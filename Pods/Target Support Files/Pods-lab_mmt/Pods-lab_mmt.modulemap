@@ -1,0 +1,6 @@
+framework module Pods_lab_mmt {
+  umbrella header "Pods-lab_mmt-umbrella.h"
+
+  export *
+  module * { export * }
+}

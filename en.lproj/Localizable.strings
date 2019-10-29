@@ -1,0 +1,14 @@
+/* 
+  Localizable.strings
+  lab_mmt
+
+  Created by Imbaggaarm on 10/27/19.
+  Copyright © 2019 Tai Duong. All rights reserved.
+*/
+
+"kSEARCH" = "Search";
+"kCHAT" = "Chat";
+"kEXPLORER" = "Explorer";
+"kFRIENDS" = "Friends";
+"kTOTAL_FRIENDS" = " friends";
+"kPROFILE_PAGE" = "Profile";
