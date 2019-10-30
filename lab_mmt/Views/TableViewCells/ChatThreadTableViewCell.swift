@@ -53,12 +53,14 @@ class ChatThreadTableViewCell: IMBBaseTableViewCell {
     let imgVMessageStatus: UIImageView = {
         let temp = UIImageView()
         temp.image = AppIcon.newMessage
-        temp.backgroundColor = AppColor.backgroundColor
+        temp.backgroundColor = UIColor.black
         return temp
     }()
     
     override func setUpLayout() {
         super.setUpLayout()
+        
+        selectionStyle = .none
         
         backgroundColor = .black
         

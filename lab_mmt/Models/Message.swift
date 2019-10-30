@@ -109,7 +109,6 @@ extension MessagePayload: Codable {
     enum CodingKeys: String, CodingKey {
         case type, text, attachment
     }
-
 }
 
 enum MessageType: String, Codable {

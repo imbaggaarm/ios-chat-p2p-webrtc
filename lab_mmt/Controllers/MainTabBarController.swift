@@ -86,7 +86,7 @@ class MainTabBarController: UITabBarController {
         view.backgroundColor = .black
         tabBar.tintColor = AppColor.tintColor
         
-        let chatListNVC = UINavigationController.init(rootViewController: ChatListViewController())
+        let chatListNVC = UINavigationController.init(rootViewController: ChatListVC())
         chatListNVC.view.backgroundColor = .black
         chatListNVC.tabBarItem.image = AppIcon.tabbarChat
         
@@ -193,6 +193,7 @@ extension MainTabBarController: MyWebRTCClientDelegate {
 //        @unknown default:
 //            textColor = .black
 //        }
+        
         DispatchQueue.main.async {
             NotificationCenter.default.post(name: MessageHandler.onPeerConnectionChanging, object: nil, userInfo: nil)
         }
@@ -211,6 +212,16 @@ extension MainTabBarController: MyWebRTCClientDelegate {
         catch {
             print("Could not decode message")
             return
+        }
+        
+        for room in chatRooms {
+            if room.partner.username == message.from {
+                room.addMessage(message: message)
+                break
+            } else if room.partner.username == message.to {
+                room.addMessage(message: message)
+                break
+            }
         }
         
         let notification = Notification.init(name: MessageHandler.onNewMessage, object: nil, userInfo: [

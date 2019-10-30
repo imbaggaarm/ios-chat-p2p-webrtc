@@ -216,7 +216,7 @@ extension FriendsViewController {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         if let mainTabbarController = tabBarController as? MainTabBarController {
-            let chatVC = ChatViewController(webRTCClient: mainTabbarController.webRTCClient, room: chatRooms[indexPath.row])
+            let chatVC = ChatVC(webRTCClient: mainTabbarController.webRTCClient, room: chatRooms[indexPath.row])
             chatVC.hidesBottomBarWhenPushed = true
             show(chatVC, sender: nil)
         }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import NVActivityIndicatorView
 
 class LaunchViewControllerLayout: BaseViewControllerLayout {
     
@@ -34,6 +35,12 @@ class LaunchViewControllerLayout: BaseViewControllerLayout {
         return temp
     }()
     
+    /// An instance of NVActivityIndicatorView, show animation when load data
+    private let indicatorView: NVActivityIndicatorView = {
+        let temp = NVActivityIndicatorView(frame: .zero, type: .ballClipRotatePulse, color: .white, padding: nil)
+        return temp
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
@@ -44,7 +51,7 @@ class LaunchViewControllerLayout: BaseViewControllerLayout {
     override func setUpLayout() {
         super.setUpLayout()
         
-        view.addSubviews(subviews: imgVLogo, lblInfo)
+        view.addSubviews(subviews: imgVLogo, lblInfo, indicatorView)
         
         //lblInfo
         do {
@@ -58,6 +65,20 @@ class LaunchViewControllerLayout: BaseViewControllerLayout {
             imgVLogo.makeSquare(size: widthOfScreen*1/2)
             imgVLogo.makeCenter(with: view)
         }
+        
+        do {
+            indicatorView.makeSquare(size: 30)
+            indicatorView.centerXAnchor(with: view)
+            indicatorView.bottomAnchor(equalTo: lblInfo.topAnchor, constant: -30)
+        }
+    }
+    
+    func startRequestAnimation() {
+        indicatorView.startAnimating()
+    }
+
+    func stopRequestAnimation() {
+        indicatorView.stopAnimating()
     }
 }
 

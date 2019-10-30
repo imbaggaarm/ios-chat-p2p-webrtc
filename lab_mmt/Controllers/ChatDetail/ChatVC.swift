@@ -1,5 +1,5 @@
 //
-//  ChatViewController.swift
+//  ChatVC.swift
 //  lab_mmt
 //
 //  Created by Imbaggaarm on 10/27/19.
@@ -8,96 +8,7 @@
 
 import UIKit
 
-struct MessageCellVM {
-    let avtImageURL: URL?
-    let name: String
-    let time: String
-    let message: String
-    var height: CGFloat = -1
-    
-    mutating func setHeight() {
-        height = calculateMessageHeight() + 8 + 20 + 8 + 2
-    }
-    
-    func calculateMessageHeight() -> CGFloat {
-        let attributedText = NSAttributedString.init(string: message, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16)])
-        let width = widthOfScreen - 8 - 40 - 8 - 8
-        
-        let constraintBox = CGSize(width: width, height: .greatestFiniteMagnitude)
-        let rect = attributedText.boundingRect(with: constraintBox, options: [.usesLineFragmentOrigin, .usesFontLeading], context: nil).integral
-        
-        return rect.size.height >= 20 ? rect.size.height : 20
-    }
-}
-
-class MessageTableView: UITableView {
-    static let CELL_ID = "CELL_ID"
-    override init(frame: CGRect, style: UITableView.Style) {
-        super.init(frame: frame, style: style)
-        
-        indicatorStyle = .white
-        separatorStyle = .none
-        keyboardDismissMode = .interactive
-        backgroundColor = .black
-        register(MessageCell.self, forCellReuseIdentifier: MessageTableView.CELL_ID)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
-class ChatViewControllerLayout: BaseViewControllerLayout {
-    lazy var tableView: MessageTableView = {
-        let temp = MessageTableView()
-        return temp
-    }()
-    
-    lazy var inputMessageBar: IMBInputMessageBar = {
-        let temp = IMBInputMessageBar()
-        return temp
-    }()
-    
-    override var inputAccessoryView: UIView? {
-        get {
-            return inputMessageBar
-        }
-    }
-    
-    override var canBecomeFirstResponder: Bool {
-        return true
-    }
-    
-    override func setUpLayout() {
-        super.setUpLayout()
-        
-        view.backgroundColor = .black
-        
-        view.addSubviews(subviews: tableView)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.makeFullWithSuperView()
-        
-        tableView.contentInset.bottom = inputMessageBar.heightOfMessageBar
-        tableView.scrollIndicatorInsets.bottom = inputMessageBar.heightOfMessageBar
-    }
-    
-    override func setUpNavigationBar() {
-        super.setUpNavigationBar()
-        
-        navigationItem.largeTitleDisplayMode = .never
-        
-        let audioCallItem = UIBarButtonItem.init(image: AppIcon.audioCall, style: .done, target: self, action: nil)
-        let videoCallItem = UIBarButtonItem.init(image: AppIcon.videoCall, style: .done, target: self, action: nil)
-        
-        let space = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
-        space.width = -20
-        
-        navigationItem.rightBarButtonItems = [videoCallItem, space, audioCallItem]
-    }
-    
-}
-
-class ChatViewController: ChatViewControllerLayout {
+class ChatVC: ChatVCLayout {
     
     var webRTCClient: MyWebRTCClient
     //    var partnerID: UserID
@@ -125,16 +36,23 @@ class ChatViewController: ChatViewControllerLayout {
         tableView.dataSource = self
         
         inputMessageBar.delegate = self
-        //tableView.contentInset.bottom = inputMessageBar.heightOfMessageBar
         loadData()
+        navigationItem.title = room.name
     }
-    
+    var isFirstLoad = true
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         addKeyboardObservers()
-        
-        navigationItem.title = room.name
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        if isFirstLoad {
+            isFirstLoad = false
+            if messageVMs.count != 0 {
+                self.tableView.scrollToRow(at: IndexPath.init(row: self.messageVMs.count - 1, section: 0), at: .middle, animated: false)
+            }
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -145,8 +63,10 @@ class ChatViewController: ChatViewControllerLayout {
     
     func reloadTableDataAfterAppendMessage() {
         tableView.reloadData()
-        Timer.scheduledTimer(withTimeInterval: 0.05, repeats: false) { (_) in
-            self.tableView.scrollToRow(at: IndexPath.init(row: self.messageVMs.count - 1, section: 0), at: .bottom, animated: true)
+        if messageVMs.count != 0 {
+            Timer.scheduledTimer(withTimeInterval: 0.05, repeats: false) { (_) in
+                self.tableView.scrollToRow(at: IndexPath.init(row: self.messageVMs.count - 1, section: 0), at: .middle, animated: true)
+            }
         }
     }
     
@@ -165,34 +85,40 @@ class ChatViewController: ChatViewControllerLayout {
     
     @objc func handleNewMessage(notification: Notification) {
         guard let message = notification.userInfo?[MessageHandler.messageUserInfoKey] as? Message else { return }
-        for friend in myFriends {
-            if friend.username == message.from {
-                switch message.message {
-                case .text(let text):
-                    var vm = MessageCellVM.init(avtImageURL: URL(string: friend.profilePictureUrl), name: friend.displayName, time: IMBPrettyDateLabel.getStringDate(from: UInt(message.createdTime)), message: text)
-                    vm.setHeight()
-                    messageVMs.append(vm)
-                    reloadTableDataAfterAppendMessage()
-                case .attachment(let attachment):
-                    if let image = UIImage.init(data: attachment.payload) {
-                        let imageView = UIImageView()
-                        imageView.image = image
-                        view.addSubview(imageView)
-                        imageView.makeCenter(with: view)
-                        imageView.width(constant: image.size.width)
-                        imageView.height(constant: image.size.height)
-                        Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { (_) in
-                            imageView.removeFromSuperview()
-                        }
-                    } else {
-                        
-                        debugPrint("Can not get image from data")
+        if message.from == room.partner.username {
+            switch message.message {
+            case .text(let text):
+                var vm = MessageCellVM.init(avtImageURL: URL(string: room.partner.profilePictureUrl), name: room.partner.displayName, time: IMBPrettyDateLabel.getStringDate(from: UInt(message.createdTime)), message: text)
+                vm.setHeight()
+                messageVMs.append(vm)
+                reloadTableDataAfterAppendMessage()
+            case .attachment(let attachment):
+                if let image = UIImage.init(data: attachment.payload) {
+                    let imageView = UIImageView()
+                    imageView.image = image
+                    view.addSubview(imageView)
+                    imageView.makeCenter(with: view)
+                    imageView.width(constant: image.size.width)
+                    imageView.height(constant: image.size.height)
+                    Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { (_) in
+                        imageView.removeFromSuperview()
                     }
+                } else {
+                    
+                    debugPrint("Can not get image from data")
                 }
-                
+            }
+        } else if message.to == room.partner.username {
+            switch message.message {
+            case .text(let text):
+                var vm = MessageCellVM.init(avtImageURL: URL(string: UserProfile.this.profilePictureUrl), name: UserProfile.this.displayName, time: IMBPrettyDateLabel.getStringDate(from: UInt(message.createdTime)), message: text)
+                vm.setHeight()
+                messageVMs.append(vm)
+                reloadTableDataAfterAppendMessage()
+            default:
+                break
             }
         }
-        
         
     }
     
@@ -231,11 +157,45 @@ class ChatViewController: ChatViewControllerLayout {
     
     var messageVMs = [MessageCellVM]()
     func loadData() {
-        tableView.reloadData()
+        for message in room.messages {
+            if room.partner.username == message.from {
+                switch message.message {
+                case .text(let text):
+                    var vm = MessageCellVM.init(avtImageURL: URL(string: room.partner.profilePictureUrl), name: room.partner.displayName, time: IMBPrettyDateLabel.getStringDate(from: UInt(message.createdTime)), message: text)
+                    vm.setHeight()
+                    messageVMs.append(vm)
+                case .attachment(let attachment):
+                    if let image = UIImage.init(data: attachment.payload) {
+                        let imageView = UIImageView()
+                        imageView.image = image
+                        view.addSubview(imageView)
+                        imageView.makeCenter(with: view)
+                        imageView.width(constant: image.size.width)
+                        imageView.height(constant: image.size.height)
+                        Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { (_) in
+                            imageView.removeFromSuperview()
+                        }
+                    } else {
+                        
+                        debugPrint("Can not get image from data")
+                    }
+                }
+            } else if message.to == room.partner.username {
+                switch message.message {
+                case .text(let text):
+                    var vm = MessageCellVM.init(avtImageURL: URL(string: UserProfile.this.profilePictureUrl), name: UserProfile.this.displayName, time: IMBPrettyDateLabel.getStringDate(from: UInt(message.createdTime)), message: text)
+                    vm.setHeight()
+                    messageVMs.append(vm)
+                default:
+                    break
+                }
+            }
+        }
     }
+    
 }
 
-extension ChatViewController: UITableViewDelegate, UITableViewDataSource {
+extension ChatVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return messageVMs.count
     }
@@ -255,7 +215,7 @@ extension ChatViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-extension ChatViewController: InputMessageBarDelegate {
+extension ChatVC: InputMessageBarDelegate {
     func inputMessageBarDidTapButtonEmoji() {
     }
     
@@ -273,18 +233,18 @@ extension ChatViewController: InputMessageBarDelegate {
             let dataMessage = try self.encoder.encode(message)
             webRTCClient.sendData(toUserID: room.partner.username, dataMessage)
             
-            let dateStr = IMBPrettyDateLabel.getStringDate(from: UInt(createdTime))
+            let notification = Notification.init(name: MessageHandler.onNewMessage, object: nil, userInfo: [
+                MessageHandler.messageUserInfoKey: message
+            ])
             
-            var messageVM = MessageCellVM.init(avtImageURL: URL(string: UserProfile.this.profilePictureUrl), name: UserProfile.this.displayName, time: dateStr, message: text)
-            messageVM.setHeight()
-            
-            messageVMs.append(messageVM)
+            room.addMessage(message: message)
+            DispatchQueue.main.async {
+                NotificationCenter.default.post(notification)
+            }
         }
         catch {
             debugPrint("Warning: Could not encode message: \(error)")
         }
-        
-        reloadTableDataAfterAppendMessage()
     }
     
     func inputMessageBarDidTapButtonFastEmoji() {
