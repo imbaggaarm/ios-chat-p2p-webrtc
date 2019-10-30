@@ -75,7 +75,7 @@ class ChatListViewControllerLayout: BaseViewControllerLayout {
         
         let logoImageView = UIImageView()
         logoImageView.clipsToBounds = true
-        logoImageView.kf.setImage(with: URL.init(string: User.this.avtStrURL))
+        logoImageView.kf.setImage(with: URL.init(string: UserProfile.this.profilePictureUrl))
         logoImageView.frame = CGRect(x:0.0,y:0.0, width:32, height:32)
         logoImageView.contentMode = .scaleAspectFit
         logoImageView.isUserInteractionEnabled = true
@@ -95,7 +95,7 @@ class ChatListViewControllerLayout: BaseViewControllerLayout {
     }
 }
 
-//
+var chatRooms = [ChatRoom]()
 class ChatListViewController: ChatListViewControllerLayout, UITableViewDelegate, UITableViewDataSource {
     
     override func viewDidLoad() {
@@ -108,27 +108,21 @@ class ChatListViewController: ChatListViewControllerLayout, UITableViewDelegate,
     }
     
     var chatThreadVMs = [ChatThreadCellVM]()
-    var chatRooms = [ChatRoom]()
     
     func loadData() {
         
-        for friend in friends {
+        for friend in myFriends {
             let room = ChatRoom.init(id: friend.username, partner: friend)
-            let thread = ChatThreadCellVM(avtImageURL: URL(string: friend.avtStrURL), title: friend.displayName, lastMessage: "Last message", messageStatusIcon: AppIcon.newMessage, time: "13:02", lastMessageFont: UIFont.boldSystemFont(ofSize: 14), lastMessageTextColor: .white)
+            let thread = ChatThreadCellVM(avtImageURL: URL(string: friend.profilePictureUrl), title: friend.displayName, lastMessage: "Last message", messageStatusIcon: AppIcon.newMessage, time: "13:02", lastMessageFont: UIFont.boldSystemFont(ofSize: 14), lastMessageTextColor: .white)
             chatRooms.append(room)
             chatThreadVMs.append(thread)
         }
-//        let thread = ChatThreadCellVM(avtImageURL: AppIcon.timAvt, title: "Tim Cook", lastMessage: "Hello, how are you? Long time no see", messageStatusIcon: AppIcon.newMessage, time: "13:02", lastMessageFont: UIFont.boldSystemFont(ofSize: 14), lastMessageTextColor: .white)
-//        let thread1 = ChatThreadCellVM(avtImageURL: AppIcon.iveAvt, title: "Jony Ive", lastMessage: "Bạn: Why the hell did you leave Apple? Did Tim Cook bully you? Tell me if that happend", messageStatusIcon: AppIcon.sentMessage, time: "Hôm qua, 23:05", lastMessageFont: UIFont.systemFont(ofSize: 14), lastMessageTextColor: .gray)
-//        let thread2 = ChatThreadCellVM(avtImageURL: AppIcon.craigAvt, title: "Craig Federighi", lastMessage: "Tai, Can you join Apple?", messageStatusIcon: AppIcon.newMessage, time: "Hôm qua, 22:35", lastMessageFont: UIFont.boldSystemFont(ofSize: 14), lastMessageTextColor: .white)
-    
-//        chatThreadVMs.append(elements: thread, thread1, thread2)
         tableView.reloadData()
     }
     
     override func onLeftBarButtonTapped() {
         super.onLeftBarButtonTapped()
-        let profileVC = ProfileVC.init(user: User.this)
+        let profileVC = ProfileVC.init(user: UserProfile.this)
         let naVC = UINavigationController.init(rootViewController: profileVC)
         naVC.view.backgroundColor = AppColor.backgroundColor
         present(naVC, animated: true, completion: nil)
@@ -156,16 +150,10 @@ extension ChatListViewController {
         tableView.deselectRow(at: indexPath, animated: true)
         
         if let mainTabbarController = tabBarController as? MainTabBarController {
-            let username = friends[0].username
-//            let text = "Hello, I'm: " + username
-//            print(text)
-//            mainTabbarController.webRTCClient.sendData(toUserID: username, text.data(using: .utf8)!)
             
             let chatVC = ChatViewController(webRTCClient: mainTabbarController.webRTCClient, room: chatRooms[indexPath.row])
             chatVC.hidesBottomBarWhenPushed = true
             show(chatVC, sender: nil)
         }
-        
-        
     }
 }

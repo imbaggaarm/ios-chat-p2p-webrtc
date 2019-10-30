@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let signalClient = self.buildSignalingClient()
 //            let mainTabbarController = MainTabBarController(signalClient: signalClient, webRTCClient: webRTCClient)
             
-            window?.rootViewController = LoginVC(signalClient: signalClient, webRTCClient: webRTCClient)
+            window?.rootViewController = LaunchViewController(signalClient: signalClient, webRTCClient: webRTCClient)
             
         }
         

@@ -1,4 +1,5 @@
 PODS:
+  - Alamofire (5.0.0-rc.3)
   - GoogleWebRTC (1.1.29400)
   - Kingfisher (5.9.0):
     - Kingfisher/Core (= 5.9.0)
@@ -10,6 +11,7 @@ PODS:
   - SwiftDate (6.1.0)
 
 DEPENDENCIES:
+  - Alamofire (~> 5.0.0-rc.3)
   - GoogleWebRTC
   - Kingfisher (~> 5.9)
   - NVActivityIndicatorView
@@ -18,6 +20,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - Alamofire
     - GoogleWebRTC
     - Kingfisher
     - NVActivityIndicatorView
@@ -25,12 +28,13 @@ SPEC REPOS:
     - SwiftDate
 
 SPEC CHECKSUMS:
+  Alamofire: ca8c0de6906873be89d6deec5c8de279e00bf872
   GoogleWebRTC: cfb83bc346435a17fe06bb05f04ad826b858a7fb
   Kingfisher: ff98240aebb7302bdc4f1ecd701761030ce18b16
   NVActivityIndicatorView: d24b7ebcf80af5dcd994adb650e2b6c93379270f
   Starscream: ef3ece99d765eeccb67de105bfa143f929026cf5
   SwiftDate: fa2bb3962056bb44047b4b85a30044e5eae30b03
 
-PODFILE CHECKSUM: 9ce6f8da92e902ebdc24b6afb407e5623ddcd7f8
+PODFILE CHECKSUM: bc02b006e66b95ae53407fdc097f3771e966e375
 
 COCOAPODS: 1.8.4

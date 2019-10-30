@@ -165,11 +165,11 @@ class ChatViewController: ChatViewControllerLayout {
     
     @objc func handleNewMessage(notification: Notification) {
         guard let message = notification.userInfo?[MessageHandler.messageUserInfoKey] as? Message else { return }
-        for friend in friends {
+        for friend in myFriends {
             if friend.username == message.from {
                 switch message.message {
                 case .text(let text):
-                    var vm = MessageCellVM.init(avtImageURL: URL(string: friend.avtStrURL), name: friend.displayName, time: IMBPrettyDateLabel.getStringDate(from: UInt(message.createdTime)), message: text)
+                    var vm = MessageCellVM.init(avtImageURL: URL(string: friend.profilePictureUrl), name: friend.displayName, time: IMBPrettyDateLabel.getStringDate(from: UInt(message.createdTime)), message: text)
                     vm.setHeight()
                     messageVMs.append(vm)
                     reloadTableDataAfterAppendMessage()
@@ -231,30 +231,6 @@ class ChatViewController: ChatViewControllerLayout {
     
     var messageVMs = [MessageCellVM]()
     func loadData() {
-        
-        //        var message = MessageCellVM(avtImageURL: AppIcon.timAvt, name: "Tim Cook", time: "10:15", message: "Hello")
-        //        message.setHeight()
-        //
-        //        var message2 = MessageCellVM(avtImageURL: AppIcon.iveAvt, name: "Jony Ive", time: "10:17", message: "Hi, how are you?")
-        //        message2.setHeight()
-        //
-        //        var message3 = MessageCellVM(avtImageURL: AppIcon.timAvt, name: "Tim Cook", time: "10:18", message: "I'm fine, do you miss Apple?")
-        //        message3.setHeight()
-        //
-        //        var message4 = MessageCellVM(avtImageURL: AppIcon.iveAvt, name: "Jony Ive", time: "10:20", message: "Of course, I've missed it every day since you kicked me out.")
-        //        message4.setHeight()
-        //
-        //        var message5 = MessageCellVM(avtImageURL: AppIcon.timAvt, name: "Tim Cook", time: "10:20", message: "Hahahahaha, shame on you.")
-        //        message5.setHeight()
-        //
-        //        var message6 = MessageCellVM(avtImageURL: AppIcon.iveAvt, name: "Jony Ive", time: "10:21", message: "I don't want to be the richest man in the graveyard, with me, money is important, but it's not enough for me to trade with the user experience.")
-        //        message6.setHeight()
-        //
-        //        var message7 = MessageCellVM(avtImageURL: AppIcon.timAvt, name: "Tim Cook", time: "10:22", message: "Some people say, \"Give the customers what they want\". But that's not my approach. Our job is to figure out what they're going to want before they do. I think Henry Ford once said, \"If I'd asked customers what they wanted, they would have told me. `A faster horse!`\". People don't know what they want until you show it to them. That's why I never rely on market research. Our task is to read things that are not yet on the page.")
-        //        message7.setHeight()
-        
-        //        messageVMs.append(elements: message, message2, message3, message4, message5, message6, message7)
-        
         tableView.reloadData()
     }
 }
@@ -291,7 +267,7 @@ extension ChatViewController: InputMessageBarDelegate {
         let id = UUID().uuidString
         let createdTime = Int64(Date().timeIntervalSince1970)
         
-        let message = Message.init(id: id, from: User.this.username, to: room.partner.username, createdTime: createdTime, message: messagePayload)
+        let message = Message.init(id: id, from: UserProfile.this.username, to: room.partner.username, createdTime: createdTime, message: messagePayload)
         print(message)
         do {
             let dataMessage = try self.encoder.encode(message)
@@ -299,7 +275,7 @@ extension ChatViewController: InputMessageBarDelegate {
             
             let dateStr = IMBPrettyDateLabel.getStringDate(from: UInt(createdTime))
             
-            var messageVM = MessageCellVM.init(avtImageURL: URL(string: User.this.avtStrURL), name: User.this.displayName, time: dateStr, message: text)
+            var messageVM = MessageCellVM.init(avtImageURL: URL(string: UserProfile.this.profilePictureUrl), name: UserProfile.this.displayName, time: dateStr, message: text)
             messageVM.setHeight()
             
             messageVMs.append(messageVM)
@@ -319,7 +295,7 @@ extension ChatViewController: InputMessageBarDelegate {
             let id = UUID().uuidString
             let createdTime = Int64(Date().timeIntervalSince1970)
             
-            let message = Message.init(id: id, from: User.this.username, to: room.partner.username, createdTime: createdTime, message: messagePayload)
+            let message = Message.init(id: id, from: UserProfile.this.username, to: room.partner.username, createdTime: createdTime, message: messagePayload)
             
             print(message)
             do {

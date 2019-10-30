@@ -35,6 +35,15 @@ class ProfileVCLayout: BaseViewControllerLayout {
         return temp
     }()
     
+    let lblEmail: UILabel = {
+        let temp = UILabel()
+        temp.font = UIFont.systemFont(ofSize: 18)
+        temp.textColor = .gray
+        temp.numberOfLines = 1
+        temp.textAlignment = .center
+        return temp
+    }()
+    
     let btnMessage: UIButton = {
         let temp = UIButton()
         temp.backgroundColor = AppColor.themeColor
@@ -59,11 +68,12 @@ class ProfileVCLayout: BaseViewControllerLayout {
         
         view.backgroundColor = AppColor.backgroundColor
         
-        view.addSubviews(subviews: coverImageView, avtImageView, lblName, btnMessage)
-        view.addConstraintsWith(format: "V:[v0]-15-[v1]-25-[v2(35)]", views: avtImageView, lblName, btnMessage)
+        view.addSubviews(subviews: coverImageView, avtImageView, lblName, lblEmail, btnMessage)
+        view.addConstraintsWith(format: "V:[v0]-15-[v1]-15-[v2]-25-[v3(35)]", views: avtImageView, lblName, lblEmail, btnMessage)
 
         view.addConstraintsWith(format: "H:|-16-[v0]-16-|", views: coverImageView)
         view.addConstraintsWith(format: "H:|-16-[v0]-16-|", views: lblName)
+        view.addConstraintsWith(format: "H:|-16-[v0]-16-|", views: lblEmail)
         view.addConstraintsWith(format: "H:|-16-[v0]-16-|", views: btnMessage)
         coverImageView.topAnchor(equalTo: view.layoutMarginsGuide.topAnchor, constant: 16)
         
@@ -75,19 +85,14 @@ class ProfileVCLayout: BaseViewControllerLayout {
         avtImageView.centerXAnchor(with: view)
         avtImageView.makeCircle(corner: widthOfScreen/4)
 
-//        lblName.centerXAnchor(with: view)
-//        lblName.widthAnchor(equalTo: view.widthAnchor, multiplier: 0.9, constant: 0)
-//
-//        btnMessage.centerXAnchor(with: view)
-//        btnMessage.widthAnchor(equalTo: view.widthAnchor, multiplier: 0.9, constant: 0)
     }
 }
 
 class ProfileVC: ProfileVCLayout {
     
-    let user: User
+    let user: UserProfile
     
-    init(user: User) {
+    init(user: UserProfile) {
         self.user = user
         super.init(nibName: nil, bundle: nil)
     }
@@ -102,10 +107,16 @@ class ProfileVC: ProfileVCLayout {
     }
     
     override func showData() {
-        avtImageView.kf.setImage(with: URL.init(string: user.avtStrURL))
-        coverImageView.kf.setImage(with: URL.init(string: user.coverStrURL))
+        avtImageView.kf.setImage(with: URL.init(string: user.profilePictureUrl))
+        coverImageView.kf.setImage(with: URL.init(string: user.coverPhotoUrl))
         lblName.text = user.displayName
+        lblEmail.text = user.email
         title = user.displayName
         
+        if user.email == UserProfile.this.email {
+            btnMessage.isHidden = true
+        } else {
+            btnMessage.isHidden = false
+        }
     }
 }

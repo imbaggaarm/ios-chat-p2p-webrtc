@@ -119,14 +119,13 @@ extension MainTabBarController: SignalClientDelegate {
     func signalClientDidConnect(_ signalClient: SignalingClient) {
         self.signalingConnected = true
         
+        self.signalClient.send(username: UserProfile.this.username)
         
-        self.signalClient.send(username: User.this.username)
-        
-        for friend in friends {
+        for friend in myFriends {
             let peerConnection = self.webRTCClient.createPeerConnection(for: friend.username)
             
             self.webRTCClient.offer(peerConnection: peerConnection) { (sdp) in
-                self.signalClient.sendOffer(username: User.this.username, partnerUsername: friend.username, sdp: sdp)
+                self.signalClient.sendOffer(username: UserProfile.this.username, partnerUsername: friend.username, sdp: sdp)
             }
         }
     }
@@ -151,7 +150,7 @@ extension MainTabBarController: SignalClientDelegate {
         self.webRTCClient.set(remoteSdp: sdp, for: userID) { (error) in
             //self.hasRemoteSdp = true
             self.webRTCClient.answer(forUserID: userID) { (sdp) in
-                self.signalClient.sendAnswer(username: User.this.username, toUser: userID, sdp: sdp)
+                self.signalClient.sendAnswer(username: UserProfile.this.username, toUser: userID, sdp: sdp)
             }
             
             //answer

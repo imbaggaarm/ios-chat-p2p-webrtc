@@ -1,9 +1,9 @@
 //
-//  File.swift
-//  WebRTC-Demo
+//  WebSocketProvider.swift
+//  lab_mmt
 //
-//  Created by Stas Seldin on 15/07/2019.
-//  Copyright © 2019 Stas Seldin. All rights reserved.
+//  Created by Imbaggaarm on 10/27/19.
+//  Copyright © 2019 Tai Duong. All rights reserved.
 //
 
 import Foundation

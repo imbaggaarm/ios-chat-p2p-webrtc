@@ -16,6 +16,13 @@
 		9C3AFB1023680AC3009E6ED6 /* IMBNotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3AFB0F23680AC3009E6ED6 /* IMBNotificationCenter.swift */; };
 		9C3AFB1223680B1D009E6ED6 /* MessageCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3AFB1123680B1D009E6ED6 /* MessageCenter.swift */; };
 		9C3AFB1423682F16009E6ED6 /* ProfileVCLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3AFB1323682F16009E6ED6 /* ProfileVCLayout.swift */; };
+		9C3B68DD2369B548007A0A56 /* APIRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3B68DC2369B548007A0A56 /* APIRouter.swift */; };
+		9C3B68DF2369B92F007A0A56 /* APIConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3B68DE2369B92F007A0A56 /* APIConfiguration.swift */; };
+		9C3B68E12369B93E007A0A56 /* UserEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3B68E02369B93E007A0A56 /* UserEndpoint.swift */; };
+		9C3B68E32369E82B007A0A56 /* AppUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3B68E22369E82B007A0A56 /* AppUserDefaults.swift */; };
+		9C3B68E72369E8F0007A0A56 /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3B68E52369E8F0007A0A56 /* LaunchViewController.swift */; };
+		9C3B68E82369E8F0007A0A56 /* LaunchViewControllerLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3B68E62369E8F0007A0A56 /* LaunchViewControllerLayout.swift */; };
+		9C3BCFC9236982B4008C2910 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3BCFC8236982B4008C2910 /* APIClient.swift */; };
 		9C46B56E2365497500602F73 /* AppString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C46B56B2365497500602F73 /* AppString.swift */; };
 		9C46B56F2365497500602F73 /* AppIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C46B56C2365497500602F73 /* AppIcon.swift */; };
 		9C46B5702365497500602F73 /* AppColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C46B56D2365497500602F73 /* AppColor.swift */; };
@@ -84,6 +91,13 @@
 		9C3AFB0F23680AC3009E6ED6 /* IMBNotificationCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMBNotificationCenter.swift; sourceTree = "<group>"; };
 		9C3AFB1123680B1D009E6ED6 /* MessageCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCenter.swift; sourceTree = "<group>"; };
 		9C3AFB1323682F16009E6ED6 /* ProfileVCLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVCLayout.swift; sourceTree = "<group>"; };
+		9C3B68DC2369B548007A0A56 /* APIRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRouter.swift; sourceTree = "<group>"; };
+		9C3B68DE2369B92F007A0A56 /* APIConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIConfiguration.swift; sourceTree = "<group>"; };
+		9C3B68E02369B93E007A0A56 /* UserEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEndpoint.swift; sourceTree = "<group>"; };
+		9C3B68E22369E82B007A0A56 /* AppUserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUserDefaults.swift; sourceTree = "<group>"; };
+		9C3B68E52369E8F0007A0A56 /* LaunchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchViewController.swift; sourceTree = "<group>"; };
+		9C3B68E62369E8F0007A0A56 /* LaunchViewControllerLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchViewControllerLayout.swift; sourceTree = "<group>"; };
+		9C3BCFC8236982B4008C2910 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 		9C46B56B2365497500602F73 /* AppString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppString.swift; sourceTree = "<group>"; };
 		9C46B56C2365497500602F73 /* AppIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIcon.swift; sourceTree = "<group>"; };
 		9C46B56D2365497500602F73 /* AppColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppColor.swift; sourceTree = "<group>"; };
@@ -189,12 +203,12 @@
 		9C0DBD292364B86A00BD3595 /* lab_mmt */ = {
 			isa = PBXGroup;
 			children = (
-				9C3AFB1123680B1D009E6ED6 /* MessageCenter.swift */,
 				9C6B9D9F2365E4AB00F76BEA /* Config.swift */,
 				9C0DBD2A2364B86A00BD3595 /* AppDelegate.swift */,
 				9C0DBD2C2364B86A00BD3595 /* SceneDelegate.swift */,
-				9C6B9D9D2365DF4D00F76BEA /* Services */,
 				9C46B56A2365496500602F73 /* Resources */,
+				9C3BCFCA23698395008C2910 /* Helpers */,
+				9C6B9D9D2365DF4D00F76BEA /* Services */,
 				9C829B8623675424008429DF /* Models */,
 				9C829B82236753BD008429DF /* Controllers */,
 				9C9A4FB723655AE600EBEFF7 /* Views */,
@@ -206,6 +220,35 @@
 				9C3AFB0F23680AC3009E6ED6 /* IMBNotificationCenter.swift */,
 			);
 			path = lab_mmt;
+			sourceTree = "<group>";
+		};
+		9C3B68DB2369B508007A0A56 /* REST */ = {
+			isa = PBXGroup;
+			children = (
+				9C3BCFC8236982B4008C2910 /* APIClient.swift */,
+				9C3B68DC2369B548007A0A56 /* APIRouter.swift */,
+				9C3B68DE2369B92F007A0A56 /* APIConfiguration.swift */,
+				9C3B68E02369B93E007A0A56 /* UserEndpoint.swift */,
+			);
+			path = REST;
+			sourceTree = "<group>";
+		};
+		9C3B68E42369E8F0007A0A56 /* LaunchVC */ = {
+			isa = PBXGroup;
+			children = (
+				9C3B68E52369E8F0007A0A56 /* LaunchViewController.swift */,
+				9C3B68E62369E8F0007A0A56 /* LaunchViewControllerLayout.swift */,
+			);
+			path = LaunchVC;
+			sourceTree = "<group>";
+		};
+		9C3BCFCA23698395008C2910 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				9C3B68E22369E82B007A0A56 /* AppUserDefaults.swift */,
+				9C3AFB1123680B1D009E6ED6 /* MessageCenter.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		9C46B56A2365496500602F73 /* Resources */ = {
@@ -223,6 +266,7 @@
 		9C6B9D9D2365DF4D00F76BEA /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				9C3B68DB2369B508007A0A56 /* REST */,
 				9C6B9DAE2365E9C400F76BEA /* WebSocketProvider */,
 				9C6B9DA12365E80A00F76BEA /* WebRTCClient.swift */,
 				9C6B9DA32365E94C00F76BEA /* SignalingClient.swift */,
@@ -253,6 +297,7 @@
 		9C829B82236753BD008429DF /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				9C3B68E42369E8F0007A0A56 /* LaunchVC */,
 				9C829B83236753E4008429DF /* Login */,
 				9C9A4F782365508D00EBEFF7 /* MainTabBarController.swift */,
 				9C9A4F792365508D00EBEFF7 /* ChatListViewController.swift */,
@@ -491,6 +536,7 @@
 				9C829B8823675430008429DF /* User.swift in Sources */,
 				9C6B9DAB2365E98F00F76BEA /* RTCStates.swift in Sources */,
 				9C0DBD352364B86A00BD3595 /* lab_mmt.xcdatamodeld in Sources */,
+				9C3B68DD2369B548007A0A56 /* APIRouter.swift in Sources */,
 				9C9A4F7B2365508D00EBEFF7 /* FriendsViewController.swift in Sources */,
 				9C3AFB1023680AC3009E6ED6 /* IMBNotificationCenter.swift in Sources */,
 				9C6B9DB42365E9C400F76BEA /* StarscreamProvider.swift in Sources */,
@@ -500,13 +546,17 @@
 				9C9A4F7C2365508D00EBEFF7 /* MainTabBarController.swift in Sources */,
 				9C9A4F9B236550CC00EBEFF7 /* IMBToolbarBasePopUpViewController.swift in Sources */,
 				9C9A4F9E236550CC00EBEFF7 /* IMBToolbarViewController.swift in Sources */,
+				9C3B68DF2369B92F007A0A56 /* APIConfiguration.swift in Sources */,
 				9C46B56E2365497500602F73 /* AppString.swift in Sources */,
 				9C9A4FA4236550CC00EBEFF7 /* IMBBaseSlideMenuCollectionViewController.swift in Sources */,
+				9C3B68E32369E82B007A0A56 /* AppUserDefaults.swift in Sources */,
+				9C3BCFC9236982B4008C2910 /* APIClient.swift in Sources */,
 				9C6B9DB22365E9C400F76BEA /* WebSocketProvider.swift in Sources */,
 				9C6B9DB32365E9C400F76BEA /* NativeWebSocket.swift in Sources */,
 				9C9A4FAD236550CC00EBEFF7 /* HTTPMethod.swift in Sources */,
 				9C6B9DCF23674C5900F76BEA /* LoginVC.swift in Sources */,
 				9C9A4F7D2365508D00EBEFF7 /* ChatListViewController.swift in Sources */,
+				9C3B68E72369E8F0007A0A56 /* LaunchViewController.swift in Sources */,
 				9C6B9DA22365E80A00F76BEA /* WebRTCClient.swift in Sources */,
 				9C46B56F2365497500602F73 /* AppIcon.swift in Sources */,
 				9C829B85236753F5008429DF /* LoginVCLayout.swift in Sources */,
@@ -524,12 +574,14 @@
 				9C9A4FA9236550CC00EBEFF7 /* IMBIndicatorView.swift in Sources */,
 				9C9A4FA5236550CC00EBEFF7 /* IMBCoreDataExtension.swift in Sources */,
 				9C9A4FAB236550CC00EBEFF7 /* IMBBaseSlideMenuView.swift in Sources */,
+				9C3B68E82369E8F0007A0A56 /* LaunchViewControllerLayout.swift in Sources */,
 				9C3AFB1223680B1D009E6ED6 /* MessageCenter.swift in Sources */,
 				9C9A4F9D236550CC00EBEFF7 /* IMBBasePopUpViewController.swift in Sources */,
 				9C6B9DA62365E96D00F76BEA /* Message.swift in Sources */,
 				9C6B9DAD2365E98F00F76BEA /* IceCandidate.swift in Sources */,
 				9C9A4FAA236550CC00EBEFF7 /* IMBBaseTableViewCell.swift in Sources */,
 				9C9A4F9A236550CC00EBEFF7 /* IMBBaseScrollViewController.swift in Sources */,
+				9C3B68E12369B93E007A0A56 /* UserEndpoint.swift in Sources */,
 				9C9A4FA7236550CC00EBEFF7 /* ImageCollectionViewCell.swift in Sources */,
 				9C0DBD2B2364B86A00BD3595 /* AppDelegate.swift in Sources */,
 				9C9A4FC42365962700EBEFF7 /* MessageCell.swift in Sources */,

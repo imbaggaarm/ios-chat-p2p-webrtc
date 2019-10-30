@@ -1,9 +1,9 @@
 //
 //  NativeSocketProvider.swift
-//  WebRTC-Demo
+//  lab_mmt
 //
-//  Created by Stas Seldin on 15/07/2019.
-//  Copyright © 2019 Stas Seldin. All rights reserved.
+//  Created by Imbaggaarm on 10/27/19.
+//  Copyright © 2019 Tai Duong. All rights reserved.
 //
 
 import Foundation
@@ -42,7 +42,6 @@ class NativeWebSocket: NSObject, WebSocketProvider {
                 self.readMessage()
                 
             case .success(.string(let string)):
-                //debugPrint("Warning: Expected to receive data format but received a string. Check the websocket server config.")
                 self.delegate?.webSocket(self, didReceiveString: string)
                 self.readMessage()
 

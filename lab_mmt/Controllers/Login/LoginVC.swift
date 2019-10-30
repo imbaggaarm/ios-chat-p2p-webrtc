@@ -39,6 +39,7 @@ class LoginVC: LoginVCLayout, UITextFieldDelegate {
 
         txtFUsername.addTarget(self, action: #selector(checkEnableBtnLogin), for: .editingChanged)
         txtFPassword.addTarget(self, action: #selector(checkEnableBtnLogin), for: .editingChanged)
+        
     }
 
     override func onBtnLoginTap() {
@@ -48,20 +49,90 @@ class LoginVC: LoginVCLayout, UITextFieldDelegate {
         let username = txtFUsername.text!.lowercased()
         let password = txtFPassword.text!
         
-        for user in allUsers {
-            if user.username == username {
-                User.this = user
-                break
+        startRequestAnimation()
+        login(email: username, password: password)
+    }
+    
+    private func login(email: String, password: String) {
+        APIClient.login(email: email, password: password) {[weak self] (result) in
+
+            switch result {
+            case .success(let response):
+                if response.success {
+                    UserProfile.this.email = email
+                    UserProfile.this.username = response.data!.username
+                    
+                    AppUserDefaults.sharedInstance.setUserAccount(email: email, password: password)
+                    self?.getUserProfileAndFriendList()
+                } else {
+                    self?.handleError(error: response.error)
+                }
+            case .failure(let error):
+                self?.handleError(error: error.errorDescription ?? "Unexpected error")
+                print(error)
+            }
+        }
+    }
+    
+    func handleError(error: String) {
+        self.stopRequestAnimation()
+        self.letsAlert(withMessage: error)
+    }
+    
+    func getUserProfileAndFriendList() {
+        var isGotProfile = false
+        var isGotUserFriends = false
+        
+        APIClient.getUserProfile(username: UserProfile.this.username) {[weak self] (result) in
+            isGotProfile = true
+            switch result {
+            case .success(let response):
+                if response.success {
+                    UserProfile.this = response.data!
+                    if isGotUserFriends {
+                        self?.showMainVC()
+                    }
+                } else {
+                    if isGotProfile {
+                        self?.stopRequestAnimation()
+                    }
+                    self?.handleError(error: response.error)
+                }
+            case .failure(let error):
+                if isGotProfile {
+                    self?.stopRequestAnimation()
+                }
+                self?.handleError(error: error.errorDescription ?? "Unexpected error")
             }
         }
         
-        startRequestAnimation()
-        showMainVC()
-        stopRequestAnimation()
+        APIClient.getUserFriends(username: UserProfile.this.username) {[weak self] (result) in
+            isGotUserFriends = true
+            switch result {
+            case .success(let response):
+                if response.success {
+                    myFriends = response.data!
+                    print(myFriends)
+                    if isGotProfile {
+                        self?.showMainVC()
+                        self?.stopRequestAnimation()
+                    }
+                } else {
+                    if isGotProfile {
+                        self?.stopRequestAnimation()
+                    }
+                    self?.handleError(error: response.error)
+                }
+            case .failure(let error):
+                if isGotProfile {
+                    self?.stopRequestAnimation()
+                }
+                self?.handleError(error: error.errorDescription ?? "Unexpected error")
+            }
+        }
     }
     
     private func showMainVC() {
-        
         let mainVC = MainTabBarController(signalClient: signalClient, webRTCClient: webRTCClient)
         mainVC.modalPresentationStyle = .overCurrentContext
         present(mainVC, animated: false) {[unowned self] in

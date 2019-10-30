@@ -249,7 +249,7 @@ extension MyWebRTCClient: RTCPeerConnectionDelegate {
         case .connected:
             for (uID, peer) in self.peerConnections {
                 if peer.isEqual(peerConnection) {
-                    for friend in friends {
+                    for friend in myFriends {
                         if friend.username == uID {
                             friend.state = .online
                             self.delegate?.webRTCClient(self, didChangeConnectionState: newState)
@@ -262,7 +262,7 @@ extension MyWebRTCClient: RTCPeerConnectionDelegate {
         case .disconnected:
             for (uID, peer) in self.peerConnections {
                 if peer.isEqual(peerConnection) {
-                    for friend in friends {
+                    for friend in myFriends {
                         if friend.username == uID {
                             friend.state = .offline
                             self.delegate?.webRTCClient(self, didChangeConnectionState: newState)

@@ -1,9 +1,9 @@
 //
 //  StarscreamProvider.swift
-//  WebRTC-Demo
+//  lab_mmt
 //
-//  Created by Stas Seldin on 15/07/2019.
-//  Copyright © 2019 Stas Seldin. All rights reserved.
+//  Created by Imbaggaarm on 10/27/19.
+//  Copyright © 2019 Tai Duong. All rights reserved.
 //
 
 import Foundation
@@ -38,7 +38,6 @@ extension StarscreamWebSocket: Starscream.WebSocketDelegate {
     }
     
     func websocketDidReceiveMessage(socket: WebSocketClient, text: String) {
-        //debugPrint("Warning: Expected to receive data format but received a string. Check the websocket server config.")
         self.delegate?.webSocket(self, didReceiveString: text)
     }
     

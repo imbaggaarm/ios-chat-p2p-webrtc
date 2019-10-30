@@ -10,4 +10,5 @@ target 'lab_mmt' do
   pod 'NVActivityIndicatorView'
   pod 'Kingfisher', '~> 5.9'
   pod 'SwiftDate'
+  pod 'Alamofire', '~> 5.0.0-rc.3'
 end

@@ -10,11 +10,11 @@ import Foundation
 
 class ChatRoom {
     let id: String
-    let partner: User
+    let partner: UserProfile
     var name: String
     var messages = [Message]()
     
-    init(id: String, partner: User) {
+    init(id: String, partner: UserProfile) {
         self.id = id
         self.partner = partner
         self.name = partner.displayName

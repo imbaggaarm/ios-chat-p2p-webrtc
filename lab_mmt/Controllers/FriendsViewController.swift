@@ -80,7 +80,7 @@ class FriendsViewControllerLayout: BaseViewControllerLayout {
         [unowned self] in
         let temp = FriendTableView()
         return temp
-    }()
+        }()
     
     let headerView = TotalFriendTableHeaderView(frame: CGRect.init(x: 0, y: 0, width: widthOfScreen, height: 40))
     
@@ -110,15 +110,24 @@ class FriendsViewControllerLayout: BaseViewControllerLayout {
         
         let logoImageView = UIImageView()
         logoImageView.clipsToBounds = true
-        logoImageView.kf.setImage(with: URL.init(string: User.this.avtStrURL))
+        logoImageView.kf.setImage(with: URL.init(string: UserProfile.this.profilePictureUrl))
         logoImageView.frame = CGRect(x:0.0,y:0.0, width:32, height:32)
         logoImageView.contentMode = .scaleAspectFit
+        logoImageView.isUserInteractionEnabled = true
+        
+        let tapGesture = UITapGestureRecognizer.init(target: self, action: #selector(onLeftBarButtonTapped))
+        logoImageView.addGestureRecognizer(tapGesture)
         
         let imageItem = UIBarButtonItem.init(customView: logoImageView)
         logoImageView.makeCircle(corner: 16)
         navigationItem.leftBarButtonItem =  imageItem
+        
+        navigationItem.backBarButtonItem = UIBarButtonItem.init(title: "", style: .done, target: nil, action: nil)
     }
     
+    @objc func onLeftBarButtonTapped() {
+        
+    }
 }
 
 class FriendsViewController: FriendsViewControllerLayout, UITableViewDelegate, UITableViewDataSource {
@@ -133,6 +142,19 @@ class FriendsViewController: FriendsViewControllerLayout, UITableViewDelegate, U
         
         addConnectionStateChangeObserver()
     }
+    
+    override func onLeftBarButtonTapped() {
+        super.onLeftBarButtonTapped()
+        showUserProfileVC(user: UserProfile.this)
+    }
+    
+    func showUserProfileVC(user: UserProfile) {
+        let profileVC = ProfileVC.init(user: user)
+        let naVC = UINavigationController.init(rootViewController: profileVC)
+        naVC.view.backgroundColor = AppColor.backgroundColor
+        present(naVC, animated: true, completion: nil)
+    }
+
     
     deinit {
         removeConnectionStateObserver()
@@ -155,15 +177,15 @@ class FriendsViewController: FriendsViewControllerLayout, UITableViewDelegate, U
     
     func loadData() {
         friendVMs = []
-        for friend in friends {
-            let vm = FriendCellVM.init(imageURL: URL(string: friend.avtStrURL), name: friend.displayName, onlineState: friend.state)
+        for friend in myFriends {
+            let vm = FriendCellVM.init(imageURL: URL(string: friend.profilePictureUrl), name: friend.displayName, onlineState: friend.state)
             friendVMs.append(vm)
         }
         
-//        let ive = FriendCellVM(imageURL: UIImage.init(named: "ive"), name: "Jony Ive", onlineState: .doNotDisturb)
-//        let cragh = FriendCellVM(imageURL: UIImage.init(named: "craig"), name: "Craig Federighi", onlineState: .offline)
-//        
-//        friendVMs.append(elements: tim, ive, cragh)
+        //        let ive = FriendCellVM(imageURL: UIImage.init(named: "ive"), name: "Jony Ive", onlineState: .doNotDisturb)
+        //        let cragh = FriendCellVM(imageURL: UIImage.init(named: "craig"), name: "Craig Federighi", onlineState: .offline)
+        //
+        //        friendVMs.append(elements: tim, ive, cragh)
         
         tableView.reloadData()
         
@@ -193,6 +215,11 @@ extension FriendsViewController {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        if let mainTabbarController = tabBarController as? MainTabBarController {
+            let chatVC = ChatViewController(webRTCClient: mainTabbarController.webRTCClient, room: chatRooms[indexPath.row])
+            chatVC.hidesBottomBarWhenPushed = true
+            show(chatVC, sender: nil)
+        }
     }
     
 }

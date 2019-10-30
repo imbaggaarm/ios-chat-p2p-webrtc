@@ -24,7 +24,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let webRTCClient = MyWebRTCClient(iceServers: self.config.webRTCIceServers)
         let signalClient = self.buildSignalingClient()
 //        window.rootViewController = MainTabBarController(signalClient: signalClient, webRTCClient: webRTCClient)
-        window.rootViewController = LoginVC(signalClient: signalClient, webRTCClient: webRTCClient)
+        window.rootViewController = LaunchViewController(signalClient: signalClient, webRTCClient: webRTCClient)
         window.makeKeyAndVisible()
         
 //        let appearance = UINavigationBarAppearance()

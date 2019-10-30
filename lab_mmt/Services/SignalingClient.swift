@@ -92,7 +92,7 @@ final class SignalingClient {
     }
             
     func send(candidate rtcIceCandidate: RTCIceCandidate, toUser userID: UserID) {
-        let message = MyMessage.candidate(CandidateData(candidate: IceCandidate(from: rtcIceCandidate), fromID: User.this.username, toID: userID))
+        let message = MyMessage.candidate(CandidateData(candidate: IceCandidate(from: rtcIceCandidate), fromID: UserProfile.this.username, toID: userID))
         do {
             let dataMessage = try self.encoder.encode(message)
             

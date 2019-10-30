@@ -9,8 +9,9 @@
 import Foundation
 
 // Set this to the machine's address which runs the signaling server
-
-fileprivate let defaultSignalingServerUrl = URL(string: "ws://8d07bc49.ngrok.io/ws")!
+fileprivate let defaultServerUrlStr = "362e9e63.ngrok.io/api/v1"
+fileprivate let defaultSignalingServerUrl = URL(string: "ws://\(defaultServerUrlStr)/ws")!
+fileprivate let defaultRestServerUrl = URL(string:"https://\(defaultServerUrlStr)")!
 
 // We use Google's public stun servers. For production apps you should deploy your own stun/turn servers.
 fileprivate let defaultIceServers = ["stun:stun.l.google.com:19302",
@@ -21,7 +22,8 @@ fileprivate let defaultIceServers = ["stun:stun.l.google.com:19302",
 
 struct Config {
     let signalingServerUrl: URL
+    let restServerUrl: URL
     let webRTCIceServers: [String]
     
-    static let `default` = Config(signalingServerUrl: defaultSignalingServerUrl, webRTCIceServers: defaultIceServers)
+    static let `default` = Config(signalingServerUrl: defaultSignalingServerUrl, restServerUrl: defaultRestServerUrl, webRTCIceServers: defaultIceServers)
 }
