@@ -1,5 +1,5 @@
 //
-//  VideoViewController.swift
+//  CallVC.swift
 //  lab_mmt
 //
 //  Created by Imbaggaarm on 10/29/19.
@@ -10,7 +10,7 @@
 import UIKit
 import WebRTC
 
-class VideoViewController: UIViewController {
+class CallVC: UIViewController {
 
     var localVideoView: UIView?
     private let webRTCClient: MyWebRTCClient

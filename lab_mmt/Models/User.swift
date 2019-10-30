@@ -12,46 +12,7 @@ enum OnlineState {
     case online, offline, doNotDisturb
 }
 
-struct LoginResponseData: Codable {
-    let jwt: String
-    let username: String
-}
-
-protocol Response {
-    var type: String { get set }
-    var success: Bool { get set }
-    var error: String { get set }
-}
-
-struct LoginResponse: Response, Codable {
-    var type: String
-    
-    var success: Bool
-    
-    var error: String
-    
-    let data: LoginResponseData?
-}
-
-struct UserProfileResponse: Response, Codable {
-    var type: String
-    
-    var success: Bool
-    
-    var error: String
-    
-    let data: UserProfile?
-}
-
-struct UserFriendsResponse: Response, Codable {
-    var type: String
-    
-    var success: Bool
-    
-    var error: String
-    
-    let data: [UserProfile]?
-}
+var myFriends = [UserProfile]()
 
 struct UserAccount: Codable {
     let email: String
@@ -88,26 +49,4 @@ extension UserProfile {
     }
 }
 
-var myFriends = [UserProfile]()
-//
-//class User {
-//    let username: String
-//    let password: String
-//    let displayName: String
-//
-//    let avtStrURL: String
-//    let coverStrURL: String
-//
-//    var state: OnlineState
-//
-////    static var this: User!
-//
-//    init(username: String, password: String, displayName: String, avtStrURL: String, coverStrURL: String, onlineState: OnlineState = .offline) {
-//        self.username = username
-//        self.password = password
-//        self.displayName = displayName
-//        self.avtStrURL = avtStrURL
-//        self.coverStrURL = coverStrURL
-//        self.state = onlineState
-//    }
-//}
+

@@ -51,7 +51,7 @@ final class SignalingClient {
     
     func send(username: String) {
         let loginData = LoginData(username: username)
-        let message = MyMessage.login(loginData)
+        let message = WSMessage.login(loginData)
 
         do {
             let dataMessage = try self.encoder.encode(message)
@@ -66,7 +66,7 @@ final class SignalingClient {
         
         print("send offer to: ", partnerUsername)
         
-        let message = MyMessage.offer(OfferData(sdp: SessionDescription(from: rtcSdp), fromID: username, toID: partnerUsername))
+        let message = WSMessage.offer(OfferData(sdp: SessionDescription(from: rtcSdp), fromID: username, toID: partnerUsername))
         do {
             let dataMessage = try self.encoder.encode(message)
             
@@ -80,7 +80,7 @@ final class SignalingClient {
     
     func sendAnswer(username: UserID, toUser userID: UserID, sdp rtcSdp: RTCSessionDescription) {
         print("send answer to: ", userID)
-        let message = MyMessage.answer(AnswerData(sdp: SessionDescription(from: rtcSdp), fromID: username, toID: userID))
+        let message = WSMessage.answer(AnswerData(sdp: SessionDescription(from: rtcSdp), fromID: username, toID: userID))
         do {
             let dataMessage = try self.encoder.encode(message)
             self.webSocket.send(data: dataMessage)
@@ -92,7 +92,7 @@ final class SignalingClient {
     }
             
     func send(candidate rtcIceCandidate: RTCIceCandidate, toUser userID: UserID) {
-        let message = MyMessage.candidate(CandidateData(candidate: IceCandidate(from: rtcIceCandidate), fromID: UserProfile.this.username, toID: userID))
+        let message = WSMessage.candidate(CandidateData(candidate: IceCandidate(from: rtcIceCandidate), fromID: UserProfile.this.username, toID: userID))
         do {
             let dataMessage = try self.encoder.encode(message)
             
@@ -123,10 +123,10 @@ extension SignalingClient: WebSocketProviderDelegate {
     func webSocket(_ webSocket: WebSocketProvider, didReceiveString string: String) {
 //        print(string)
         
-        let message: MyMessage
+        let message: WSMessage
         do {
             let data = Data(string.utf8)
-            message = try self.decoder.decode(MyMessage.self, from: data)
+            message = try self.decoder.decode(WSMessage.self, from: data)
             print("Succeeded")
         }
         catch {
@@ -155,9 +155,9 @@ extension SignalingClient: WebSocketProviderDelegate {
     }
     
     func webSocket(_ webSocket: WebSocketProvider, didReceiveData data: Data) {
-        let message: MyMessage
+        let message: WSMessage
         do {
-            message = try self.decoder.decode(MyMessage.self, from: data)
+            message = try self.decoder.decode(WSMessage.self, from: data)
         }
         catch {
             debugPrint("Warning: Could not decode incoming message: \(error)")

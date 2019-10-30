@@ -1,5 +1,5 @@
 //
-//  LaunchViewController.swift
+//  LaunchVC.swift
 //  MysteryChat
 //
 //  Created by Imbaggaarm on 7/11/18.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LaunchViewController: LaunchViewControllerLayout {
+class LaunchVC: LaunchVCLayout {
 
     let signalClient: SignalingClient
     let webRTCClient: MyWebRTCClient

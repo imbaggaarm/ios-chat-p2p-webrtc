@@ -20,8 +20,8 @@
 		9C3B68DF2369B92F007A0A56 /* APIConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3B68DE2369B92F007A0A56 /* APIConfiguration.swift */; };
 		9C3B68E12369B93E007A0A56 /* UserEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3B68E02369B93E007A0A56 /* UserEndpoint.swift */; };
 		9C3B68E32369E82B007A0A56 /* AppUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3B68E22369E82B007A0A56 /* AppUserDefaults.swift */; };
-		9C3B68E72369E8F0007A0A56 /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3B68E52369E8F0007A0A56 /* LaunchViewController.swift */; };
-		9C3B68E82369E8F0007A0A56 /* LaunchViewControllerLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3B68E62369E8F0007A0A56 /* LaunchViewControllerLayout.swift */; };
+		9C3B68E72369E8F0007A0A56 /* LaunchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3B68E52369E8F0007A0A56 /* LaunchVC.swift */; };
+		9C3B68E82369E8F0007A0A56 /* LaunchVCLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3B68E62369E8F0007A0A56 /* LaunchVCLayout.swift */; };
 		9C3B68EB236A0A67007A0A56 /* ChatListVCLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3B68EA236A0A67007A0A56 /* ChatListVCLayout.swift */; };
 		9C3B68EE236A0ABD007A0A56 /* ChatThreadCellVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3B68ED236A0ABD007A0A56 /* ChatThreadCellVM.swift */; };
 		9C3B68F1236A0AF6007A0A56 /* ChatListTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3B68F0236A0AF6007A0A56 /* ChatListTableView.swift */; };
@@ -32,7 +32,7 @@
 		9C46B56E2365497500602F73 /* AppString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C46B56B2365497500602F73 /* AppString.swift */; };
 		9C46B56F2365497500602F73 /* AppIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C46B56C2365497500602F73 /* AppIcon.swift */; };
 		9C46B5702365497500602F73 /* AppColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C46B56D2365497500602F73 /* AppColor.swift */; };
-		9C5CDB6B236892AD003B1849 /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5CDB6A236892AD003B1849 /* VideoViewController.swift */; };
+		9C5CDB6B236892AD003B1849 /* CallVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5CDB6A236892AD003B1849 /* CallVC.swift */; };
 		9C6B9DA02365E4AB00F76BEA /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C6B9D9F2365E4AB00F76BEA /* Config.swift */; };
 		9C6B9DA22365E80A00F76BEA /* WebRTCClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C6B9DA12365E80A00F76BEA /* WebRTCClient.swift */; };
 		9C6B9DA42365E94C00F76BEA /* SignalingClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C6B9DA32365E94C00F76BEA /* SignalingClient.swift */; };
@@ -44,12 +44,21 @@
 		9C6B9DB32365E9C400F76BEA /* NativeWebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C6B9DB02365E9C400F76BEA /* NativeWebSocket.swift */; };
 		9C6B9DB42365E9C400F76BEA /* StarscreamProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C6B9DB12365E9C400F76BEA /* StarscreamProvider.swift */; };
 		9C6B9DCF23674C5900F76BEA /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C6B9DCE23674C5900F76BEA /* LoginVC.swift */; };
+		9C7B39AF236A0D00001E7F95 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7B39AE236A0D00001E7F95 /* ProfileVC.swift */; };
+		9C7B39B2236A0D66001E7F95 /* FriendsVCLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7B39B1236A0D66001E7F95 /* FriendsVCLayout.swift */; };
+		9C7B39B4236A0DA0001E7F95 /* FriendTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7B39B3236A0DA0001E7F95 /* FriendTableView.swift */; };
+		9C7B39B6236A0DF9001E7F95 /* FriendCellVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7B39B5236A0DF9001E7F95 /* FriendCellVM.swift */; };
+		9C7B39BC236A0EE3001E7F95 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7B39BB236A0EE3001E7F95 /* Response.swift */; };
+		9C7B39BE236A0F25001E7F95 /* WSMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7B39BD236A0F25001E7F95 /* WSMessage.swift */; };
+		9C7B39C0236A105D001E7F95 /* WSMessageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7B39BF236A105D001E7F95 /* WSMessageData.swift */; };
+		9C7B39C2236A1254001E7F95 /* MessagePayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7B39C1236A1254001E7F95 /* MessagePayload.swift */; };
+		9C7B39C4236A12AB001E7F95 /* MessageAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7B39C3236A12AB001E7F95 /* MessageAttachment.swift */; };
 		9C829B8123674DDF008429DF /* ActivityIndicatorButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C829B8023674DDF008429DF /* ActivityIndicatorButton.swift */; };
 		9C829B85236753F5008429DF /* LoginVCLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C829B84236753F5008429DF /* LoginVCLayout.swift */; };
 		9C829B8823675430008429DF /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C829B8723675430008429DF /* User.swift */; };
-		9C9A4F7B2365508D00EBEFF7 /* FriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9A4F772365508D00EBEFF7 /* FriendsViewController.swift */; };
+		9C9A4F7B2365508D00EBEFF7 /* FriendsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9A4F772365508D00EBEFF7 /* FriendsVC.swift */; };
 		9C9A4F7C2365508D00EBEFF7 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9A4F782365508D00EBEFF7 /* MainTabBarController.swift */; };
-		9C9A4F7D2365508D00EBEFF7 /* ChatListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9A4F792365508D00EBEFF7 /* ChatListViewController.swift */; };
+		9C9A4F7D2365508D00EBEFF7 /* ChatListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9A4F792365508D00EBEFF7 /* ChatListVC.swift */; };
 		9C9A4F9A236550CC00EBEFF7 /* IMBBaseScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9A4F80236550CB00EBEFF7 /* IMBBaseScrollViewController.swift */; };
 		9C9A4F9B236550CC00EBEFF7 /* IMBToolbarBasePopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9A4F81236550CB00EBEFF7 /* IMBToolbarBasePopUpViewController.swift */; };
 		9C9A4F9C236550CC00EBEFF7 /* IMBBaseWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9A4F82236550CB00EBEFF7 /* IMBBaseWebViewController.swift */; };
@@ -101,8 +110,8 @@
 		9C3B68DE2369B92F007A0A56 /* APIConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIConfiguration.swift; sourceTree = "<group>"; };
 		9C3B68E02369B93E007A0A56 /* UserEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEndpoint.swift; sourceTree = "<group>"; };
 		9C3B68E22369E82B007A0A56 /* AppUserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUserDefaults.swift; sourceTree = "<group>"; };
-		9C3B68E52369E8F0007A0A56 /* LaunchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchViewController.swift; sourceTree = "<group>"; };
-		9C3B68E62369E8F0007A0A56 /* LaunchViewControllerLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchViewControllerLayout.swift; sourceTree = "<group>"; };
+		9C3B68E52369E8F0007A0A56 /* LaunchVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchVC.swift; sourceTree = "<group>"; };
+		9C3B68E62369E8F0007A0A56 /* LaunchVCLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchVCLayout.swift; sourceTree = "<group>"; };
 		9C3B68EA236A0A67007A0A56 /* ChatListVCLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListVCLayout.swift; sourceTree = "<group>"; };
 		9C3B68ED236A0ABD007A0A56 /* ChatThreadCellVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatThreadCellVM.swift; sourceTree = "<group>"; };
 		9C3B68F0236A0AF6007A0A56 /* ChatListTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListTableView.swift; sourceTree = "<group>"; };
@@ -113,7 +122,7 @@
 		9C46B56B2365497500602F73 /* AppString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppString.swift; sourceTree = "<group>"; };
 		9C46B56C2365497500602F73 /* AppIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIcon.swift; sourceTree = "<group>"; };
 		9C46B56D2365497500602F73 /* AppColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppColor.swift; sourceTree = "<group>"; };
-		9C5CDB6A236892AD003B1849 /* VideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
+		9C5CDB6A236892AD003B1849 /* CallVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallVC.swift; sourceTree = "<group>"; };
 		9C6B9D9F2365E4AB00F76BEA /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		9C6B9DA12365E80A00F76BEA /* WebRTCClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebRTCClient.swift; sourceTree = "<group>"; };
 		9C6B9DA32365E94C00F76BEA /* SignalingClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignalingClient.swift; sourceTree = "<group>"; };
@@ -125,12 +134,21 @@
 		9C6B9DB02365E9C400F76BEA /* NativeWebSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NativeWebSocket.swift; sourceTree = "<group>"; };
 		9C6B9DB12365E9C400F76BEA /* StarscreamProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarscreamProvider.swift; sourceTree = "<group>"; };
 		9C6B9DCE23674C5900F76BEA /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
+		9C7B39AE236A0D00001E7F95 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
+		9C7B39B1236A0D66001E7F95 /* FriendsVCLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsVCLayout.swift; sourceTree = "<group>"; };
+		9C7B39B3236A0DA0001E7F95 /* FriendTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendTableView.swift; sourceTree = "<group>"; };
+		9C7B39B5236A0DF9001E7F95 /* FriendCellVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendCellVM.swift; sourceTree = "<group>"; };
+		9C7B39BB236A0EE3001E7F95 /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
+		9C7B39BD236A0F25001E7F95 /* WSMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WSMessage.swift; sourceTree = "<group>"; };
+		9C7B39BF236A105D001E7F95 /* WSMessageData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WSMessageData.swift; sourceTree = "<group>"; };
+		9C7B39C1236A1254001E7F95 /* MessagePayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagePayload.swift; sourceTree = "<group>"; };
+		9C7B39C3236A12AB001E7F95 /* MessageAttachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageAttachment.swift; sourceTree = "<group>"; };
 		9C829B8023674DDF008429DF /* ActivityIndicatorButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorButton.swift; sourceTree = "<group>"; };
 		9C829B84236753F5008429DF /* LoginVCLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVCLayout.swift; sourceTree = "<group>"; };
 		9C829B8723675430008429DF /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		9C9A4F772365508D00EBEFF7 /* FriendsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsViewController.swift; sourceTree = "<group>"; };
+		9C9A4F772365508D00EBEFF7 /* FriendsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsVC.swift; sourceTree = "<group>"; };
 		9C9A4F782365508D00EBEFF7 /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
-		9C9A4F792365508D00EBEFF7 /* ChatListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatListViewController.swift; sourceTree = "<group>"; };
+		9C9A4F792365508D00EBEFF7 /* ChatListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatListVC.swift; sourceTree = "<group>"; };
 		9C9A4F80236550CB00EBEFF7 /* IMBBaseScrollViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMBBaseScrollViewController.swift; sourceTree = "<group>"; };
 		9C9A4F81236550CB00EBEFF7 /* IMBToolbarBasePopUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMBToolbarBasePopUpViewController.swift; sourceTree = "<group>"; };
 		9C9A4F82236550CB00EBEFF7 /* IMBBaseWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMBBaseWebViewController.swift; sourceTree = "<group>"; };
@@ -249,8 +267,8 @@
 		9C3B68E42369E8F0007A0A56 /* LaunchVC */ = {
 			isa = PBXGroup;
 			children = (
-				9C3B68E52369E8F0007A0A56 /* LaunchViewController.swift */,
-				9C3B68E62369E8F0007A0A56 /* LaunchViewControllerLayout.swift */,
+				9C3B68E52369E8F0007A0A56 /* LaunchVC.swift */,
+				9C3B68E62369E8F0007A0A56 /* LaunchVCLayout.swift */,
 			);
 			path = LaunchVC;
 			sourceTree = "<group>";
@@ -258,7 +276,7 @@
 		9C3B68E9236A0A47007A0A56 /* ChatList */ = {
 			isa = PBXGroup;
 			children = (
-				9C9A4F792365508D00EBEFF7 /* ChatListViewController.swift */,
+				9C9A4F792365508D00EBEFF7 /* ChatListVC.swift */,
 				9C3B68EA236A0A67007A0A56 /* ChatListVCLayout.swift */,
 			);
 			path = ChatList;
@@ -269,6 +287,7 @@
 			children = (
 				9C3B68ED236A0ABD007A0A56 /* ChatThreadCellVM.swift */,
 				9C3B68F4236A0BBD007A0A56 /* MessageCellVM.swift */,
+				9C7B39B5236A0DF9001E7F95 /* FriendCellVM.swift */,
 			);
 			path = "View Models";
 			sourceTree = "<group>";
@@ -278,6 +297,7 @@
 			children = (
 				9C3B68F0236A0AF6007A0A56 /* ChatListTableView.swift */,
 				9C3B68F6236A0BDD007A0A56 /* MessageTableView.swift */,
+				9C7B39B3236A0DA0001E7F95 /* FriendTableView.swift */,
 			);
 			path = TableViews;
 			sourceTree = "<group>";
@@ -296,6 +316,7 @@
 			children = (
 				9C9A4FBD2365867300EBEFF7 /* ChatVC.swift */,
 				9C3B68F8236A0C09007A0A56 /* ChatVCLayout.swift */,
+				9C5CDB6A236892AD003B1849 /* CallVC.swift */,
 			);
 			path = ChatDetail;
 			sourceTree = "<group>";
@@ -352,17 +373,50 @@
 			path = WebSocketProvider;
 			sourceTree = "<group>";
 		};
+		9C7B39AD236A0CEA001E7F95 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				9C7B39AE236A0D00001E7F95 /* ProfileVC.swift */,
+				9C3AFB1323682F16009E6ED6 /* ProfileVCLayout.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		9C7B39B0236A0D1E001E7F95 /* Friends */ = {
+			isa = PBXGroup;
+			children = (
+				9C9A4F772365508D00EBEFF7 /* FriendsVC.swift */,
+				9C7B39B1236A0D66001E7F95 /* FriendsVCLayout.swift */,
+			);
+			path = Friends;
+			sourceTree = "<group>";
+		};
+		9C7B39B7236A0E1A001E7F95 /* Starting */ = {
+			isa = PBXGroup;
+			children = (
+				9C3B68E42369E8F0007A0A56 /* LaunchVC */,
+				9C829B83236753E4008429DF /* Login */,
+			);
+			path = Starting;
+			sourceTree = "<group>";
+		};
+		9C7B39B8236A0E26001E7F95 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				9C9A4F782365508D00EBEFF7 /* MainTabBarController.swift */,
+				9C7B39B0236A0D1E001E7F95 /* Friends */,
+				9C7B39AD236A0CEA001E7F95 /* Profile */,
+				9C3B68F3236A0BA5007A0A56 /* ChatDetail */,
+				9C3B68E9236A0A47007A0A56 /* ChatList */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
 		9C829B82236753BD008429DF /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				9C3B68F3236A0BA5007A0A56 /* ChatDetail */,
-				9C3B68E9236A0A47007A0A56 /* ChatList */,
-				9C3B68E42369E8F0007A0A56 /* LaunchVC */,
-				9C829B83236753E4008429DF /* Login */,
-				9C9A4F782365508D00EBEFF7 /* MainTabBarController.swift */,
-				9C9A4F772365508D00EBEFF7 /* FriendsViewController.swift */,
-				9C3AFB1323682F16009E6ED6 /* ProfileVCLayout.swift */,
-				9C5CDB6A236892AD003B1849 /* VideoViewController.swift */,
+				9C7B39B7236A0E1A001E7F95 /* Starting */,
+				9C7B39B8236A0E26001E7F95 /* Main */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -380,8 +434,13 @@
 			isa = PBXGroup;
 			children = (
 				9C829B8723675430008429DF /* User.swift */,
-				9C6B9DA52365E96D00F76BEA /* Message.swift */,
 				9C3AFB0D2367F237009E6ED6 /* ChatRoom.swift */,
+				9C7B39BB236A0EE3001E7F95 /* Response.swift */,
+				9C7B39BD236A0F25001E7F95 /* WSMessage.swift */,
+				9C7B39BF236A105D001E7F95 /* WSMessageData.swift */,
+				9C6B9DA52365E96D00F76BEA /* Message.swift */,
+				9C7B39C1236A1254001E7F95 /* MessagePayload.swift */,
+				9C7B39C3236A12AB001E7F95 /* MessageAttachment.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -595,7 +654,8 @@
 				9C6B9DAB2365E98F00F76BEA /* RTCStates.swift in Sources */,
 				9C0DBD352364B86A00BD3595 /* lab_mmt.xcdatamodeld in Sources */,
 				9C3B68DD2369B548007A0A56 /* APIRouter.swift in Sources */,
-				9C9A4F7B2365508D00EBEFF7 /* FriendsViewController.swift in Sources */,
+				9C7B39C0236A105D001E7F95 /* WSMessageData.swift in Sources */,
+				9C9A4F7B2365508D00EBEFF7 /* FriendsVC.swift in Sources */,
 				9C3AFB1023680AC3009E6ED6 /* IMBNotificationCenter.swift in Sources */,
 				9C6B9DB42365E9C400F76BEA /* StarscreamProvider.swift in Sources */,
 				9C829B8123674DDF008429DF /* ActivityIndicatorButton.swift in Sources */,
@@ -610,17 +670,21 @@
 				9C3B68E32369E82B007A0A56 /* AppUserDefaults.swift in Sources */,
 				9C3BCFC9236982B4008C2910 /* APIClient.swift in Sources */,
 				9C6B9DB22365E9C400F76BEA /* WebSocketProvider.swift in Sources */,
+				9C7B39B4236A0DA0001E7F95 /* FriendTableView.swift in Sources */,
 				9C6B9DB32365E9C400F76BEA /* NativeWebSocket.swift in Sources */,
 				9C9A4FAD236550CC00EBEFF7 /* HTTPMethod.swift in Sources */,
+				9C7B39C4236A12AB001E7F95 /* MessageAttachment.swift in Sources */,
 				9C6B9DCF23674C5900F76BEA /* LoginVC.swift in Sources */,
-				9C9A4F7D2365508D00EBEFF7 /* ChatListViewController.swift in Sources */,
-				9C3B68E72369E8F0007A0A56 /* LaunchViewController.swift in Sources */,
+				9C9A4F7D2365508D00EBEFF7 /* ChatListVC.swift in Sources */,
+				9C3B68E72369E8F0007A0A56 /* LaunchVC.swift in Sources */,
 				9C6B9DA22365E80A00F76BEA /* WebRTCClient.swift in Sources */,
 				9C3B68F7236A0BDD007A0A56 /* MessageTableView.swift in Sources */,
+				9C7B39C2236A1254001E7F95 /* MessagePayload.swift in Sources */,
 				9C46B56F2365497500602F73 /* AppIcon.swift in Sources */,
 				9C829B85236753F5008429DF /* LoginVCLayout.swift in Sources */,
 				9C9A4FA2236550CC00EBEFF7 /* IMBBaseSlideMenuController.swift in Sources */,
 				9C9A4FA1236550CC00EBEFF7 /* IMBBaseSlideMenuScrollViewController.swift in Sources */,
+				9C7B39AF236A0D00001E7F95 /* ProfileVC.swift in Sources */,
 				9C3B68F5236A0BBD007A0A56 /* MessageCellVM.swift in Sources */,
 				9C3B68F1236A0AF6007A0A56 /* ChatListTableView.swift in Sources */,
 				9C6B9DA42365E94C00F76BEA /* SignalingClient.swift in Sources */,
@@ -633,16 +697,20 @@
 				9C3B68EB236A0A67007A0A56 /* ChatListVCLayout.swift in Sources */,
 				9C9A4FAE236550CC00EBEFF7 /* IMBPrettyDateLabel.swift in Sources */,
 				9C3AFB0E2367F237009E6ED6 /* ChatRoom.swift in Sources */,
+				9C7B39B2236A0D66001E7F95 /* FriendsVCLayout.swift in Sources */,
 				9C9A4FA9236550CC00EBEFF7 /* IMBIndicatorView.swift in Sources */,
 				9C9A4FA5236550CC00EBEFF7 /* IMBCoreDataExtension.swift in Sources */,
 				9C9A4FAB236550CC00EBEFF7 /* IMBBaseSlideMenuView.swift in Sources */,
-				9C3B68E82369E8F0007A0A56 /* LaunchViewControllerLayout.swift in Sources */,
+				9C3B68E82369E8F0007A0A56 /* LaunchVCLayout.swift in Sources */,
+				9C7B39BE236A0F25001E7F95 /* WSMessage.swift in Sources */,
+				9C7B39BC236A0EE3001E7F95 /* Response.swift in Sources */,
 				9C3AFB1223680B1D009E6ED6 /* MessageCenter.swift in Sources */,
 				9C9A4F9D236550CC00EBEFF7 /* IMBBasePopUpViewController.swift in Sources */,
 				9C6B9DA62365E96D00F76BEA /* Message.swift in Sources */,
 				9C6B9DAD2365E98F00F76BEA /* IceCandidate.swift in Sources */,
 				9C9A4FAA236550CC00EBEFF7 /* IMBBaseTableViewCell.swift in Sources */,
 				9C9A4F9A236550CC00EBEFF7 /* IMBBaseScrollViewController.swift in Sources */,
+				9C7B39B6236A0DF9001E7F95 /* FriendCellVM.swift in Sources */,
 				9C3B68E12369B93E007A0A56 /* UserEndpoint.swift in Sources */,
 				9C9A4FA7236550CC00EBEFF7 /* ImageCollectionViewCell.swift in Sources */,
 				9C0DBD2B2364B86A00BD3595 /* AppDelegate.swift in Sources */,
@@ -653,7 +721,7 @@
 				9C6B9DA02365E4AB00F76BEA /* Config.swift in Sources */,
 				9C3AFB1423682F16009E6ED6 /* ProfileVCLayout.swift in Sources */,
 				9C9A4FBC2365756100EBEFF7 /* ChatThreadTableViewCell.swift in Sources */,
-				9C5CDB6B236892AD003B1849 /* VideoViewController.swift in Sources */,
+				9C5CDB6B236892AD003B1849 /* CallVC.swift in Sources */,
 				9C9A4F9C236550CC00EBEFF7 /* IMBBaseWebViewController.swift in Sources */,
 				9C9A4FA6236550CC00EBEFF7 /* IMBExtension.swift in Sources */,
 				9C9A4FC023658A2000EBEFF7 /* IMBInputMessageBar.swift in Sources */,

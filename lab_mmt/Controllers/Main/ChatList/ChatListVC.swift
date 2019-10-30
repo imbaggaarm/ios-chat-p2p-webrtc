@@ -1,5 +1,5 @@
 //
-//  ChatListViewController.swift
+//  ChatListVC.swift
 //  unichat
 //
 //  Created by Imbaggaarm on 10/13/19.

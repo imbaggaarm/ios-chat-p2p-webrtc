@@ -17,7 +17,7 @@ class AppConstant {
 
 struct K {
     struct ProductionServer {
-        static let baseURL = "https://362e9e63.ngrok.io/api/v1"
+        static let baseURL = Config.default.restServerUrl
     }
     
     struct APIParameterKey {

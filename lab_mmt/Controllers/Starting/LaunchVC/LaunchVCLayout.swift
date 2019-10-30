@@ -9,7 +9,7 @@
 import UIKit
 import NVActivityIndicatorView
 
-class LaunchViewControllerLayout: BaseViewControllerLayout {
+class LaunchVCLayout: BaseViewControllerLayout {
     
     var appVersion: String {
         let dictionary = Bundle.main.infoDictionary!

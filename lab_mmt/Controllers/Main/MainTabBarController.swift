@@ -93,10 +93,10 @@ class MainTabBarController: UITabBarController {
         //        let roomExplorerNVC = UINavigationController.init(rootViewController: ExplorerViewController())
         //        roomExplorerNVC.tabBarItem.image = AppIcon.tabbarExplorer
         
-        let friendsViewController = UINavigationController.init(rootViewController: FriendsViewController())
-        friendsViewController.tabBarItem.image = AppIcon.tabbarFriends
+        let friendsVC = UINavigationController.init(rootViewController: FriendsVC())
+        friendsVC.tabBarItem.image = AppIcon.tabbarFriends
         
-        viewControllers = [chatListNVC, friendsViewController]
+        viewControllers = [chatListNVC, friendsVC]
         
         selectedIndex = 0
         
