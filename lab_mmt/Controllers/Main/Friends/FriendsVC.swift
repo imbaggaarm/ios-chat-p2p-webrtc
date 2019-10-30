@@ -56,7 +56,7 @@ class FriendsVC: FriendsVCLayout, UITableViewDelegate, UITableViewDataSource {
     func loadData() {
         friendVMs = []
         for friend in myFriends {
-            let vm = FriendCellVM.init(imageURL: URL(string: friend.profilePictureUrl), name: friend.displayName, onlineState: friend.state)
+            let vm = FriendCellVM.init(imageURL: URL(string: friend.profilePictureUrl), name: friend.displayName, onlineState: friend.p2pState)
             friendVMs.append(vm)
         }
         
@@ -93,7 +93,7 @@ extension FriendsVC {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        if let mainTabbarController = tabBarController as? MainTabBarController {
+        if let mainTabbarController = tabBarController as? MainTabbarVC {
             let chatVC = ChatVC(webRTCClient: mainTabbarController.webRTCClient, room: chatRooms[indexPath.row])
             chatVC.hidesBottomBarWhenPushed = true
             show(chatVC, sender: nil)

@@ -66,3 +66,13 @@ public struct CandidateData: Codable {
         case toID = "to_id"
     }
 }
+
+public struct OnlineStateData: Codable {
+    let username: String
+    let onlineState: WSOnlineState
+    
+    enum CodingKeys: String, CodingKey {
+        case username
+        case onlineState = "online_state"
+    }
+}

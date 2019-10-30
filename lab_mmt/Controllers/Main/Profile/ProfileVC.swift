@@ -24,6 +24,31 @@ class ProfileVC: ProfileVCLayout {
     override func viewDidLoad() {
         super.viewDidLoad()
         showData()
+        
+        btnMessage.addTarget(self, action: #selector(onBtnMessageTapped), for: .touchUpInside)
+    }
+    
+    @objc func onBtnMessageTapped() {
+        let alertC = UIAlertController.init(title: "Thay đổi trạng thái", message: nil, preferredStyle: .actionSheet)
+        
+        let cancel = UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil)
+        let online = UIAlertAction.init(title: "Online", style: .default) {[unowned self] (action) in
+            self.user.state = .online
+            self.setOnlineStateColor()
+            //send to other users
+            SignalingClient.default?.sendOnlineStateChange(username: self.user.username, state: .online)
+        }
+        
+        let doNotDisturb = UIAlertAction.init(title: "Do not disturb", style: .default) {[unowned self] (action) in
+            self.user.state = .doNotDisturb
+            self.setOnlineStateColor()
+            //send to other users
+            SignalingClient.default?.sendOnlineStateChange(username: self.user.username, state: .doNotDisturb)
+        }
+        alertC.addAction(cancel)
+        alertC.addAction(online)
+        alertC.addAction(doNotDisturb)
+        present(alertC, animated: true, completion: nil)
     }
     
     override func showData() {
@@ -34,9 +59,25 @@ class ProfileVC: ProfileVCLayout {
         title = user.displayName
         
         if user.email == UserProfile.this.email {
-            btnMessage.isHidden = true
+            btnMessage.setTitle("Thay đổi trạng thái", for: .normal)
         } else {
-            btnMessage.isHidden = false
+            btnMessage.setTitle("Gửi tin nhắn", for: .normal)
         }
+        setOnlineStateColor()
+    }
+    
+    func setOnlineStateColor() {
+        var color: UIColor
+        switch user.p2pState {
+        case .online:
+            color = .green
+        case .offline:
+            color = .gray
+        case .doNotDisturb:
+            color = .red
+        default:
+            color = .yellow
+        }
+        vOnlineState.backgroundColor = color
     }
 }

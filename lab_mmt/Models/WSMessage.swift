@@ -9,20 +9,19 @@
 import Foundation
 
 enum WSMessageType: String, Codable {
-    case login = "LOGIN"
     case offer = "OFFER"
     case offerResponse = "OFFER_RESPONSE"
     case answer = "ANSWER"
     case candidate = "CANDIDATE"
-    case leave = "LEAVE"
+    case onlineStateChange = "ONLINE_STATE_CHANGE"
 }
 
 enum WSMessage {
-    case login(LoginData)
     case offer(OfferData)
     case offerRespone(OfferResponse)
     case answer(AnswerData)
     case candidate(CandidateData)
+    case onlineState(OnlineStateData)
 }
 
 extension WSMessage: Codable {
@@ -31,8 +30,6 @@ extension WSMessage: Codable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let type = try container.decode(WSMessageType.self, forKey: .type)
         switch type {
-        case .login:
-            self = .login(try container.decode(LoginData.self, forKey: .data))
         case .offer:
             self = .offer(try container.decode(OfferData.self, forKey: .data))
         case .offerResponse:
@@ -41,17 +38,14 @@ extension WSMessage: Codable {
             self = .answer(try container.decode(AnswerData.self, forKey: .data))
         case .candidate:
             self = .candidate(try container.decode(CandidateData.self, forKey: .data))
-        default:
-            throw DecodeError.unknownType
+        case .onlineStateChange:
+            self = .onlineState(try container.decode(OnlineStateData.self, forKey: .data))
         }
     }
     
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         switch self {
-        case .login(let loginData):
-            try container.encode(loginData, forKey: .data)
-            try container.encode(WSMessageType.login, forKey: .type)
         case .offer(let offerData):
             try container.encode(offerData, forKey: .data)
             try container.encode(WSMessageType.offer, forKey: .type)
@@ -61,6 +55,9 @@ extension WSMessage: Codable {
         case .candidate(let candidateData):
             try container.encode(candidateData, forKey: .data)
             try container.encode(WSMessageType.candidate, forKey: .type)
+        case .onlineState(let onlineStateData):
+            try container.encode(onlineStateData, forKey: .data)
+            try container.encode(WSMessageType.onlineStateChange, forKey: .type)
         default:
             print("DOES NOT HAVE NOW")
         }

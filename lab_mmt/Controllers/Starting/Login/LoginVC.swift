@@ -11,12 +11,10 @@ import UIKit
 
 class LoginVC: LoginVCLayout, UITextFieldDelegate {
 
-    let signalClient: SignalingClient
-    let webRTCClient: MyWebRTCClient
+    var signalClient: SignalingClient?
+    var webRTCClient: WebRTCClient?
     
-    init(signalClient: SignalingClient, webRTCClient: MyWebRTCClient) {
-        self.signalClient = signalClient
-        self.webRTCClient = webRTCClient
+    init() {
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -61,7 +59,7 @@ class LoginVC: LoginVCLayout, UITextFieldDelegate {
                 if response.success {
                     UserProfile.this.email = email
                     UserProfile.this.username = response.data!.username
-                    
+                    UserProfile.this.jwt = response.data!.jwt
                     AppUserDefaults.sharedInstance.setUserAccount(email: email, password: password)
                     self?.getUserProfileAndFriendList()
                 } else {
@@ -88,7 +86,7 @@ class LoginVC: LoginVCLayout, UITextFieldDelegate {
             switch result {
             case .success(let response):
                 if response.success {
-                    UserProfile.this = response.data!
+                    UserProfile.this.copy(from: response.data!)
                     if isGotUserFriends {
                         self?.showMainVC()
                     }
@@ -112,7 +110,9 @@ class LoginVC: LoginVCLayout, UITextFieldDelegate {
             case .success(let response):
                 if response.success {
                     myFriends = response.data!
-                    print(myFriends)
+                    for friend in myFriends {
+                        friend.setP2pState()
+                    }
                     if isGotProfile {
                         self?.showMainVC()
                         self?.stopRequestAnimation()
@@ -133,7 +133,9 @@ class LoginVC: LoginVCLayout, UITextFieldDelegate {
     }
     
     private func showMainVC() {
-        let mainVC = MainTabBarController(signalClient: signalClient, webRTCClient: webRTCClient)
+        webRTCClient = WebRTCClient(iceServers: Config.default.webRTCIceServers)
+        signalClient = self.buildSignalingClient()
+        let mainVC = MainTabbarVC(signalClient: signalClient!, webRTCClient: webRTCClient!)
         mainVC.modalPresentationStyle = .overCurrentContext
         present(mainVC, animated: false) {[unowned self] in
             self.stopRequestAnimation()
@@ -169,4 +171,20 @@ class LoginVC: LoginVCLayout, UITextFieldDelegate {
         }
         return true
     }
+    
+    private func buildSignalingClient() -> SignalingClient {
+        
+        // iOS 13 has native websocket support. For iOS 12 or lower we will use 3rd party library.
+        let webSocketProvider: WebSocketProvider
+        let url = URL.init(string: Config.default.signalingServerUrlStr + "?token=\(UserProfile.this.jwt)")!
+        if #available(iOS 13.0, *) {
+            webSocketProvider = NativeWebSocket(url: url)
+        } else {
+            webSocketProvider = StarscreamWebSocket(url: url)
+        }
+        
+        return SignalingClient(webSocket: webSocketProvider)
+    }
+
+
 }

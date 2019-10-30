@@ -90,7 +90,7 @@ extension ChatListVC {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        if let mainTabbarController = tabBarController as? MainTabBarController {
+        if let mainTabbarController = tabBarController as? MainTabbarVC {
             
             let chatVC = ChatVC(webRTCClient: mainTabbarController.webRTCClient, room: chatRooms[indexPath.row])
             chatVC.hidesBottomBarWhenPushed = true

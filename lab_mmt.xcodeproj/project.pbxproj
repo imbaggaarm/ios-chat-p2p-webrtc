@@ -57,7 +57,7 @@
 		9C829B85236753F5008429DF /* LoginVCLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C829B84236753F5008429DF /* LoginVCLayout.swift */; };
 		9C829B8823675430008429DF /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C829B8723675430008429DF /* User.swift */; };
 		9C9A4F7B2365508D00EBEFF7 /* FriendsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9A4F772365508D00EBEFF7 /* FriendsVC.swift */; };
-		9C9A4F7C2365508D00EBEFF7 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9A4F782365508D00EBEFF7 /* MainTabBarController.swift */; };
+		9C9A4F7C2365508D00EBEFF7 /* MainTabbarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9A4F782365508D00EBEFF7 /* MainTabbarVC.swift */; };
 		9C9A4F7D2365508D00EBEFF7 /* ChatListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9A4F792365508D00EBEFF7 /* ChatListVC.swift */; };
 		9C9A4F9A236550CC00EBEFF7 /* IMBBaseScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9A4F80236550CB00EBEFF7 /* IMBBaseScrollViewController.swift */; };
 		9C9A4F9B236550CC00EBEFF7 /* IMBToolbarBasePopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9A4F81236550CB00EBEFF7 /* IMBToolbarBasePopUpViewController.swift */; };
@@ -147,7 +147,7 @@
 		9C829B84236753F5008429DF /* LoginVCLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVCLayout.swift; sourceTree = "<group>"; };
 		9C829B8723675430008429DF /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		9C9A4F772365508D00EBEFF7 /* FriendsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsVC.swift; sourceTree = "<group>"; };
-		9C9A4F782365508D00EBEFF7 /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		9C9A4F782365508D00EBEFF7 /* MainTabbarVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabbarVC.swift; sourceTree = "<group>"; };
 		9C9A4F792365508D00EBEFF7 /* ChatListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatListVC.swift; sourceTree = "<group>"; };
 		9C9A4F80236550CB00EBEFF7 /* IMBBaseScrollViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMBBaseScrollViewController.swift; sourceTree = "<group>"; };
 		9C9A4F81236550CB00EBEFF7 /* IMBToolbarBasePopUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMBToolbarBasePopUpViewController.swift; sourceTree = "<group>"; };
@@ -237,8 +237,8 @@
 				9C0DBD2A2364B86A00BD3595 /* AppDelegate.swift */,
 				9C0DBD2C2364B86A00BD3595 /* SceneDelegate.swift */,
 				9C46B56A2365496500602F73 /* Resources */,
-				9C3BCFCA23698395008C2910 /* Helpers */,
 				9C6B9D9D2365DF4D00F76BEA /* Services */,
+				9C3BCFCA23698395008C2910 /* Helpers */,
 				9C3B68EC236A0A97007A0A56 /* View Models */,
 				9C829B8623675424008429DF /* Models */,
 				9C829B82236753BD008429DF /* Controllers */,
@@ -403,7 +403,7 @@
 		9C7B39B8236A0E26001E7F95 /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				9C9A4F782365508D00EBEFF7 /* MainTabBarController.swift */,
+				9C9A4F782365508D00EBEFF7 /* MainTabbarVC.swift */,
 				9C7B39B0236A0D1E001E7F95 /* Friends */,
 				9C7B39AD236A0CEA001E7F95 /* Profile */,
 				9C3B68F3236A0BA5007A0A56 /* ChatDetail */,
@@ -661,7 +661,7 @@
 				9C829B8123674DDF008429DF /* ActivityIndicatorButton.swift in Sources */,
 				9C9A4FA3236550CC00EBEFF7 /* IMBTouchableBaseScrollView.swift in Sources */,
 				9C9A4FBE2365867300EBEFF7 /* ChatVC.swift in Sources */,
-				9C9A4F7C2365508D00EBEFF7 /* MainTabBarController.swift in Sources */,
+				9C9A4F7C2365508D00EBEFF7 /* MainTabbarVC.swift in Sources */,
 				9C9A4F9B236550CC00EBEFF7 /* IMBToolbarBasePopUpViewController.swift in Sources */,
 				9C9A4F9E236550CC00EBEFF7 /* IMBToolbarViewController.swift in Sources */,
 				9C3B68DF2369B92F007A0A56 /* APIConfiguration.swift in Sources */,

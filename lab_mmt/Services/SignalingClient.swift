@@ -15,10 +15,13 @@ protocol SignalClientDelegate: class {
     func signalClient(_ signalClient: SignalingClient, didReceiveRemoteSdp sdp: RTCSessionDescription, fromUser userID: UserID)
     func signalClient(_ signalClient: SignalingClient, didReceiveAnswerSdp sdp: RTCSessionDescription, fromUser userID: UserID)
     func signalClient(_ signalClient: SignalingClient, didReceiveCandidate candidate: RTCIceCandidate, fromUser userID: UserID)
+    func signalClient(_ signalClient: SignalingClient, didReceiveOnlineState onlineState: WSOnlineState, fromUser userID: UserID)
     func signalClient(_ signalClient: SignalingClient, didReceiveFailedOfferFromUser userID: UserID)
 }
 
 final class SignalingClient {
+    
+    public static var `default`: SignalingClient?
     
     private let decoder = JSONDecoder()
     private let encoder = JSONEncoder()
@@ -27,41 +30,26 @@ final class SignalingClient {
     
     init(webSocket: WebSocketProvider) {
         self.webSocket = webSocket
+        SignalingClient.default = self
     }
     
     func connect() {
         self.webSocket.delegate = self
         self.webSocket.connect()
-        
     }
     
-//    func sendMessage(message: [String: Any]) {
-//        do {
-//            let dataMessage = try JSONSerialization.data(withJSONObject: message, options: .prettyPrinted)
-//            
-////            let decoded = try JSONSerialization.jsonObject(with: dataMessage, options: [])
-////            print(decoded)
-//
-//            webSocket.send(data: dataMessage)
-//        }
-//        catch {
-//            debugPrint("Warning: Could not encode message: \(error)")
-//        }
-//    }
-    
-    func send(username: String) {
-        let loginData = LoginData(username: username)
-        let message = WSMessage.login(loginData)
-
+    func sendOnlineStateChange(username: String, state: WSOnlineState) {
+        print("sending online state")
+        let message = WSMessage.onlineState(OnlineStateData.init(username: username, onlineState: state))
         do {
             let dataMessage = try self.encoder.encode(message)
             self.webSocket.send(data: dataMessage)
         }
         catch {
-            debugPrint("Warning: Could not encode message: \(error)")
+            debugPrint("Warning: Could not encode sdp: \(error)")
         }
     }
-    
+        
     func sendOffer(username: UserID, partnerUsername: UserID, sdp rtcSdp: RTCSessionDescription) {
         
         print("send offer to: ", partnerUsername)
@@ -121,8 +109,6 @@ extension SignalingClient: WebSocketProviderDelegate {
     }
     
     func webSocket(_ webSocket: WebSocketProvider, didReceiveString string: String) {
-//        print(string)
-        
         let message: WSMessage
         do {
             let data = Data(string.utf8)
@@ -130,7 +116,7 @@ extension SignalingClient: WebSocketProviderDelegate {
             print("Succeeded")
         }
         catch {
-//            debugPrint("Warning: Could not decode incoming message: \(error)")
+            debugPrint("Warning: Could not decode incoming message: \(error)")
             return
         }
         
@@ -138,19 +124,15 @@ extension SignalingClient: WebSocketProviderDelegate {
         switch message {
         case .offer(let offerData):
             self.delegate?.signalClient(self, didReceiveRemoteSdp: offerData.sdp.rtcSessionDescription, fromUser: offerData.fromID)
-        case .offerRespone(let response):
-//            print(response.fromID)
-//            print(response.success)
-            if !response.success {
-                //self.delegate?.signalClient(self, didReceiveFailedOfferFromUser: response.fromID)
-            }
+        case .offerRespone(_):
+            break
         case .answer(let answerData):
             //print(answerData)
             self.delegate?.signalClient(self, didReceiveAnswerSdp: answerData.sdp.rtcSessionDescription, fromUser: answerData.fromID)
         case .candidate(let candidateData):
             self.delegate?.signalClient(self, didReceiveCandidate: candidateData.candidate.rtcIceCandidate, fromUser: candidateData.fromID)
-        default:
-            break
+        case .onlineState(let onlineStateData):
+            self.delegate?.signalClient(self, didReceiveOnlineState: onlineStateData.onlineState, fromUser: onlineStateData.username)
         }
     }
     

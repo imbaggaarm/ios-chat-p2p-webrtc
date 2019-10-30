@@ -13,9 +13,9 @@ import WebRTC
 class CallVC: UIViewController {
 
     var localVideoView: UIView?
-    private let webRTCClient: MyWebRTCClient
+    private let webRTCClient: WebRTCClient
 
-    init(webRTCClient: MyWebRTCClient) {
+    init(webRTCClient: WebRTCClient) {
         self.webRTCClient = webRTCClient
         super.init(nibName: nil, bundle: nil)
     }

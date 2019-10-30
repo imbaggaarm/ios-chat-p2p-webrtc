@@ -10,14 +10,14 @@ import UIKit
 
 class ChatVC: ChatVCLayout {
     
-    var webRTCClient: MyWebRTCClient
+    var webRTCClient: WebRTCClient
     //    var partnerID: UserID
     var room: ChatRoom
     
     private let decoder = JSONDecoder()
     private let encoder = JSONEncoder()
     
-    init(webRTCClient: MyWebRTCClient, room: ChatRoom) {
+    init(webRTCClient: WebRTCClient, room: ChatRoom) {
         self.webRTCClient = webRTCClient
         self.room = room
         super.init(nibName: nil, bundle: nil)
@@ -219,6 +219,25 @@ extension ChatVC: InputMessageBarDelegate {
     func inputMessageBarDidTapButtonEmoji() {
     }
     
+    func sendMessage(message: Message) {
+        do {
+            let dataMessage = try self.encoder.encode(message)
+            webRTCClient.sendData(toUserID: room.partner.username, dataMessage)
+            room.addMessage(message: message)
+            
+            let notification = Notification.init(name: MessageHandler.onNewMessage, object: nil, userInfo: [
+                MessageHandler.messageUserInfoKey: message
+            ])
+            
+            DispatchQueue.main.async {
+                NotificationCenter.default.post(notification)
+            }
+        }
+        catch {
+            debugPrint("Warning: Could not encode message: \(error)")
+        }
+    }
+    
     func inputMessageBarDidTapButtonSendMessage() {
         let text = (inputMessageBar.inputContentView.txtVInputMessage.text ?? "")
         inputMessageBar.sendTextMessage()
@@ -229,22 +248,7 @@ extension ChatVC: InputMessageBarDelegate {
         
         let message = Message.init(id: id, from: UserProfile.this.username, to: room.partner.username, createdTime: createdTime, message: messagePayload)
         print(message)
-        do {
-            let dataMessage = try self.encoder.encode(message)
-            webRTCClient.sendData(toUserID: room.partner.username, dataMessage)
-            
-            let notification = Notification.init(name: MessageHandler.onNewMessage, object: nil, userInfo: [
-                MessageHandler.messageUserInfoKey: message
-            ])
-            
-            room.addMessage(message: message)
-            DispatchQueue.main.async {
-                NotificationCenter.default.post(notification)
-            }
-        }
-        catch {
-            debugPrint("Warning: Could not encode message: \(error)")
-        }
+        sendMessage(message: message)
     }
     
     func inputMessageBarDidTapButtonFastEmoji() {
@@ -258,14 +262,7 @@ extension ChatVC: InputMessageBarDelegate {
             let message = Message.init(id: id, from: UserProfile.this.username, to: room.partner.username, createdTime: createdTime, message: messagePayload)
             
             print(message)
-            do {
-                let dataMessage = try self.encoder.encode(message)
-                webRTCClient.sendData(toUserID: room.partner.username, dataMessage)
-                
-            }
-            catch {
-                debugPrint("Warning: Could not encode message: \(error)")
-            }
+            sendMessage(message: message)
         } else {
             print("can not get data from fast emoji")
         }

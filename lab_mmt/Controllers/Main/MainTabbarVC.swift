@@ -1,5 +1,5 @@
 //
-//  MainTabBarController.swift
+//  MainTabbarVC.swift
 //  unichat
 //
 //  Created by Imbaggaarm on 10/13/19.
@@ -9,61 +9,13 @@
 import UIKit
 import WebRTC
 
-class MainTabBarController: UITabBarController {
+class MainTabbarVC: UITabBarController {
     
     let signalClient: SignalingClient
-    let webRTCClient: MyWebRTCClient
+    let webRTCClient: WebRTCClient
     let decoder = JSONDecoder()
     
-    private var signalingConnected: Bool = false {
-        didSet {
-            DispatchQueue.main.async {
-                if self.signalingConnected {
-                    //                    self.signalingStatusLabel?.text = "Connected"
-                    //                    self.signalingStatusLabel?.textColor = UIColor.green
-                }
-                else {
-                    //                    self.signalingStatusLabel?.text = "Not connected"
-                    //                    self.signalingStatusLabel?.textColor = UIColor.red
-                }
-            }
-        }
-    }
-    
-    private var hasLocalSdp: Bool = false {
-        didSet {
-            DispatchQueue.main.async {
-                //                self.localSdpStatusLabel?.text = self.hasLocalSdp ? "✅" : "❌"
-            }
-        }
-    }
-    
-    private var localCandidateCount: Int = 0 {
-        didSet {
-            DispatchQueue.main.async {
-                //                self.localCandidatesLabel?.text = "\(self.localCandidateCount)"
-            }
-        }
-    }
-    
-    private var hasRemoteSdp: Bool = false {
-        didSet {
-            DispatchQueue.main.async {
-                //                self.remoteSdpStatusLabel?.text = self.hasRemoteSdp ? "✅" : "❌"
-            }
-        }
-    }
-    
-    private var remoteCandidateCount: Int = 0 {
-        didSet {
-            DispatchQueue.main.async {
-                //                self.remoteCandidatesLabel?.text = "\(self.remoteCandidateCount)"
-            }
-        }
-    }
-    
-    
-    init(signalClient: SignalingClient, webRTCClient: MyWebRTCClient) {
+    init(signalClient: SignalingClient, webRTCClient: WebRTCClient) {
         self.signalClient = signalClient
         self.webRTCClient = webRTCClient
         super.init(nibName: nil, bundle: nil)
@@ -79,9 +31,7 @@ class MainTabBarController: UITabBarController {
         
         self.webRTCClient.delegate = self
         self.signalClient.delegate = self
-        
         self.signalClient.connect()
-        
         
         view.backgroundColor = .black
         tabBar.tintColor = AppColor.tintColor
@@ -114,24 +64,24 @@ class MainTabBarController: UITabBarController {
     }
 }
 
-extension MainTabBarController: SignalClientDelegate {
+extension MainTabbarVC: SignalClientDelegate {
     
     func signalClientDidConnect(_ signalClient: SignalingClient) {
-        self.signalingConnected = true
-        
-        self.signalClient.send(username: UserProfile.this.username)
         
         for friend in myFriends {
-            let peerConnection = self.webRTCClient.createPeerConnection(for: friend.username)
-            
-            self.webRTCClient.offer(peerConnection: peerConnection) { (sdp) in
-                self.signalClient.sendOffer(username: UserProfile.this.username, partnerUsername: friend.username, sdp: sdp)
+            //only establish connection for friend is online
+            if friend.state == .online {
+                let peerConnection = self.webRTCClient.createPeerConnection(for: friend.username)
+                
+                self.webRTCClient.offer(peerConnection: peerConnection) { (sdp) in
+                    self.signalClient.sendOffer(username: UserProfile.this.username, partnerUsername: friend.username, sdp: sdp)
+                }
             }
         }
     }
     
     func signalClientDidDisconnect(_ signalClient: SignalingClient) {
-        self.signalingConnected = false
+        //self.signalingConnected = false
     }
     
     
@@ -157,7 +107,19 @@ extension MainTabBarController: SignalClientDelegate {
         }
     }
     
-    
+    func signalClient(_ signalClient: SignalingClient, didReceiveOnlineState onlineState: WSOnlineState, fromUser userID: UserID) {
+        print("Received online state changed")
+        for friend in myFriends {
+            if friend.username == userID {
+                friend.state = onlineState
+                
+                DispatchQueue.main.async {
+                    NotificationCenter.default.post(name: MessageHandler.onPeerConnectionChanging, object: nil, userInfo: nil)
+                }
+                break
+            }
+        }
+    }
     
     func signalClient(_ signalClient: SignalingClient, didReceiveFailedOfferFromUser userID: UserID) {
         print("Received failed offer")
@@ -166,40 +128,27 @@ extension MainTabBarController: SignalClientDelegate {
     
     func signalClient(_ signalClient: SignalingClient, didReceiveCandidate candidate: RTCIceCandidate, fromUser userID: UserID) {
         print("Received remote candidate")
-        self.remoteCandidateCount += 1
+        //self.remoteCandidateCount += 1
         self.webRTCClient.set(remoteCandidate: candidate, for: userID)
     }
 }
 
-extension MainTabBarController: MyWebRTCClientDelegate {
-    func webRTCClient(_ client: MyWebRTCClient, didDiscoverLocalCandidate candidate: RTCIceCandidate, forUser userID: UserID) {
+extension MainTabbarVC: WebRTCClientDelegate {
+    func webRTCClient(_ client: WebRTCClient, didDiscoverLocalCandidate candidate: RTCIceCandidate, forUser userID: UserID) {
         print("discovered local candidate")
-        self.localCandidateCount += 1
+        //self.localCandidateCount += 1
         self.signalClient.send(candidate: candidate, toUser: userID)
         //        print(candidate)
     }
     
-    func webRTCClient(_ client: MyWebRTCClient, didChangeConnectionState state: RTCIceConnectionState) {
-        let textColor: UIColor
-//        switch state {
-//        case .connected, .completed:
-//            textColor = .green
-//        case .disconnected:
-//            textColor = .orange
-//        case .failed, .closed:
-//            textColor = .red
-//        case .new, .checking, .count:
-//            textColor = .black
-//        @unknown default:
-//            textColor = .black
-//        }
-        
+    func webRTCClient(_ client: WebRTCClient, didChangeConnectionState state: RTCIceConnectionState) {
+    
         DispatchQueue.main.async {
             NotificationCenter.default.post(name: MessageHandler.onPeerConnectionChanging, object: nil, userInfo: nil)
         }
     }
     
-    func webRTCClient(_ client: MyWebRTCClient, didReceiveData data: Data) {
+    func webRTCClient(_ client: WebRTCClient, didReceiveData data: Data) {
         
         //let message = String(data: data, encoding: .utf8) ?? "(Binary: \(data.count) bytes)"
         

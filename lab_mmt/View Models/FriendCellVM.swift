@@ -13,12 +13,14 @@ struct FriendCellVM {
     let name: String
     let onlineStateColor: UIColor
     
-    init(imageURL: URL?, name: String, onlineState: OnlineState) {
+    init(imageURL: URL?, name: String, onlineState: P2POnlineState) {
         self.imageURL = imageURL
         self.name = name
         switch onlineState {
         case .online:
             onlineStateColor = .green
+        case .idle:
+            onlineStateColor = .yellow
         case .doNotDisturb:
             onlineStateColor = .red
         default: //offline

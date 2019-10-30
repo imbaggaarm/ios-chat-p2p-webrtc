@@ -21,34 +21,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let window = UIWindow(windowScene: windowScene)
         self.window = window
         
-        let webRTCClient = MyWebRTCClient(iceServers: self.config.webRTCIceServers)
-        let signalClient = self.buildSignalingClient()
-//        window.rootViewController = MainTabBarController(signalClient: signalClient, webRTCClient: webRTCClient)
-        window.rootViewController = LaunchVC(signalClient: signalClient, webRTCClient: webRTCClient)
+        window.rootViewController = LaunchVC()
         window.makeKeyAndVisible()
-        
-//        let appearance = UINavigationBarAppearance()
-//        appearance.backgroundColor = UIColor.black
-//
-//        UINavigationBar.appearance().standardAppearance = appearance
-//        UINavigationBar.appearance().compactAppearance = appearance
-//        UINavigationBar.appearance().scrollEdgeAppearance = appearance
-    }
     
-    private func buildSignalingClient() -> SignalingClient {
-        
-        // iOS 13 has native websocket support. For iOS 12 or lower we will use 3rd party library.
-        let webSocketProvider: WebSocketProvider
-        
-        if #available(iOS 13.0, *) {
-            webSocketProvider = NativeWebSocket(url: self.config.signalingServerUrl)
-        } else {
-            webSocketProvider = StarscreamWebSocket(url: self.config.signalingServerUrl)
-        }
-        
-        return SignalingClient(webSocket: webSocketProvider)
     }
-
 
     @available(iOS 13.0, *)
     func sceneDidDisconnect(_ scene: UIScene) {

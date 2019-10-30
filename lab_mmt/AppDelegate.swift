@@ -8,7 +8,7 @@
 
 import UIKit
 import CoreData
- 
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -20,12 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
         } else {
             window = UIWindow.init(frame: UIScreen.main.bounds)
-            let webRTCClient = MyWebRTCClient(iceServers: self.config.webRTCIceServers)
-            let signalClient = self.buildSignalingClient()
-//            let mainTabbarController = MainTabBarController(signalClient: signalClient, webRTCClient: webRTCClient)
-            
-            window?.rootViewController = LaunchVC(signalClient: signalClient, webRTCClient: webRTCClient)
-            
+            window?.rootViewController = LaunchVC()
         }
         
         return true
@@ -53,21 +48,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         return true
     }
-    
-    private func buildSignalingClient() -> SignalingClient {
-        
-        // iOS 13 has native websocket support. For iOS 12 or lower we will use 3rd party library.
-        let webSocketProvider: WebSocketProvider
-        
-        if #available(iOS 13.0, *) {
-            webSocketProvider = NativeWebSocket(url: self.config.signalingServerUrl)
-        } else {
-            webSocketProvider = StarscreamWebSocket(url: self.config.signalingServerUrl)
-        }
-        
-        return SignalingClient(webSocket: webSocketProvider)
-    }
-
 
     // MARK: UISceneSession Lifecycle
 
