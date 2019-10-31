@@ -16,6 +16,7 @@ struct ChatThreadCellVM {
     let time: String
     let lastMessageFont: UIFont
     let lastMessageTextColor: UIColor
+    let onlineState: P2POnlineState
     
     init(with room: ChatRoom) {
         avtImageURL = URL.init(string: room.partner.profilePictureUrl)
@@ -40,5 +41,7 @@ struct ChatThreadCellVM {
                 self.lastMessage = room.partner.displayName + " đã gửi một ảnh."
             }
         }
+        
+        onlineState = room.partner.p2pState
     }
 }

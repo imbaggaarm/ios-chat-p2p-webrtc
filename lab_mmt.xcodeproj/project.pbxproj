@@ -406,8 +406,8 @@
 				9C9A4F782365508D00EBEFF7 /* MainTabbarVC.swift */,
 				9C7B39B0236A0D1E001E7F95 /* Friends */,
 				9C7B39AD236A0CEA001E7F95 /* Profile */,
-				9C3B68F3236A0BA5007A0A56 /* ChatDetail */,
 				9C3B68E9236A0A47007A0A56 /* ChatList */,
+				9C3B68F3236A0BA5007A0A56 /* ChatDetail */,
 			);
 			path = Main;
 			sourceTree = "<group>";

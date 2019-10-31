@@ -53,6 +53,7 @@ class ChatListVC: ChatListVCLayout, UITableViewDelegate, UITableViewDataSource {
     func addOnNewMessageObserver() {
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(handleNewMessage(notification:)), name: MessageHandler.onNewMessage, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(handleOnlineStateChanging), name: MessageHandler.onPeerConnectionChanging, object: nil)
     }
     
     func removeOnNewMessageObserver() {
@@ -61,6 +62,10 @@ class ChatListVC: ChatListVCLayout, UITableViewDelegate, UITableViewDataSource {
     
     deinit {
         removeOnNewMessageObserver()
+    }
+    
+    @objc func handleOnlineStateChanging() {
+        reloadData()
     }
     
     @objc func handleNewMessage(notification: Notification) {

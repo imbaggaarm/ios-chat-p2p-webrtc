@@ -82,8 +82,9 @@ class ProfileVCLayout: BaseViewControllerLayout {
         avtImageView.makeCircle(corner: widthOfScreen/4)
 
         vOnlineState.makeCircle(corner: 16)
-        vOnlineState.topAnchor(equalTo: avtImageView.topAnchor, constant: (CGFloat(2.0.squareRoot()/2.0) + 1)*(widthOfScreen - 12)/4 - 16)
-        vOnlineState.leftAnchor(equalTo: avtImageView.leftAnchor, constant: (CGFloat(2.0.squareRoot()/2.0) + 1)*(widthOfScreen - 12)/4 - 16)
+        let spacing = (CGFloat(2.0.squareRoot()/2.0) + 1)*(widthOfScreen - 12)/4 - 16
+        vOnlineState.topAnchor(equalTo: avtImageView.topAnchor, constant: spacing)
+        vOnlineState.leftAnchor(equalTo: avtImageView.leftAnchor, constant: spacing)
     }
 }
 

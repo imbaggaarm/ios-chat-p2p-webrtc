@@ -66,7 +66,7 @@ class UserProfile: Codable {
     }
     
     func setP2pState() {
-        if self.state == .online {
+        if self.state == .online && self.p2pState != .doNotDisturb {
             self.p2pState = .idle
             return
         }
