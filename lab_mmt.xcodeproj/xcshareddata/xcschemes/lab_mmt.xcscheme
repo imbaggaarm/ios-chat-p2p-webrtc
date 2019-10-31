@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "9C0DBD262364B86A00BD3595"
-               BuildableName = "lab_mmt.app"
+               BuildableName = "iChat.app"
                BlueprintName = "lab_mmt"
                ReferencedContainer = "container:lab_mmt.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "9C0DBD262364B86A00BD3595"
-            BuildableName = "lab_mmt.app"
+            BuildableName = "iChat.app"
             BlueprintName = "lab_mmt"
             ReferencedContainer = "container:lab_mmt.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "9C0DBD262364B86A00BD3595"
-            BuildableName = "lab_mmt.app"
+            BuildableName = "iChat.app"
             BlueprintName = "lab_mmt"
             ReferencedContainer = "container:lab_mmt.xcodeproj">
          </BuildableReference>

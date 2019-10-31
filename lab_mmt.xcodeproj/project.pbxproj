@@ -88,6 +88,7 @@
 		9C9A4FC023658A2000EBEFF7 /* IMBInputMessageBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9A4FBF23658A2000EBEFF7 /* IMBInputMessageBar.swift */; };
 		9C9A4FC223658ABC00EBEFF7 /* AppConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9A4FC123658ABC00EBEFF7 /* AppConstant.swift */; };
 		9C9A4FC42365962700EBEFF7 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9A4FC32365962700EBEFF7 /* MessageCell.swift */; };
+		9CEE3695236A7E05003250C4 /* ChatDetailNavTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEE3694236A7E05003250C4 /* ChatDetailNavTitleView.swift */; };
 		D7849D9B3165B4C9C7D0E4B8 /* Pods_lab_mmt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 703780E5A04382471FE3EF15 /* Pods_lab_mmt.framework */; };
 /* End PBXBuildFile section */
 
@@ -95,7 +96,7 @@
 		692232784A3B34A5106192A3 /* Pods-lab_mmt.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-lab_mmt.release.xcconfig"; path = "Target Support Files/Pods-lab_mmt/Pods-lab_mmt.release.xcconfig"; sourceTree = "<group>"; };
 		703780E5A04382471FE3EF15 /* Pods_lab_mmt.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_lab_mmt.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		827B6EBFB2F09FBEB9EB8123 /* Pods-lab_mmt.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-lab_mmt.debug.xcconfig"; path = "Target Support Files/Pods-lab_mmt/Pods-lab_mmt.debug.xcconfig"; sourceTree = "<group>"; };
-		9C0DBD272364B86A00BD3595 /* lab_mmt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = lab_mmt.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9C0DBD272364B86A00BD3595 /* iChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C0DBD2A2364B86A00BD3595 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9C0DBD2C2364B86A00BD3595 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		9C0DBD342364B86A00BD3595 /* lab_mmt.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = lab_mmt.xcdatamodel; sourceTree = "<group>"; };
@@ -180,6 +181,7 @@
 		9C9A4FBF23658A2000EBEFF7 /* IMBInputMessageBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMBInputMessageBar.swift; sourceTree = "<group>"; };
 		9C9A4FC123658ABC00EBEFF7 /* AppConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstant.swift; sourceTree = "<group>"; };
 		9C9A4FC32365962700EBEFF7 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
+		9CEE3694236A7E05003250C4 /* ChatDetailNavTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDetailNavTitleView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -225,7 +227,7 @@
 		9C0DBD282364B86A00BD3595 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9C0DBD272364B86A00BD3595 /* lab_mmt.app */,
+				9C0DBD272364B86A00BD3595 /* iChat.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -307,6 +309,7 @@
 			children = (
 				9C9A4FBF23658A2000EBEFF7 /* IMBInputMessageBar.swift */,
 				9C829B8023674DDF008429DF /* ActivityIndicatorButton.swift */,
+				9CEE3694236A7E05003250C4 /* ChatDetailNavTitleView.swift */,
 			);
 			path = Others;
 			sourceTree = "<group>";
@@ -553,7 +556,7 @@
 			);
 			name = lab_mmt;
 			productName = lab_mmt;
-			productReference = 9C0DBD272364B86A00BD3595 /* lab_mmt.app */;
+			productReference = 9C0DBD272364B86A00BD3595 /* iChat.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -650,6 +653,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9CEE3695236A7E05003250C4 /* ChatDetailNavTitleView.swift in Sources */,
 				9C829B8823675430008429DF /* User.swift in Sources */,
 				9C6B9DAB2365E98F00F76BEA /* RTCStates.swift in Sources */,
 				9C0DBD352364B86A00BD3595 /* lab_mmt.xcdatamodeld in Sources */,
@@ -888,7 +892,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "imbaggaarm.lab-mmt";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = iChat;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -909,7 +913,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "imbaggaarm.lab-mmt";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = iChat;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

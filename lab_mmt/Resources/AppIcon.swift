@@ -42,4 +42,6 @@ class AppIcon {
     
     static let audioCall = UIImage.init(named: "audio_call")
     static let videoCall = UIImage.init(named: "video_call")
+    
+    static let navBackIcon = UIImage.init(named: "back_icon")
 }

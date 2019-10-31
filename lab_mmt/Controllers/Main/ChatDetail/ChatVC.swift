@@ -37,8 +37,23 @@ class ChatVC: ChatVCLayout {
         
         inputMessageBar.delegate = self
         loadData()
-        navigationItem.title = room.name
+        
+        navTitleView.isUserInteractionEnabled = true
+        let tapGesture = UITapGestureRecognizer.init(target: self, action: #selector(onNavTitleViewTapped))
+        navTitleView.addGestureRecognizer(tapGesture)
+        
+        navTitleView.lblName.text = room.name
+        navTitleView.setOnlineState(state: room.partner.p2pState)
+        navTitleView.vImage.kf.setImage(with: URL.init(string: room.partner.profilePictureUrl)!)
+        
+        //        navTitleView.backButton.addTarget(self, action: #selector(handleBack), for: .touchUpInside)
     }
+    
+    @objc func onNavTitleViewTapped() {
+        let profileVC = ProfileVC.init(user: room.partner)
+        present(profileVC, animated: true, completion: nil)
+    }
+    
     var isFirstLoad = true
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -86,8 +101,7 @@ class ChatVC: ChatVCLayout {
     
     
     @objc func handleNewOnlineState() {
-        
-//        /self.tableView.reloadData()
+        navTitleView.setOnlineState(state: room.partner.p2pState)
     }
     
     @objc func handleNewMessage(notification: Notification) {
@@ -107,9 +121,17 @@ class ChatVC: ChatVCLayout {
                     imageView.makeCenter(with: view)
                     imageView.width(constant: image.size.width)
                     imageView.height(constant: image.size.height)
-                    Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { (_) in
-                        imageView.removeFromSuperview()
-                    }
+                    
+                    UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.3, initialSpringVelocity: 10, options: .curveEaseOut, animations: {
+                        //
+                        imageView.layer.transform = CATransform3DMakeScale(1.5, 1.5, 1)
+                    }, completion: { (completed) in
+                        UIView.animate(withDuration: 0.3, animations: {
+                            imageView.alpha = 0
+                        }, completion: { (completed) in
+                            imageView.removeFromSuperview()
+                        })
+                    })
                 } else {
                     
                     debugPrint("Can not get image from data")
@@ -171,21 +193,8 @@ class ChatVC: ChatVCLayout {
                     var vm = MessageCellVM.init(avtImageURL: URL(string: room.partner.profilePictureUrl), name: room.partner.displayName, time: IMBPrettyDateLabel.getStringDate(from: UInt(message.createdTime)), message: text)
                     vm.setHeight()
                     messageVMs.append(vm)
-                case .attachment(let attachment):
-                    if let image = UIImage.init(data: attachment.payload) {
-                        let imageView = UIImageView()
-                        imageView.image = image
-                        view.addSubview(imageView)
-                        imageView.makeCenter(with: view)
-                        imageView.width(constant: image.size.width)
-                        imageView.height(constant: image.size.height)
-                        Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { (_) in
-                            imageView.removeFromSuperview()
-                        }
-                    } else {
-                        
-                        debugPrint("Can not get image from data")
-                    }
+                case .attachment(_):
+                    break
                 }
             } else if message.to == room.partner.username {
                 switch message.message {
@@ -227,6 +236,11 @@ extension ChatVC: InputMessageBarDelegate {
     }
     
     func sendMessage(message: Message) {
+        guard room.partner.p2pState == .online || room.partner.p2pState == .doNotDisturb else {
+            letsAlert(withMessage: "\(room.partner.displayName) không online.")
+            return
+        }
+        
         do {
             let dataMessage = try self.encoder.encode(message)
             webRTCClient.sendData(toUserID: room.partner.username, dataMessage)

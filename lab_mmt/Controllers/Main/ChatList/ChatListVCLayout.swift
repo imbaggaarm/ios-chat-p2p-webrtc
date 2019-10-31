@@ -38,9 +38,9 @@ class ChatListVCLayout: BaseViewControllerLayout {
         
         //        let leftBarButton = UIBarButtonItem.init(image: AppIcon.navbarAvt, style: .done, target: nil, action: nil)
         //        navigationItem.leftBarButtonItem = leftBarButton
-        
-        let rightBarButton = UIBarButtonItem.init(image: AppIcon.navNewChatThread, style: .done, target: nil, action: nil)
-        navigationItem.rightBarButtonItem = rightBarButton
+//        
+//        let rightBarButton = UIBarButtonItem.init(image: AppIcon.navNewChatThread, style: .done, target: nil, action: nil)
+//        navigationItem.rightBarButtonItem = rightBarButton
         
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .automatic

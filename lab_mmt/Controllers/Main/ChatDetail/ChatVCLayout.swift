@@ -42,10 +42,14 @@ class ChatVCLayout: BaseViewControllerLayout {
         tableView.scrollIndicatorInsets.bottom = inputMessageBar.heightOfMessageBar
     }
     
+    let navTitleView = ChatDetailNavTitleView()
     override func setUpNavigationBar() {
         super.setUpNavigationBar()
         
         navigationItem.largeTitleDisplayMode = .never
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: navTitleView)
+        navigationItem.leftItemsSupplementBackButton = true
         
         let audioCallItem = UIBarButtonItem.init(image: AppIcon.audioCall, style: .done, target: self, action: nil)
         let videoCallItem = UIBarButtonItem.init(image: AppIcon.videoCall, style: .done, target: self, action: nil)

@@ -28,7 +28,7 @@ class ProfileVC: ProfileVCLayout {
         btnMessage.addTarget(self, action: #selector(onBtnMessageTapped), for: .touchUpInside)
     }
     
-    @objc func onBtnMessageTapped() {
+    func handleChangeOnlineState() {
         let alertC = UIAlertController.init(title: "Thay đổi trạng thái", message: nil, preferredStyle: .actionSheet)
         
         let cancel = UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil)
@@ -49,6 +49,15 @@ class ProfileVC: ProfileVCLayout {
         alertC.addAction(online)
         alertC.addAction(doNotDisturb)
         present(alertC, animated: true, completion: nil)
+    }
+    
+    @objc func onBtnMessageTapped() {
+        if user.username == UserProfile.this.username {
+            handleChangeOnlineState()
+        } else {
+            //dismiss to chat
+            self.dismissMySelf()
+        }
     }
     
     override func showData() {
