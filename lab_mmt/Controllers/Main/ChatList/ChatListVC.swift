@@ -36,10 +36,17 @@ class ChatListVC: ChatListVCLayout, UITableViewDelegate, UITableViewDataSource {
     
     func reloadData() {
         chatThreadVMs = []
-        for room in chatRooms {
+        
+        //sort room by last message time
+        let sortedRooms = chatRooms.sorted { (a, b) -> Bool in
+            return a.lastMessage.createdTime > b.lastMessage.createdTime
+        }
+        
+        for room in sortedRooms {
             let thread = ChatThreadCellVM.init(with: room)
             chatThreadVMs.append(thread)
         }
+        
         tableView.reloadData()
     }
     override func onLeftBarButtonTapped() {
@@ -69,8 +76,28 @@ class ChatListVC: ChatListVCLayout, UITableViewDelegate, UITableViewDataSource {
     }
     
     @objc func handleNewMessage(notification: Notification) {
-//        guard let message = notification.userInfo?[MessageHandler.messageUserInfoKey] as? Message else { return }
-        reloadData()
+        guard let message = notification.userInfo?[MessageHandler.messageUserInfoKey] as? Message else {
+            return
+        }
+        
+        for (i, t) in chatThreadVMs.enumerated() {
+            if t.room.id == message.from || t.room.id == message.to {
+                print(t.room.lastMessage)
+                let oldIndex = IndexPath.init(row: i, section: 0)
+                
+                chatThreadVMs.remove(at: i)
+                // create new chat thread VM
+                let newVM = ChatThreadCellVM.init(with: t.room)
+                print(newVM.lastMessage)
+                chatThreadVMs.insert(newVM, at: 0)
+                
+                let newIndex = IndexPath.init(row: 0, section: 0)
+                tableView.moveRow(at: oldIndex, to: newIndex)
+                tableView.reloadRows(at: [newIndex], with: .none)
+                return
+            }
+        }
+        //chatThreadVMs.insert(ChatThreadCellVM.init(with: message.), at: <#T##Int#>)
     }
     
 }
@@ -97,7 +124,7 @@ extension ChatListVC {
         
         if let mainTabbarController = tabBarController as? MainTabbarVC {
             
-            let chatVC = ChatVC(webRTCClient: mainTabbarController.webRTCClient, room: chatRooms[indexPath.row])
+            let chatVC = ChatVC(webRTCClient: mainTabbarController.webRTCClient, room: chatThreadVMs[indexPath.row].room)
             chatVC.hidesBottomBarWhenPushed = true
             show(chatVC, sender: nil)
         }

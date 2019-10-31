@@ -17,8 +17,11 @@ struct ChatThreadCellVM {
     let lastMessageFont: UIFont
     let lastMessageTextColor: UIColor
     let onlineState: P2POnlineState
+    let room: ChatRoom
     
     init(with room: ChatRoom) {
+        self.room = room
+        
         avtImageURL = URL.init(string: room.partner.profilePictureUrl)
         title = room.partner.displayName
         let lastMessage = room.lastMessage
