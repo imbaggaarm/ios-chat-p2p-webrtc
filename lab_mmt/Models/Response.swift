@@ -15,8 +15,9 @@ protocol Response {
 }
 
 struct LoginResponseData: Codable {
-    let jwt: String
+    let token: String
     let username: String
+    let email: String
 }
 
 struct LoginResponse: Response, Codable {

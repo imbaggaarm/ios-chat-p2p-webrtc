@@ -42,7 +42,7 @@ class UserProfile: Codable {
         }
     }
     var p2pState: P2POnlineState = .offline
-    var jwt: String = ""
+    var token: String = ""
     
     init(email: String, username: String, displayName: String, profilePictureUrl: String, coverPhotoUrl: String, state: WSOnlineState = .offline, p2pState: P2POnlineState = .offline) {
         self.email = email
@@ -61,7 +61,7 @@ class UserProfile: Codable {
         self.profilePictureUrl = u.profilePictureUrl
         self.coverPhotoUrl = u.coverPhotoUrl
         
-        //not copy state and p2pstate, jwt
+        //not copy state and p2pstate, token
         //self.state = u.state
     }
     

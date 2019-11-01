@@ -19,8 +19,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if #available(iOS 13.0, *) {
             
         } else {
+            let rootVC = UINavigationController.init(rootViewController: UpdateProfileVC())//WelcomeVC()//
             window = UIWindow.init(frame: UIScreen.main.bounds)
-            window?.rootViewController = WelcomeVC()
+            window?.rootViewController = rootVC//WelcomeVC()
         }
         
         return true

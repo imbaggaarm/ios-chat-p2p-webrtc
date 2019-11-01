@@ -68,7 +68,7 @@ class ProfileVC: ProfileVCLayout {
         avtImageView.kf.setImage(with: URL.init(string: user.profilePictureUrl))
         coverImageView.kf.setImage(with: URL.init(string: user.coverPhotoUrl))
         lblName.text = user.displayName
-        lblEmail.text = user.email
+        lblUsername.text = user.username
         title = user.displayName
         
         if user.email == UserProfile.this.email {

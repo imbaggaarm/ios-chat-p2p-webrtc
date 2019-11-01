@@ -24,8 +24,13 @@ final class APIClient {
         })
     }
     
+    static func register(email: String, password: String) -> Future<LoginResponse> {
+        let route = AuthRouter.register(email: email, password: password)
+        return performRequest(route: route)
+    }
+    
     static func login(email: String, password: String) -> Future<LoginResponse> {
-        let route = APIRouter.login(email: email, password: password)
+        let route = AuthRouter.login(email: email, password: password)
         return performRequest(route: route)
     }
     

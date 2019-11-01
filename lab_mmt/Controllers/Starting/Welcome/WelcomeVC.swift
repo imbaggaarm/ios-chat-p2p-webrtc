@@ -20,6 +20,18 @@ class WelcomeVC: WelcomeVCLayout {
             }
         }
     }
+    
+    var shouldPresentUpdateProfileVC: Bool = false {
+        didSet {
+            if self.shouldPresentUpdateProfileVC {
+                view.isHidden = true
+                self.shouldPresentUpdateProfileVC = false
+            } else {
+                view.isHidden = false
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         butRegister.addTarget(self, action: #selector(handleTapButRegister), for: .touchUpInside)
@@ -60,13 +72,21 @@ class WelcomeVC: WelcomeVCLayout {
     func presentLoginVC() {
         let loginVC = LoginVC()
         let navC = UINavigationController.init(rootViewController: loginVC)
+        navC.modalPresentationStyle = .overCurrentContext
         present(navC, animated: true, completion: nil)
     }
 
     func presentRegisterVC() {
         let registerVC = RegisterVC()
         let navC = UINavigationController.init(rootViewController: registerVC)
+        navC.modalPresentationStyle = .overCurrentContext
         present(navC, animated: true, completion: nil)
     }
-    
+
+    func presentUpdateProfileVC() {
+        let vc = UINavigationController.init(rootViewController: UpdateProfileVC())
+        vc.modalPresentationStyle = .overCurrentContext
+        present(vc, animated: true, completion: nil)
+    }
 }
+

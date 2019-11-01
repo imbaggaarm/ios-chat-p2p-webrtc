@@ -108,7 +108,6 @@ class RegisterVCLayout: BaseViewControllerLayout {
         //email address
         //password confirm
         
-        startRequestAnimation()
         print("Hello")
     }
 }

@@ -21,6 +21,7 @@ class RegisterVC: RegisterVCLayout, UITextFieldDelegate {
         txtFPassword.addTarget(self, action: #selector(checkEnableBtnRegister), for: .editingChanged)
         txtFRPassword.addTarget(self, action: #selector(checkEnableBtnRegister), for: .editingChanged)
         
+        txtFEmail.becomeFirstResponder()
     }
     
     //MARK: - UITextFieldDelegate
@@ -59,10 +60,43 @@ class RegisterVC: RegisterVCLayout, UITextFieldDelegate {
     
     override func onBtnRegisterTapped() {
         super.onBtnRegisterTapped()
-        if txtFRPassword.text != txtFRPassword.text {
+        if txtFPassword.text != txtFRPassword.text {
             letsAlert(withMessage: "Mật khẩu không trùng khớp!")
             return
         }
         
+        startRequestAnimation()
+        APIClient.register(email: txtFEmail.text!, password: txtFPassword.text!)
+            .execute(onSuccess: {[weak self] (response) in
+                if response.success == true {
+                    let email = response.data!.email
+                    let password = self!.txtFPassword.text!
+                    UserProfile.this.email = email
+                    UserProfile.this.username = response.data!.username
+                    UserProfile.this.token = response.data!.token
+                    AppUserDefaults.sharedInstance.setUserAccount(email: email, password: password)
+                    
+                    self?.dismissToWelcomeVC()
+                } else {
+                    self?.letsAlert(withMessage: response.error)
+                    self?.stopRequestAnimation()
+                }
+            }) {[weak self] (error) in
+                self?.letsAlert(withMessage: error.asAFError?.errorDescription ?? "Unexpected error!")
+                self?.stopRequestAnimation()
+        }
+        
+    }
+    
+    private func dismissToWelcomeVC() {
+        if let welcomeVC = presentingViewController as? WelcomeVC {
+            welcomeVC.shouldPresentUpdateProfileVC = true
+            dismiss(animated: false) {
+                welcomeVC.presentUpdateProfileVC()
+            }
+            return
+        }
+        dismiss(animated: false, completion: nil)
     }
 }
+

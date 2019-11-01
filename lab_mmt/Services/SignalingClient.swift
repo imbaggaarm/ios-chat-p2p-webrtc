@@ -30,7 +30,7 @@ final class SignalingClient {
     
     init() {
         // iOS 13 has native websocket support. For iOS 12 or lower we will use 3rd party library.
-        let url = URL.init(string: Config.default.signalingServerUrlStr + "?token=\(UserProfile.this.jwt)")!
+        let url = URL.init(string: Config.default.signalingServerUrlStr + "?token=\(UserProfile.this.token)")!
         if #available(iOS 13.0, *) {
             self.webSocket = NativeWebSocket(url: url)
         } else {

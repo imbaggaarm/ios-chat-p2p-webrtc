@@ -21,7 +21,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let window = UIWindow(windowScene: windowScene)
         self.window = window
         
-        window.rootViewController = WelcomeVC()
+        let rootVC = UINavigationController.init(rootViewController: UpdateProfileVC())//
+        window.rootViewController = rootVC
         window.makeKeyAndVisible()
     
     }

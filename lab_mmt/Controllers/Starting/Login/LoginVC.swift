@@ -24,6 +24,13 @@ class LoginVC: LoginVCLayout, UITextFieldDelegate {
         print(#function)
     }
     
+    // define a variable to store initial touch position
+    var initialTouchPoint: CGPoint = CGPoint(x: 0,y: 0)
+
+    @objc func swipeGestureRecognizerHandler(_ sender: UISwipeGestureRecognizer) {
+        dismissMySelf()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -31,6 +38,9 @@ class LoginVC: LoginVCLayout, UITextFieldDelegate {
         if let strAccount = userDefaults.getUserAccount() {
             let email = strAccount.email
             txtFEmail.text = email
+            txtFPassword.becomeFirstResponder()
+        } else {
+            txtFEmail.becomeFirstResponder()
         }
         
         changeBtnLoginState(isEnabled: false)
@@ -40,6 +50,10 @@ class LoginVC: LoginVCLayout, UITextFieldDelegate {
         
         txtFEmail.addTarget(self, action: #selector(checkEnableBtnLogin), for: .editingChanged)
         txtFPassword.addTarget(self, action: #selector(checkEnableBtnLogin), for: .editingChanged)
+        
+        let swipeGesture = UISwipeGestureRecognizer.init(target: self, action: #selector(swipeGestureRecognizerHandler(_:)))
+        swipeGesture.direction = .down
+        view.addGestureRecognizer(swipeGesture)
     }
     
     override func onBtnLoginTap() {
@@ -57,9 +71,9 @@ class LoginVC: LoginVCLayout, UITextFieldDelegate {
         APIClient.login(email: email, password: password)
             .execute(onSuccess: {[weak self] (response) in
                 if response.success {
-                    UserProfile.this.email = email
+                    UserProfile.this.email = response.data!.email
                     UserProfile.this.username = response.data!.username
-                    UserProfile.this.jwt = response.data!.jwt
+                    UserProfile.this.token = response.data!.token
                     AppUserDefaults.sharedInstance.setUserAccount(email: email, password: password)
                     self?.getUserProfileAndFriendList()
                 } else {

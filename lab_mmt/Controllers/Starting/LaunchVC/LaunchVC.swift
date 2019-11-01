@@ -90,7 +90,7 @@ class LaunchVC: LaunchVCLayout {
                 if response.success {
                     UserProfile.this.email = email
                     UserProfile.this.username = response.data!.username
-                    UserProfile.this.jwt = response.data!.jwt
+                    UserProfile.this.token = response.data!.token
                     AppUserDefaults.sharedInstance.setUserAccount(email: email, password: password)
                     self?.getUserProfileAndFriendList()
                 } else {
@@ -152,7 +152,7 @@ class LaunchVC: LaunchVCLayout {
     //
     //        // iOS 13 has native websocket support. For iOS 12 or lower we will use 3rd party library.
     //        let webSocketProvider: WebSocketProvider
-    //        let url = URL.init(string: Config.default.signalingServerUrlStr + "?token=\(UserProfile.this.jwt)")!
+    //        let url = URL.init(string: Config.default.signalingServerUrlStr + "?token=\(UserProfile.this.token)")!
     //        if #available(iOS 13.0, *) {
     //            webSocketProvider = NativeWebSocket(url: url)
     //        } else {

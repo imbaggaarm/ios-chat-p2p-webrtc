@@ -44,4 +44,8 @@ class AppIcon {
     static let videoCall = UIImage.init(named: "video_call")
     
     static let navBackIcon = UIImage.init(named: "back_icon")
+    
+    static let userAvtPlaceholder = UIImage.init(named: "placeholder-user-photo")
+    static let imagePlaceHolder = UIImage.init(named: "imagePlaceHolder")
+    
 }

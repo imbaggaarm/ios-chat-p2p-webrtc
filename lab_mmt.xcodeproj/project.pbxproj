@@ -95,6 +95,7 @@
 		9C9A4FC223658ABC00EBEFF7 /* AppConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9A4FC123658ABC00EBEFF7 /* AppConstant.swift */; };
 		9C9A4FC42365962700EBEFF7 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9A4FC32365962700EBEFF7 /* MessageCell.swift */; };
 		9C9E7389236C3791003DBEC3 /* AuthRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9E7388236C3791003DBEC3 /* AuthRouter.swift */; };
+		9C9E738C236C73BB003DBEC3 /* UpdateProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9E738B236C73BB003DBEC3 /* UpdateProfileVC.swift */; };
 		9CEE3695236A7E05003250C4 /* ChatDetailNavTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEE3694236A7E05003250C4 /* ChatDetailNavTitleView.swift */; };
 		D7849D9B3165B4C9C7D0E4B8 /* Pods_lab_mmt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 703780E5A04382471FE3EF15 /* Pods_lab_mmt.framework */; };
 /* End PBXBuildFile section */
@@ -196,6 +197,7 @@
 		9C9A4FC123658ABC00EBEFF7 /* AppConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstant.swift; sourceTree = "<group>"; };
 		9C9A4FC32365962700EBEFF7 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		9C9E7388236C3791003DBEC3 /* AuthRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRouter.swift; sourceTree = "<group>"; };
+		9C9E738B236C73BB003DBEC3 /* UpdateProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProfileVC.swift; sourceTree = "<group>"; };
 		9CEE3694236A7E05003250C4 /* ChatDetailNavTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDetailNavTitleView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -288,8 +290,8 @@
 		9C3B68E42369E8F0007A0A56 /* LaunchVC */ = {
 			isa = PBXGroup;
 			children = (
-				9C3B68E52369E8F0007A0A56 /* LaunchVC.swift */,
 				9C3B68E62369E8F0007A0A56 /* LaunchVCLayout.swift */,
+				9C3B68E52369E8F0007A0A56 /* LaunchVC.swift */,
 			);
 			path = LaunchVC;
 			sourceTree = "<group>";
@@ -297,8 +299,8 @@
 		9C3B68E9236A0A47007A0A56 /* ChatList */ = {
 			isa = PBXGroup;
 			children = (
-				9C9A4F792365508D00EBEFF7 /* ChatListVC.swift */,
 				9C3B68EA236A0A67007A0A56 /* ChatListVCLayout.swift */,
+				9C9A4F792365508D00EBEFF7 /* ChatListVC.swift */,
 			);
 			path = ChatList;
 			sourceTree = "<group>";
@@ -336,8 +338,8 @@
 		9C3B68F3236A0BA5007A0A56 /* ChatDetail */ = {
 			isa = PBXGroup;
 			children = (
-				9C9A4FBD2365867300EBEFF7 /* ChatVC.swift */,
 				9C3B68F8236A0C09007A0A56 /* ChatVCLayout.swift */,
+				9C9A4FBD2365867300EBEFF7 /* ChatVC.swift */,
 				9C5CDB6A236892AD003B1849 /* CallVC.swift */,
 			);
 			path = ChatDetail;
@@ -370,6 +372,7 @@
 			children = (
 				9C6926B1236BF587007B55B7 /* RegisterVCLayout.swift */,
 				9C6926BA236C0268007B55B7 /* RegisterVC.swift */,
+				9C9E738B236C73BB003DBEC3 /* UpdateProfileVC.swift */,
 			);
 			path = Register;
 			sourceTree = "<group>";
@@ -417,8 +420,8 @@
 		9C7B39AD236A0CEA001E7F95 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				9C7B39AE236A0D00001E7F95 /* ProfileVC.swift */,
 				9C3AFB1323682F16009E6ED6 /* ProfileVCLayout.swift */,
+				9C7B39AE236A0D00001E7F95 /* ProfileVC.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -426,8 +429,8 @@
 		9C7B39B0236A0D1E001E7F95 /* Friends */ = {
 			isa = PBXGroup;
 			children = (
-				9C9A4F772365508D00EBEFF7 /* FriendsVC.swift */,
 				9C7B39B1236A0D66001E7F95 /* FriendsVCLayout.swift */,
+				9C9A4F772365508D00EBEFF7 /* FriendsVC.swift */,
 			);
 			path = Friends;
 			sourceTree = "<group>";
@@ -718,6 +721,7 @@
 				9C7B39B4236A0DA0001E7F95 /* FriendTableView.swift in Sources */,
 				9C6B9DB32365E9C400F76BEA /* NativeWebSocket.swift in Sources */,
 				9C9A4FAD236550CC00EBEFF7 /* HTTPMethod.swift in Sources */,
+				9C9E738C236C73BB003DBEC3 /* UpdateProfileVC.swift in Sources */,
 				9C7B39C4236A12AB001E7F95 /* MessageAttachment.swift in Sources */,
 				9C6B9DCF23674C5900F76BEA /* LoginVC.swift in Sources */,
 				9C9A4F7D2365508D00EBEFF7 /* ChatListVC.swift in Sources */,

@@ -15,6 +15,7 @@ class ProfileVCLayout: BaseViewControllerLayout {
         temp.clipsToBounds = true
         temp.layer.borderColor = AppColor.backgroundColor.cgColor
         temp.layer.borderWidth = 6
+        temp.image = AppIcon.userAvtPlaceholder
         return temp
     }()
     
@@ -23,6 +24,7 @@ class ProfileVCLayout: BaseViewControllerLayout {
         temp.backgroundColor = .darkGray
         temp.contentMode = .scaleAspectFill
         temp.clipsToBounds = true
+        temp.image = AppIcon.imagePlaceHolder
         return temp
     }()
     
@@ -43,7 +45,7 @@ class ProfileVCLayout: BaseViewControllerLayout {
         return temp
     }()
     
-    let lblEmail: UILabel = {
+    let lblUsername: UILabel = {
         let temp = UILabel()
         temp.font = UIFont.systemFont(ofSize: 18)
         temp.textColor = .gray
@@ -65,12 +67,12 @@ class ProfileVCLayout: BaseViewControllerLayout {
         
         view.backgroundColor = AppColor.backgroundColor
         
-        view.addSubviews(subviews: coverImageView, avtImageView, lblName, lblEmail, btnMessage, vOnlineState)
-        view.addConstraintsWith(format: "V:[v0]-15-[v1]-15-[v2]-25-[v3(35)]", views: avtImageView, lblName, lblEmail, btnMessage)
+        view.addSubviews(subviews: coverImageView, avtImageView, lblName, lblUsername, btnMessage, vOnlineState)
+        view.addConstraintsWith(format: "V:[v0]-15-[v1]-15-[v2]-25-[v3(35)]", views: avtImageView, lblName, lblUsername, btnMessage)
 
         view.addConstraintsWith(format: "H:|-16-[v0]-16-|", views: coverImageView)
         view.addConstraintsWith(format: "H:|-16-[v0]-16-|", views: lblName)
-        view.addConstraintsWith(format: "H:|-16-[v0]-16-|", views: lblEmail)
+        view.addConstraintsWith(format: "H:|-16-[v0]-16-|", views: lblUsername)
         view.addConstraintsWith(format: "H:|-16-[v0]-16-|", views: btnMessage)
         
         coverImageView.topAnchor(equalTo: view.layoutMarginsGuide.topAnchor, constant: 16)
