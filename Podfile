@@ -11,4 +11,6 @@ target 'lab_mmt' do
   pod 'Kingfisher', '~> 5.9'
   pod 'SwiftDate'
   pod 'Alamofire', '~> 5.0.0-rc.3'
+  pod 'PromisedFuture'
+
 end

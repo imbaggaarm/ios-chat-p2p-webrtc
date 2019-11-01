@@ -49,7 +49,7 @@
 		9C6B9DB22365E9C400F76BEA /* WebSocketProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C6B9DAF2365E9C400F76BEA /* WebSocketProvider.swift */; };
 		9C6B9DB32365E9C400F76BEA /* NativeWebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C6B9DB02365E9C400F76BEA /* NativeWebSocket.swift */; };
 		9C6B9DB42365E9C400F76BEA /* StarscreamProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C6B9DB12365E9C400F76BEA /* StarscreamProvider.swift */; };
-		9C6B9DCF23674C5900F76BEA /* showWelcomVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C6B9DCE23674C5900F76BEA /* showWelcomVC.swift */; };
+		9C6B9DCF23674C5900F76BEA /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C6B9DCE23674C5900F76BEA /* LoginVC.swift */; };
 		9C7B39AF236A0D00001E7F95 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7B39AE236A0D00001E7F95 /* ProfileVC.swift */; };
 		9C7B39B2236A0D66001E7F95 /* FriendsVCLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7B39B1236A0D66001E7F95 /* FriendsVCLayout.swift */; };
 		9C7B39B4236A0DA0001E7F95 /* FriendTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7B39B3236A0DA0001E7F95 /* FriendTableView.swift */; };
@@ -94,6 +94,7 @@
 		9C9A4FC023658A2000EBEFF7 /* IMBInputMessageBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9A4FBF23658A2000EBEFF7 /* IMBInputMessageBar.swift */; };
 		9C9A4FC223658ABC00EBEFF7 /* AppConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9A4FC123658ABC00EBEFF7 /* AppConstant.swift */; };
 		9C9A4FC42365962700EBEFF7 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9A4FC32365962700EBEFF7 /* MessageCell.swift */; };
+		9C9E7389236C3791003DBEC3 /* AuthRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9E7388236C3791003DBEC3 /* AuthRouter.swift */; };
 		9CEE3695236A7E05003250C4 /* ChatDetailNavTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEE3694236A7E05003250C4 /* ChatDetailNavTitleView.swift */; };
 		D7849D9B3165B4C9C7D0E4B8 /* Pods_lab_mmt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 703780E5A04382471FE3EF15 /* Pods_lab_mmt.framework */; };
 /* End PBXBuildFile section */
@@ -147,7 +148,7 @@
 		9C6B9DAF2365E9C400F76BEA /* WebSocketProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebSocketProvider.swift; sourceTree = "<group>"; };
 		9C6B9DB02365E9C400F76BEA /* NativeWebSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NativeWebSocket.swift; sourceTree = "<group>"; };
 		9C6B9DB12365E9C400F76BEA /* StarscreamProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarscreamProvider.swift; sourceTree = "<group>"; };
-		9C6B9DCE23674C5900F76BEA /* showWelcomVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = showWelcomVC.swift; sourceTree = "<group>"; };
+		9C6B9DCE23674C5900F76BEA /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		9C7B39AE236A0D00001E7F95 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		9C7B39B1236A0D66001E7F95 /* FriendsVCLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsVCLayout.swift; sourceTree = "<group>"; };
 		9C7B39B3236A0DA0001E7F95 /* FriendTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendTableView.swift; sourceTree = "<group>"; };
@@ -194,6 +195,7 @@
 		9C9A4FBF23658A2000EBEFF7 /* IMBInputMessageBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMBInputMessageBar.swift; sourceTree = "<group>"; };
 		9C9A4FC123658ABC00EBEFF7 /* AppConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstant.swift; sourceTree = "<group>"; };
 		9C9A4FC32365962700EBEFF7 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
+		9C9E7388236C3791003DBEC3 /* AuthRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRouter.swift; sourceTree = "<group>"; };
 		9CEE3694236A7E05003250C4 /* ChatDetailNavTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDetailNavTitleView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -274,10 +276,11 @@
 		9C3B68DB2369B508007A0A56 /* REST */ = {
 			isa = PBXGroup;
 			children = (
+				9C3B68DE2369B92F007A0A56 /* APIConfiguration.swift */,
 				9C3BCFC8236982B4008C2910 /* APIClient.swift */,
 				9C3B68DC2369B548007A0A56 /* APIRouter.swift */,
-				9C3B68DE2369B92F007A0A56 /* APIConfiguration.swift */,
 				9C3B68E02369B93E007A0A56 /* UserEndpoint.swift */,
+				9C9E7388236C3791003DBEC3 /* AuthRouter.swift */,
 			);
 			path = REST;
 			sourceTree = "<group>";
@@ -465,7 +468,7 @@
 			isa = PBXGroup;
 			children = (
 				9C829B84236753F5008429DF /* LoginVCLayout.swift */,
-				9C6B9DCE23674C5900F76BEA /* showWelcomVC.swift */,
+				9C6B9DCE23674C5900F76BEA /* LoginVC.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -716,7 +719,7 @@
 				9C6B9DB32365E9C400F76BEA /* NativeWebSocket.swift in Sources */,
 				9C9A4FAD236550CC00EBEFF7 /* HTTPMethod.swift in Sources */,
 				9C7B39C4236A12AB001E7F95 /* MessageAttachment.swift in Sources */,
-				9C6B9DCF23674C5900F76BEA /* showWelcomVC.swift in Sources */,
+				9C6B9DCF23674C5900F76BEA /* LoginVC.swift in Sources */,
 				9C9A4F7D2365508D00EBEFF7 /* ChatListVC.swift in Sources */,
 				9C3B68E72369E8F0007A0A56 /* LaunchVC.swift in Sources */,
 				9C6B9DA22365E80A00F76BEA /* WebRTCClient.swift in Sources */,
@@ -747,6 +750,7 @@
 				9C3B68E82369E8F0007A0A56 /* LaunchVCLayout.swift in Sources */,
 				9C7B39BE236A0F25001E7F95 /* WSMessage.swift in Sources */,
 				9C7B39BC236A0EE3001E7F95 /* Response.swift in Sources */,
+				9C9E7389236C3791003DBEC3 /* AuthRouter.swift in Sources */,
 				9C3AFB1223680B1D009E6ED6 /* MessageCenter.swift in Sources */,
 				9C9A4F9D236550CC00EBEFF7 /* IMBBasePopUpViewController.swift in Sources */,
 				9C6B9DA62365E96D00F76BEA /* Message.swift in Sources */,

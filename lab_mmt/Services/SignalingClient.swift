@@ -21,18 +21,24 @@ protocol SignalClientDelegate: class {
 
 final class SignalingClient {
     
-    public static var `default`: SignalingClient?
+    public static var shared: SignalingClient!
     
     private let decoder = JSONDecoder()
     private let encoder = JSONEncoder()
     private let webSocket: WebSocketProvider
     weak var delegate: SignalClientDelegate?
     
-    init(webSocket: WebSocketProvider) {
-        self.webSocket = webSocket
-        SignalingClient.default = self
+    init() {
+        // iOS 13 has native websocket support. For iOS 12 or lower we will use 3rd party library.
+        let url = URL.init(string: Config.default.signalingServerUrlStr + "?token=\(UserProfile.this.jwt)")!
+        if #available(iOS 13.0, *) {
+            self.webSocket = NativeWebSocket(url: url)
+        } else {
+            self.webSocket = StarscreamWebSocket(url: url)
+        }
+        SignalingClient.shared = self
     }
-    
+        
     func connect() {
         self.webSocket.delegate = self
         self.webSocket.connect()

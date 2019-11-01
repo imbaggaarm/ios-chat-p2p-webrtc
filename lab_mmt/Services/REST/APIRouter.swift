@@ -24,7 +24,7 @@ enum APIRouter: URLRequestConvertible {
     private var path: String {
         switch self {
         case .login:
-            return "/login"
+            return "/auth/login"
         }
     }
     

@@ -24,22 +24,12 @@ enum UserEndPoint: APIConfiguration {
             return .get
         }
     }
-    
-    private func percentEscapeString(string: String) -> String {
-        var characterSet = CharacterSet.alphanumerics
-        characterSet.insert(charactersIn: "-._* ")
         
-        return string
-          .addingPercentEncoding(withAllowedCharacters: characterSet)!
-          .replacingOccurrences(of: " ", with: "+")
-          .replacingOccurrences(of: " ", with: "+", options: [], range: nil)
-    }
-    
     // MARK: - Path
     var path: String {
         switch self {
         case .login:
-            return "/login"
+            return "/auth/login"
         case .profile(let username):
             return "/\(username)"
         case .friends(let username):
@@ -59,27 +49,27 @@ enum UserEndPoint: APIConfiguration {
         }
     }
     
-    func asURLRequest() throws -> URLRequest {
-        let url = try K.ProductionServer.baseURL.asURL()
-        
-        var urlRequest = URLRequest(url: url.appendingPathComponent(path))
-        
-        // HTTP Method
-        urlRequest.httpMethod = method.rawValue
-        
-        // Common Headers
-        urlRequest.setValue(ContentType.json.rawValue, forHTTPHeaderField: HTTPHeaderField.acceptType.rawValue)
-        urlRequest.setValue(ContentType.form_urlencoded.rawValue, forHTTPHeaderField: HTTPHeaderField.contentType.rawValue)
-        
-        // Parameters
-        if let parameters = parameters {
-            let parameterArray = parameters.map { (key, value) -> String in
-                return "\(key)=\(self.percentEscapeString(string: value as! String))"
-            }
-            
-            urlRequest.httpBody = parameterArray.joined(separator: "&").data(using: .utf8)
-        }
-        
-        return urlRequest
-    }
+//    func asURLRequest() throws -> URLRequest {
+//        let url = try K.ProductionServer.baseURL.asURL()
+//
+//        var urlRequest = URLRequest(url: url.appendingPathComponent(path))
+//
+//        // HTTP Method
+//        urlRequest.httpMethod = method.rawValue
+//
+//        // Common Headers
+//        urlRequest.setValue(ContentType.json.rawValue, forHTTPHeaderField: HTTPHeaderField.acceptType.rawValue)
+//        urlRequest.setValue(ContentType.form_urlencoded.rawValue, forHTTPHeaderField: HTTPHeaderField.contentType.rawValue)
+//
+//        // Parameters
+//        if let parameters = parameters {
+//            let parameterArray = parameters.map { (key, value) -> String in
+//                return "\(key)=\(self.percentEscapeString(string: value as! String))"
+//            }
+//
+//            urlRequest.httpBody = parameterArray.joined(separator: "&").data(using: .utf8)
+//        }
+//
+//        return urlRequest
+//    }
 }

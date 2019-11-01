@@ -50,8 +50,8 @@ class ChatVC: ChatVCLayout {
     }
     
     @objc func onNavTitleViewTapped() {
-        let profileVC = ProfileVC.init(user: room.partner)
-        present(profileVC, animated: true, completion: nil)
+        let profileNVC = UINavigationController.init(rootViewController: ProfileVC.init(user: room.partner))
+        present(profileNVC, animated: true, completion: nil)
     }
     
     var isFirstLoad = true

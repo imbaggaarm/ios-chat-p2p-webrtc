@@ -40,9 +40,6 @@ class MainTabbarVC: UITabBarController {
         chatListNVC.view.backgroundColor = .black
         chatListNVC.tabBarItem.image = AppIcon.tabbarChat
         
-        //        let roomExplorerNVC = UINavigationController.init(rootViewController: ExplorerViewController())
-        //        roomExplorerNVC.tabBarItem.image = AppIcon.tabbarExplorer
-        
         let friendsVC = UINavigationController.init(rootViewController: FriendsVC())
         friendsVC.tabBarItem.image = AppIcon.tabbarFriends
         

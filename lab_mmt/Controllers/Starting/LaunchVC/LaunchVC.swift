@@ -9,13 +9,13 @@
 import UIKit
 
 class LaunchVC: LaunchVCLayout {
-
+    
     var signalClient: SignalingClient?
     var webRTCClient: WebRTCClient?
     
     init() {
-//        self.signalClient = signalClient
-//        self.webRTCClient = webRTCClient
+        //        self.signalClient = signalClient
+        //        self.webRTCClient = webRTCClient
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -40,9 +40,9 @@ class LaunchVC: LaunchVCLayout {
     var isShowing: Bool = false
     
     func loadConfigData() {
-        let userDefaults = AppUserDefaults.sharedInstance
         
         //handle autologin to load data
+        let userDefaults = AppUserDefaults.sharedInstance
         if let strAccount = userDefaults.getUserAccount() {
             let email = strAccount.email
             let password = strAccount.password
@@ -67,7 +67,7 @@ class LaunchVC: LaunchVCLayout {
     
     private func showMainVC() {
         webRTCClient = WebRTCClient(iceServers: Config.default.webRTCIceServers)
-        signalClient = self.buildSignalingClient()
+        signalClient = SignalingClient()
         
         let vc = MainTabbarVC(signalClient: signalClient!, webRTCClient: webRTCClient!)
         vc.modalPresentationStyle = .overCurrentContext
@@ -84,12 +84,9 @@ class LaunchVC: LaunchVCLayout {
         }
     }
     
-    
     private func login(email: String, password: String) {
-        APIClient.login(email: email, password: password) {[weak self] (result) in
-
-            switch result {
-            case .success(let response):
+        APIClient.login(email: email, password: password)
+            .execute(onSuccess: {[weak self] (response) in
                 if response.success {
                     UserProfile.this.email = email
                     UserProfile.this.username = response.data!.username
@@ -99,9 +96,8 @@ class LaunchVC: LaunchVCLayout {
                 } else {
                     self?.showWelcomeVC()
                 }
-            case .failure(_):
+            }) {[weak self] (error) in
                 self?.showWelcomeVC()
-            }
         }
     }
     
@@ -114,10 +110,9 @@ class LaunchVC: LaunchVCLayout {
         var isGotProfile = false
         var isGotUserFriends = false
         
-        APIClient.getUserProfile(username: UserProfile.this.username) {[weak self] (result) in
-            isGotProfile = true
-            switch result {
-            case .success(let response):
+        APIClient.getUserProfile(username: UserProfile.this.username)
+            .execute(onSuccess: {[weak self] (response) in
+                isGotProfile = true
                 if response.success {
                     UserProfile.this.copy(from: response.data!)
                     if isGotUserFriends {
@@ -126,15 +121,15 @@ class LaunchVC: LaunchVCLayout {
                 } else {
                     self?.showWelcomeVC()
                 }
-            case .failure(_):
+            }) {[weak self] (_) in
+                isGotProfile = true
                 self?.showWelcomeVC()
-            }
         }
         
-        APIClient.getUserFriends(username: UserProfile.this.username) {[weak self] (result) in
-            isGotUserFriends = true
-            switch result {
-            case .success(let response):
+        
+        APIClient.getUserFriends(username: UserProfile.this.username)
+            .execute(onSuccess: {[weak self] (response) in
+                isGotUserFriends = true
                 if response.success {
                     myFriends = response.data!
                     for friend in myFriends {
@@ -147,24 +142,24 @@ class LaunchVC: LaunchVCLayout {
                 } else {
                     self?.showWelcomeVC()
                 }
-            case .failure(_):
+            }) {[weak self] (_) in
+                isGotUserFriends = true
                 self?.showWelcomeVC()
-            }
         }
     }
     
-    private func buildSignalingClient() -> SignalingClient {
-        
-        // iOS 13 has native websocket support. For iOS 12 or lower we will use 3rd party library.
-        let webSocketProvider: WebSocketProvider
-        let url = URL.init(string: Config.default.signalingServerUrlStr + "?token=\(UserProfile.this.jwt)")!
-        if #available(iOS 13.0, *) {
-            webSocketProvider = NativeWebSocket(url: url)
-        } else {
-            webSocketProvider = StarscreamWebSocket(url: url)
-        }
-        
-        return SignalingClient(webSocket: webSocketProvider)
-    }
-
+    //    private func buildSignalingClient() -> SignalingClient {
+    //
+    //        // iOS 13 has native websocket support. For iOS 12 or lower we will use 3rd party library.
+    //        let webSocketProvider: WebSocketProvider
+    //        let url = URL.init(string: Config.default.signalingServerUrlStr + "?token=\(UserProfile.this.jwt)")!
+    //        if #available(iOS 13.0, *) {
+    //            webSocketProvider = NativeWebSocket(url: url)
+    //        } else {
+    //            webSocketProvider = StarscreamWebSocket(url: url)
+    //        }
+    //
+    //        return SignalingClient(webSocket: webSocketProvider)
+    //    }
+    
 }

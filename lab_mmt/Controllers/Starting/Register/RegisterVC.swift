@@ -20,6 +20,7 @@ class RegisterVC: RegisterVCLayout, UITextFieldDelegate {
         txtFEmail.addTarget(self, action: #selector(checkEnableBtnRegister), for: .editingChanged)
         txtFPassword.addTarget(self, action: #selector(checkEnableBtnRegister), for: .editingChanged)
         txtFRPassword.addTarget(self, action: #selector(checkEnableBtnRegister), for: .editingChanged)
+        
     }
     
     //MARK: - UITextFieldDelegate
@@ -54,5 +55,14 @@ class RegisterVC: RegisterVCLayout, UITextFieldDelegate {
     func changeBtnLoginState(isEnabled: Bool) {
         btnRegister.isEnabled = isEnabled
         btnRegister.backgroundColor = isEnabled ? AppColor.themeColor : .darkGray
+    }
+    
+    override func onBtnRegisterTapped() {
+        super.onBtnRegisterTapped()
+        if txtFRPassword.text != txtFRPassword.text {
+            letsAlert(withMessage: "Mật khẩu không trùng khớp!")
+            return
+        }
+        
     }
 }

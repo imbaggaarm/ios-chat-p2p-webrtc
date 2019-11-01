@@ -9,10 +9,7 @@
 
 import UIKit
 
-class showWelcomVC: LoginVCLayout, UITextFieldDelegate {
-
-    var signalClient: SignalingClient?
-    var webRTCClient: WebRTCClient?
+class LoginVC: LoginVCLayout, UITextFieldDelegate {
     
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -26,23 +23,29 @@ class showWelcomVC: LoginVCLayout, UITextFieldDelegate {
     deinit {
         print(#function)
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        let userDefaults = AppUserDefaults.sharedInstance
+        if let strAccount = userDefaults.getUserAccount() {
+            let email = strAccount.email
+            txtFEmail.text = email
+        }
+        
         changeBtnLoginState(isEnabled: false)
-
+        
         txtFEmail.delegate = self
         txtFPassword.delegate = self
-
+        
         txtFEmail.addTarget(self, action: #selector(checkEnableBtnLogin), for: .editingChanged)
         txtFPassword.addTarget(self, action: #selector(checkEnableBtnLogin), for: .editingChanged)
     }
-
+    
     override func onBtnLoginTap() {
         super.onBtnLoginTap()
         view.endEditing(true)
-
+        
         let username = txtFEmail.text!.lowercased()
         let password = txtFPassword.text!
         
@@ -51,10 +54,8 @@ class showWelcomVC: LoginVCLayout, UITextFieldDelegate {
     }
     
     private func login(email: String, password: String) {
-        APIClient.login(email: email, password: password) {[weak self] (result) in
-
-            switch result {
-            case .success(let response):
+        APIClient.login(email: email, password: password)
+            .execute(onSuccess: {[weak self] (response) in
                 if response.success {
                     UserProfile.this.email = email
                     UserProfile.this.username = response.data!.username
@@ -64,10 +65,9 @@ class showWelcomVC: LoginVCLayout, UITextFieldDelegate {
                 } else {
                     self?.handleError(error: response.error)
                 }
-            case .failure(let error):
-                self?.handleError(error: error.errorDescription ?? "Unexpected error")
+            }) {[weak self] (error) in
+                self?.handleError(error: error.asAFError?.errorDescription ?? "Unexpected error")
                 print(error)
-            }
         }
     }
     
@@ -80,41 +80,38 @@ class showWelcomVC: LoginVCLayout, UITextFieldDelegate {
         var isGotProfile = false
         var isGotUserFriends = false
         
-        APIClient.getUserProfile(username: UserProfile.this.username) {[weak self] (result) in
-            isGotProfile = true
-            switch result {
-            case .success(let response):
+        APIClient.getUserProfile(username: UserProfile.this.username)
+            .execute(onSuccess: {[weak self] (response) in
+                isGotProfile = true
                 if response.success {
                     UserProfile.this.copy(from: response.data!)
                     if isGotUserFriends {
-                        self?.showMainVC()
+                        self?.dismissToWelcomeVC()
                     }
                 } else {
-                    if isGotProfile {
+                    if isGotUserFriends {
                         self?.stopRequestAnimation()
                     }
                     self?.handleError(error: response.error)
                 }
-            case .failure(let error):
-                if isGotProfile {
+            }) {[weak self] (error) in
+                isGotProfile = true
+                if isGotUserFriends {
                     self?.stopRequestAnimation()
                 }
-                self?.handleError(error: error.errorDescription ?? "Unexpected error")
-            }
+                self?.handleError(error: error.asAFError?.errorDescription ?? "Unexpected error")
         }
         
-        APIClient.getUserFriends(username: UserProfile.this.username) {[weak self] (result) in
-            isGotUserFriends = true
-            switch result {
-            case .success(let response):
+        APIClient.getUserFriends(username: UserProfile.this.username)
+            .execute(onSuccess: {[weak self] (response) in
+                isGotUserFriends = true
                 if response.success {
                     myFriends = response.data!
                     for friend in myFriends {
                         friend.setP2pState()
                     }
                     if isGotProfile {
-                        self?.showMainVC()
-                        self?.stopRequestAnimation()
+                        self?.dismissToWelcomeVC()
                     }
                 } else {
                     if isGotProfile {
@@ -122,39 +119,41 @@ class showWelcomVC: LoginVCLayout, UITextFieldDelegate {
                     }
                     self?.handleError(error: response.error)
                 }
-            case .failure(let error):
+            }) {[weak self] (error) in
+                isGotUserFriends = true
                 if isGotProfile {
                     self?.stopRequestAnimation()
                 }
-                self?.handleError(error: error.errorDescription ?? "Unexpected error")
-            }
+                self?.handleError(error: error.asAFError?.errorDescription ?? "Unexpected error")
         }
     }
     
-    private func showMainVC() {
-        webRTCClient = WebRTCClient(iceServers: Config.default.webRTCIceServers)
-        signalClient = self.buildSignalingClient()
-        let mainVC = MainTabbarVC(signalClient: signalClient!, webRTCClient: webRTCClient!)
-        mainVC.modalPresentationStyle = .overFullScreen
-        present(mainVC, animated: false) {[unowned self] in
-            self.stopRequestAnimation()
+    private func dismissToWelcomeVC() {
+        if let welcomeVC = presentingViewController as? WelcomeVC {
+            welcomeVC.shouldPresentMainVC = true
+            dismiss(animated: false) {
+                welcomeVC.presentMainVC()
+            }
+            return
         }
+        
+        dismiss(animated: false, completion: nil)
     }
-
+    
     @objc func checkEnableBtnLogin() {
         let isTxtEmailEmpty = (txtFEmail.text?.isEmpty)!
         let isTxtPasswordEmpty = (txtFPassword.text?.isEmpty)!
-
+        
         changeBtnLoginState(isEnabled: !isTxtEmailEmpty && !isTxtPasswordEmpty)
     }
-
+    
     func changeBtnLoginState(isEnabled: Bool) {
         btnLogin.isEnabled = isEnabled
         btnLogin.backgroundColor = isEnabled ? AppColor.themeColor : .darkGray
     }
-
+    
     //MARK: - UITextFieldDelegate
-
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == txtFEmail {
             //active txtFPassword
@@ -170,20 +169,4 @@ class showWelcomVC: LoginVCLayout, UITextFieldDelegate {
         }
         return true
     }
-    
-    private func buildSignalingClient() -> SignalingClient {
-        
-        // iOS 13 has native websocket support. For iOS 12 or lower we will use 3rd party library.
-        let webSocketProvider: WebSocketProvider
-        let url = URL.init(string: Config.default.signalingServerUrlStr + "?token=\(UserProfile.this.jwt)")!
-        if #available(iOS 13.0, *) {
-            webSocketProvider = NativeWebSocket(url: url)
-        } else {
-            webSocketProvider = StarscreamWebSocket(url: url)
-        }
-        
-        return SignalingClient(webSocket: webSocketProvider)
-    }
-
-
 }

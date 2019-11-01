@@ -33,17 +33,21 @@ class ProfileVC: ProfileVCLayout {
         
         let cancel = UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil)
         let online = UIAlertAction.init(title: "Online", style: .default) {[unowned self] (action) in
-            self.user.state = .online
-            self.setOnlineStateColor()
-            //send to other users
-            SignalingClient.default?.sendOnlineStateChange(username: self.user.username, state: .online)
+            if self.user.state != .online {
+                self.user.state = .online
+                self.setOnlineStateColor()
+                //send to other users
+                SignalingClient.shared.sendOnlineStateChange(username: self.user.username, state: .online)
+            }
         }
         
         let doNotDisturb = UIAlertAction.init(title: "Do not disturb", style: .default) {[unowned self] (action) in
-            self.user.state = .doNotDisturb
-            self.setOnlineStateColor()
-            //send to other users
-            SignalingClient.default?.sendOnlineStateChange(username: self.user.username, state: .doNotDisturb)
+            if self.user.state != .doNotDisturb {
+                self.user.state = .doNotDisturb
+                self.setOnlineStateColor()
+                //send to other users
+                SignalingClient.shared.sendOnlineStateChange(username: self.user.username, state: .doNotDisturb)
+            }
         }
         alertC.addAction(cancel)
         alertC.addAction(online)
