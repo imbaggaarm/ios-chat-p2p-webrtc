@@ -10,11 +10,11 @@ import UIKit
 
 class LoginVCLayout: BaseViewControllerLayout {
     
-    lazy var txtFUsername: UITextField = {
+    lazy var txtFEmail: UITextField = {
         let temp = UITextField()
         temp.keyboardType = UIKeyboardType.emailAddress
         temp.autocapitalizationType = .none
-        temp.placeholder = "Username"
+        temp.placeholder = "Email"
         //temp.font = AppFont.logInTxtFieldContentFont
         temp.clearButtonMode = .whileEditing
         temp.backgroundColor = AppColor.inputBackgroundColor
@@ -37,7 +37,7 @@ class LoginVCLayout: BaseViewControllerLayout {
     let btnLogin: ActivityIndicatorButton = {
         let temp = ActivityIndicatorButton()
         temp.backgroundColor = .darkGray
-        temp.setTitle("Đăng nhập", for: .normal)
+        temp.setTitle(AppString.login, for: .normal)
         temp.setTitleColor(.white, for: .normal)
         //temp.titleLabel?.font = AppFont.logInButtonTitleFont
         temp.translatesAutoresizingMaskIntoConstraints = false
@@ -50,12 +50,17 @@ class LoginVCLayout: BaseViewControllerLayout {
         temp.backgroundColor = .clear
         temp.image = AppIcon.appIcon
         temp.contentMode = .scaleAspectFit
+        temp.isHidden = true
         return temp
     }()
 
     override func setUpNavigationBar() {
         super.setUpNavigationBar()
-        setStatusBarHidden(isHidden: true)
+        //setStatusBarHidden(isHidden: true)
+        
+        navigationItem.largeTitleDisplayMode = .automatic
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.title = AppString.login
     }
 
     override func setUpLayout() {
@@ -63,10 +68,10 @@ class LoginVCLayout: BaseViewControllerLayout {
         view.backgroundColor = .black
 
         let loginView = UIView()
-        loginView.addSubviews(subviews: txtFUsername, txtFPassword, btnLogin)
-        loginView.addSameConstraintsWith(format: "H:|-10-[v0]-10-|", for: txtFUsername, txtFPassword, btnLogin)
-        loginView.addConstraintsWith(format: "V:|[v0]-10-[v1]-10-[v2]|", views: txtFUsername, txtFPassword, btnLogin)
-        loginView.addSameConstraintsWith(format: "V:[v0(\(AppConstant.heightOfLoginButton))]", for: txtFUsername, txtFPassword, btnLogin)
+        loginView.addSubviews(subviews: txtFEmail, txtFPassword, btnLogin)
+        loginView.addSameConstraintsWith(format: "H:|-10-[v0]-10-|", for: txtFEmail, txtFPassword, btnLogin)
+        loginView.addConstraintsWith(format: "V:|[v0]-10-[v1]-10-[v2]|", views: txtFEmail, txtFPassword, btnLogin)
+        loginView.addSameConstraintsWith(format: "V:[v0(\(AppConstant.heightOfLoginButton))]", for: txtFEmail, txtFPassword, btnLogin)
 
         btnLogin.layer.cornerRadius = 5
         btnLogin.setIndicatorViewFrame(width: widthOfScreen - 20, height: AppConstant.heightOfLoginButton)

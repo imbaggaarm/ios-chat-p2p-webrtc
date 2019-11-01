@@ -32,4 +32,12 @@ class AppString {
     static var profile: String {
         return "kPROFILE_PAGE".localized()
     }
+    
+    static var register: String {
+        return "kREGISTER".localized()
+    }
+    
+    static var login: String {
+        return "kLOGIN".localized()
+    }
 }

@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
         } else {
             window = UIWindow.init(frame: UIScreen.main.bounds)
-            window?.rootViewController = LaunchVC()
+            window?.rootViewController = WelcomeVC()
         }
         
         return true

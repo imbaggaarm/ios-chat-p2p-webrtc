@@ -53,11 +53,11 @@ class LaunchVC: LaunchVCLayout {
                 autoLogin(email: email, password: password)
             } else {
                 //show loginvc
-                showLoginVC()
+                showWelcomeVC()
             }
         } else {
             //show loginvc
-            showLoginVC()
+            showWelcomeVC()
         }
     }
     
@@ -76,8 +76,8 @@ class LaunchVC: LaunchVCLayout {
         }
     }
     
-    private func showLoginVC() {
-        let vc = LoginVC()
+    private func showWelcomeVC() {
+        let vc = WelcomeVC()
         vc.modalPresentationStyle = .overCurrentContext
         present(vc, animated: false) {[unowned self] in
             self.stopRequestAnimation()
@@ -97,10 +97,10 @@ class LaunchVC: LaunchVCLayout {
                     AppUserDefaults.sharedInstance.setUserAccount(email: email, password: password)
                     self?.getUserProfileAndFriendList()
                 } else {
-                    self?.showLoginVC()
+                    self?.showWelcomeVC()
                 }
             case .failure(_):
-                self?.showLoginVC()
+                self?.showWelcomeVC()
             }
         }
     }
@@ -124,10 +124,10 @@ class LaunchVC: LaunchVCLayout {
                         self?.showMainVC()
                     }
                 } else {
-                    self?.showLoginVC()
+                    self?.showWelcomeVC()
                 }
             case .failure(_):
-                self?.showLoginVC()
+                self?.showWelcomeVC()
             }
         }
         
@@ -145,10 +145,10 @@ class LaunchVC: LaunchVCLayout {
                         self?.stopRequestAnimation()
                     }
                 } else {
-                    self?.showLoginVC()
+                    self?.showWelcomeVC()
                 }
             case .failure(_):
-                self?.showLoginVC()
+                self?.showWelcomeVC()
             }
         }
     }

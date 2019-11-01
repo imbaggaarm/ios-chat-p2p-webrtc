@@ -9,7 +9,7 @@
 
 import UIKit
 
-class LoginVC: LoginVCLayout, UITextFieldDelegate {
+class showWelcomVC: LoginVCLayout, UITextFieldDelegate {
 
     var signalClient: SignalingClient?
     var webRTCClient: WebRTCClient?
@@ -32,19 +32,18 @@ class LoginVC: LoginVCLayout, UITextFieldDelegate {
 
         changeBtnLoginState(isEnabled: false)
 
-        txtFUsername.delegate = self
+        txtFEmail.delegate = self
         txtFPassword.delegate = self
 
-        txtFUsername.addTarget(self, action: #selector(checkEnableBtnLogin), for: .editingChanged)
+        txtFEmail.addTarget(self, action: #selector(checkEnableBtnLogin), for: .editingChanged)
         txtFPassword.addTarget(self, action: #selector(checkEnableBtnLogin), for: .editingChanged)
-        
     }
 
     override func onBtnLoginTap() {
         super.onBtnLoginTap()
         view.endEditing(true)
 
-        let username = txtFUsername.text!.lowercased()
+        let username = txtFEmail.text!.lowercased()
         let password = txtFPassword.text!
         
         startRequestAnimation()
@@ -136,14 +135,14 @@ class LoginVC: LoginVCLayout, UITextFieldDelegate {
         webRTCClient = WebRTCClient(iceServers: Config.default.webRTCIceServers)
         signalClient = self.buildSignalingClient()
         let mainVC = MainTabbarVC(signalClient: signalClient!, webRTCClient: webRTCClient!)
-        mainVC.modalPresentationStyle = .overCurrentContext
+        mainVC.modalPresentationStyle = .overFullScreen
         present(mainVC, animated: false) {[unowned self] in
             self.stopRequestAnimation()
         }
     }
 
     @objc func checkEnableBtnLogin() {
-        let isTxtEmailEmpty = (txtFUsername.text?.isEmpty)!
+        let isTxtEmailEmpty = (txtFEmail.text?.isEmpty)!
         let isTxtPasswordEmpty = (txtFPassword.text?.isEmpty)!
 
         changeBtnLoginState(isEnabled: !isTxtEmailEmpty && !isTxtPasswordEmpty)
@@ -157,12 +156,12 @@ class LoginVC: LoginVCLayout, UITextFieldDelegate {
     //MARK: - UITextFieldDelegate
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if textField == txtFUsername {
+        if textField == txtFEmail {
             //active txtFPassword
             txtFPassword.becomeFirstResponder()
         } else if textField == txtFPassword {
-            if (txtFUsername.text!.isEmpty) {
-                txtFUsername.becomeFirstResponder()
+            if (txtFEmail.text!.isEmpty) {
+                txtFEmail.becomeFirstResponder()
             } else {
                 if btnLogin.isEnabled { //check if should call tap handle at bottom
                     onBtnLoginTap()

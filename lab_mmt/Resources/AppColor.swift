@@ -9,7 +9,7 @@
 import UIKit
 
 class AppColor {
-    
+    static let black = UIColor.black
     static let backgroundColor = UIColor.init(hexString: "#1C1E21")
     static var barTintColor: UIColor {
         return UIColor.black
