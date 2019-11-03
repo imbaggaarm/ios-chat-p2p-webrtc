@@ -23,6 +23,9 @@ struct K {
     struct APIParameterKey {
         static let password = "password"
         static let email = "email"
+        static let token = "token"
+        static let displayName = "display_name"
+        static let username = "username"
     }
 }
 

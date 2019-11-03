@@ -30,6 +30,13 @@ struct LoginResponse: Response, Codable {
     let data: LoginResponseData?
 }
 
+struct LogoutResponse: Response, Codable {
+    var type: String
+    var success: Bool
+    
+    var error: String
+}
+
 struct UserProfileResponse: Response, Codable {
     var type: String
     

@@ -67,7 +67,7 @@ class FriendsVC: FriendsVCLayout, UITableViewDelegate, UITableViewDataSource {
         
         tableView.reloadData()
         
-        headerView.totalFriend = 3
+        headerView.totalFriend = myFriends.count
         
     }
     

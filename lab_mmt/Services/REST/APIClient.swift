@@ -34,6 +34,11 @@ final class APIClient {
         return performRequest(route: route)
     }
     
+    static func logout() -> Future<LogoutResponse> {
+        let route = AuthRouter.logout
+        return performRequest(route: route)
+    }
+    
     static func getUserProfile(username: String) -> Future<UserProfileResponse> {
         let route = UserEndPoint.profile(username: username)
         return performRequest(route: route)
@@ -41,6 +46,11 @@ final class APIClient {
     
     static func getUserFriends(username: String) -> Future<UserFriendsResponse> {
         let route = UserEndPoint.friends(username: username)
+        return performRequest(route: route)
+    }
+    
+    static func updateUserProfile(username: String, displayName: String) -> Future<UserProfileResponse> {
+        let route = UserEndPoint.updateProfile(username: username, displayName: displayName)
         return performRequest(route: route)
     }
 

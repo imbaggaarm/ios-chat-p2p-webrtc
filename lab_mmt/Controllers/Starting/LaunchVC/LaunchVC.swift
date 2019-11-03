@@ -10,9 +10,6 @@ import UIKit
 
 class LaunchVC: LaunchVCLayout {
     
-    var signalClient: SignalingClient?
-    var webRTCClient: WebRTCClient?
-    
     init() {
         //        self.signalClient = signalClient
         //        self.webRTCClient = webRTCClient
@@ -24,16 +21,18 @@ class LaunchVC: LaunchVCLayout {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-    }
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setStatusBarHidden(isHidden: true)
         loadConfigData()
         startRequestAnimation()
+        let swipeGesture = UISwipeGestureRecognizer.init(target: self, action: #selector(swipeGestureRecognizerHandler(_:)))
+        swipeGesture.direction = .down
+        view.addGestureRecognizer(swipeGesture)
+    }
+    
+    @objc func swipeGestureRecognizerHandler(_ sender: UISwipeGestureRecognizer) {
+        dismissMySelf()
     }
     
     var shouldShowLoginVC: Bool = false
@@ -66,12 +65,13 @@ class LaunchVC: LaunchVCLayout {
     }
     
     private func showMainVC() {
-        webRTCClient = WebRTCClient(iceServers: Config.default.webRTCIceServers)
-        signalClient = SignalingClient()
         
-        let vc = MainTabbarVC(signalClient: signalClient!, webRTCClient: webRTCClient!)
+        let vc = WelcomeVC()
         vc.modalPresentationStyle = .overCurrentContext
+        vc.coverView.isHidden = false
+        
         present(vc, animated: false) {[unowned self] in
+            vc.presentMainVC()
             self.stopRequestAnimation()
         }
     }
@@ -147,19 +147,4 @@ class LaunchVC: LaunchVCLayout {
                 self?.showWelcomeVC()
         }
     }
-    
-    //    private func buildSignalingClient() -> SignalingClient {
-    //
-    //        // iOS 13 has native websocket support. For iOS 12 or lower we will use 3rd party library.
-    //        let webSocketProvider: WebSocketProvider
-    //        let url = URL.init(string: Config.default.signalingServerUrlStr + "?token=\(UserProfile.this.token)")!
-    //        if #available(iOS 13.0, *) {
-    //            webSocketProvider = NativeWebSocket(url: url)
-    //        } else {
-    //            webSocketProvider = StarscreamWebSocket(url: url)
-    //        }
-    //
-    //        return SignalingClient(webSocket: webSocketProvider)
-    //    }
-    
 }

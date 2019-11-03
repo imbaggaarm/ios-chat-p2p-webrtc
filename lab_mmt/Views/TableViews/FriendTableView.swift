@@ -18,7 +18,12 @@ class FriendTableHeaderView: UIView {
     
     var totalFriend: Int = -1 {
         didSet {
-            lblTotalFriend.text = "\(self.totalFriend)" + AppString.totalFriend
+            if self.totalFriend == 0 {
+                lblTotalFriend.text = "Chưa có người bạn nào"
+            } else {
+                lblTotalFriend.text = "\(self.totalFriend)" + AppString.totalFriend
+            }
+            
         }
     }
     override init(frame: CGRect) {

@@ -23,9 +23,27 @@ class ProfileVC: ProfileVCLayout {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        showData()
         
         btnMessage.addTarget(self, action: #selector(onBtnMessageTapped), for: .touchUpInside)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        showData()
+    }
+    
+    override func setUpNavigationBar() {
+        super.setUpNavigationBar()
+        if user.username == UserProfile.this.username {
+            let rightBtn = UIBarButtonItem.init(image: AppIcon.editProfile, style: .done, target: self, action: #selector(presentUpdateProfileVC))
+            
+            let settingBtn = UIBarButtonItem.init(image: AppIcon.setting, style: .done, target: self, action: #selector(presentSettingVC))
+
+            
+            navigationItem.rightBarButtonItems = [settingBtn, rightBtn]
+        } else {
+            navigationItem.rightBarButtonItems = []
+        }
     }
     
     func handleChangeOnlineState() {
@@ -68,7 +86,7 @@ class ProfileVC: ProfileVCLayout {
         avtImageView.kf.setImage(with: URL.init(string: user.profilePictureUrl))
         coverImageView.kf.setImage(with: URL.init(string: user.coverPhotoUrl))
         lblName.text = user.displayName
-        lblUsername.text = user.username
+        lblUsername.text = "@" + user.username
         title = user.displayName
         
         if user.email == UserProfile.this.email {

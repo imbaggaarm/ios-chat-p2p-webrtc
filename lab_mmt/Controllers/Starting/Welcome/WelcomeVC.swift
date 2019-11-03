@@ -9,14 +9,12 @@
 import UIKit
 
 class WelcomeVC: WelcomeVCLayout {
-    
+
     var shouldPresentMainVC: Bool = false {
         didSet {
             if self.shouldPresentMainVC {
-                view.isHidden = true
+                coverView.isHidden = false
                 self.shouldPresentMainVC = false
-            } else {
-                view.isHidden = false
             }
         }
     }
@@ -24,10 +22,8 @@ class WelcomeVC: WelcomeVCLayout {
     var shouldPresentUpdateProfileVC: Bool = false {
         didSet {
             if self.shouldPresentUpdateProfileVC {
-                view.isHidden = true
+                coverView.isHidden = false
                 self.shouldPresentUpdateProfileVC = false
-            } else {
-                view.isHidden = false
             }
         }
     }
@@ -39,16 +35,13 @@ class WelcomeVC: WelcomeVCLayout {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        if shouldPresentMainVC {
-//            shouldPresentMainVC = false
-//
-//        }
+
     }
     
-//    override func viewDidAppear(_ animated: Bool) {
-//        super.viewDidAppear(animated)
-//
-//    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+    }
     
     @objc func handleTapButRegister() {
         presentRegisterVC()
@@ -66,7 +59,9 @@ class WelcomeVC: WelcomeVCLayout {
         
         let mainVC = MainTabbarVC.init(signalClient: signalClient, webRTCClient: webRTCClient)
         mainVC.modalPresentationStyle = .overCurrentContext
-        present(mainVC, animated: false, completion: nil)
+        present(mainVC, animated: false) {
+            self.coverView.isHidden = true
+        }
     }
     
     func presentLoginVC() {
@@ -86,7 +81,9 @@ class WelcomeVC: WelcomeVCLayout {
     func presentUpdateProfileVC() {
         let vc = UINavigationController.init(rootViewController: UpdateProfileVC())
         vc.modalPresentationStyle = .overCurrentContext
-        present(vc, animated: true, completion: nil)
+        present(vc, animated: true, completion: {
+            self.coverView.isHidden = true
+        })
     }
 }
 

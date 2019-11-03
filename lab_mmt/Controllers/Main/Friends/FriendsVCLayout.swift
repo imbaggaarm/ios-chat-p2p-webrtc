@@ -43,6 +43,7 @@ class FriendsVCLayout: BaseViewControllerLayout {
         navigationItem.title = AppString.friends
         
         let logoImageView = UIImageView()
+        logoImageView.backgroundColor = UIColor.darkGray
         logoImageView.clipsToBounds = true
         logoImageView.kf.setImage(with: URL.init(string: UserProfile.this.profilePictureUrl))
         logoImageView.frame = CGRect(x:0.0,y:0.0, width:32, height:32)

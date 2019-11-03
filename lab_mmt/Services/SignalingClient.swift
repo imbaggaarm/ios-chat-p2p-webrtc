@@ -44,6 +44,11 @@ final class SignalingClient {
         self.webSocket.connect()
     }
     
+    func disconnect() {
+        self.webSocket.delegate = nil
+        self.webSocket.disconnect()
+    }
+    
     func sendOnlineStateChange(username: String, state: WSOnlineState) {
         print("sending online state")
         let message = WSMessage.onlineState(OnlineStateData.init(username: username, onlineState: state))

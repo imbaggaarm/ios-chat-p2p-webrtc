@@ -19,6 +19,13 @@ class WelcomeVCLayout: BaseViewControllerLayout, UITextViewDelegate {
     
     /// end define
     
+    let coverView: UIView = {
+        let temp = UIView()
+        temp.backgroundColor = .black
+        temp.isHidden = true
+        return temp
+    }()
+    
     let imgVLogo: UIImageView = {
         let temp = UIImageView()
         temp.backgroundColor = .clear
@@ -89,6 +96,9 @@ class WelcomeVCLayout: BaseViewControllerLayout, UITextViewDelegate {
         super.setUpLayout()
         
         view.addSubviews(subviews: vContentSignUp, loadIndicator, imgVLogo, txtVLogin)
+        
+        view.addSubview(coverView)
+        coverView.makeFullWithSuperView()
         
         do { // content view
             vContentSignUp.addSubviews(subviews: lblTitle, butRegister)

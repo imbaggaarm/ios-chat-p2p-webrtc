@@ -24,4 +24,14 @@ class AppFont {
         }
         return UIFont.systemFont(ofSize: 20, weight: .medium)//avenirNext(size: 20, type: .demiBold)
     }()
+    
+    static let settingsVCLblEmailTxtFont = UIFont.avenirNext(size: 14, type: .demiBold)
+    
+    static let accountSettingCVCellLblTitleFont = UIFont.avenirNext(size: 16, type: .medium)
+    
+    
+    static let settingVCDescribeTextFont = UIFont.avenirNext(size: 14, type: .regular)
+    static let settingVCTxtFTextFont = UIFont.avenirNext(size: 15, type: .regular)
+    
+    static let alertPasswordFont = UIFont.avenirNext(size: 12, type: .demiBold)
 }

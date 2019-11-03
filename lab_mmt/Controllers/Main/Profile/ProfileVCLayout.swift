@@ -16,6 +16,7 @@ class ProfileVCLayout: BaseViewControllerLayout {
         temp.layer.borderColor = AppColor.backgroundColor.cgColor
         temp.layer.borderWidth = 6
         temp.image = AppIcon.userAvtPlaceholder
+        temp.backgroundColor = .darkGray
         return temp
     }()
     
@@ -87,6 +88,22 @@ class ProfileVCLayout: BaseViewControllerLayout {
         let spacing = (CGFloat(2.0.squareRoot()/2.0) + 1)*(widthOfScreen - 12)/4 - 16
         vOnlineState.topAnchor(equalTo: avtImageView.topAnchor, constant: spacing)
         vOnlineState.leftAnchor(equalTo: avtImageView.leftAnchor, constant: spacing)
+    }
+    
+    override func setUpNavigationBar() {
+        super.setUpNavigationBar()
+        navigationItem.backBarButtonItem = UIBarButtonItem.init(title: "", style: .done, target: nil, action: nil)
+    }
+    
+    @objc func presentSettingVC() {
+        let vc = UINavigationController.init(rootViewController: SettingsVC())
+        vc.modalPresentationStyle = .overFullScreen
+        present(vc, animated: true, completion: nil)
+    }
+    
+    @objc func presentUpdateProfileVC() {
+        let vc = UINavigationController.init(rootViewController: UpdateProfileVC())
+        present(vc, animated: true, completion: nil)
     }
 }
 

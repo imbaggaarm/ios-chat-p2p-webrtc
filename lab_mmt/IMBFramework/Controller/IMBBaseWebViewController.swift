@@ -18,10 +18,10 @@ class IMBBaseWebViewController: BaseViewControllerLayout, WKNavigationDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .white
-        webView.backgroundColor = .white
+        view.backgroundColor = AppColor.black
+        webView.backgroundColor = AppColor.black
         webView.isOpaque = false
-        activityIndicator.color = UIColor.black
+        activityIndicator.color = UIColor.white
         
         setUpLayout()
     }

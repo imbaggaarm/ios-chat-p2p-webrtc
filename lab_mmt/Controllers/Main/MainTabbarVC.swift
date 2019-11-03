@@ -59,6 +59,10 @@ class MainTabbarVC: UITabBarController {
         return UIStatusBarStyle.lightContent
         //return UIStatusBarStyle.default   // Make dark again
     }
+    
+    deinit {
+        print(self.description + #function)
+    }
 }
 
 extension MainTabbarVC: SignalClientDelegate {

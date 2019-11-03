@@ -52,7 +52,8 @@ class RegisterVCLayout: BaseViewControllerLayout {
         return temp
     }()
     
-    let btnRegister: ActivityIndicatorButton = {
+    lazy var btnRegister: ActivityIndicatorButton = {
+        [unowned self ] in
         let temp = ActivityIndicatorButton()
         temp.backgroundColor = .darkGray
         temp.setTitle("Đăng ký", for: .normal)
@@ -78,12 +79,14 @@ class RegisterVCLayout: BaseViewControllerLayout {
 
         let centerView = UIView()
         centerView.addSubviews(subviews: txtFEmail, txtFPassword, txtFRPassword, btnRegister)
-        centerView.addSameConstraintsWith(format: "H:|-10-[v0]-10-|", for: txtFEmail, txtFPassword, btnRegister, txtFRPassword)
+        centerView.addSameConstraintsWith(format: "H:|-10-[v0]-10-|", for: txtFEmail, txtFPassword, txtFRPassword)
         centerView.addConstraintsWith(format: "V:|[v0]-10-[v1]-10-[v2]-30-[v3]-10-|", views: txtFEmail, txtFPassword, txtFRPassword, btnRegister)
         centerView.addSameConstraintsWith(format: "V:[v0(\(AppConstant.heightOfLoginButton))]", for: txtFEmail, txtFPassword, txtFRPassword, btnRegister)
-
+        
+        btnRegister.centerXAnchor(with: centerView)
+        btnRegister.width(constant: widthOfScreen/2)
         btnRegister.layer.cornerRadius = AppConstant.heightOfLoginButton/2
-        btnRegister.setIndicatorViewFrame(width: widthOfScreen - 20, height: AppConstant.heightOfLoginButton)
+        btnRegister.setIndicatorViewFrame(width: widthOfScreen/2, height: AppConstant.heightOfLoginButton)
 
         view.addSubviews(subviews: centerView)
         centerView.makeFullWidthWithSuperView()

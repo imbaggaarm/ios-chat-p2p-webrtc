@@ -49,6 +49,7 @@ class ChatListVCLayout: BaseViewControllerLayout {
         
         let logoImageView = UIImageView()
         logoImageView.clipsToBounds = true
+        logoImageView.backgroundColor = UIColor.darkGray
         logoImageView.kf.setImage(with: URL.init(string: UserProfile.this.profilePictureUrl))
         logoImageView.frame = CGRect(x:0.0,y:0.0, width:32, height:32)
         logoImageView.contentMode = .scaleAspectFit

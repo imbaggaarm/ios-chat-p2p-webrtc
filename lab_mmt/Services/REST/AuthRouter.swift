@@ -11,12 +11,15 @@ import Alamofire
 
 enum AuthRouter: APIConfiguration {
     case login(email: String, password: String)
+    case logout
     case register(email: String, password: String)
     
     var method: HTTPMethod {
         switch self {
         case .login:
             return .post
+        case .logout:
+            return .get
         case .register:
             return .post
         }
@@ -26,6 +29,8 @@ enum AuthRouter: APIConfiguration {
         switch self {
         case .login:
             return "/auth/login"
+        case .logout:
+            return "/auth/logout"
         case .register:
             return "/auth/register"
         }
@@ -35,6 +40,8 @@ enum AuthRouter: APIConfiguration {
         switch self {
         case .login(let email, let password):
             return [K.APIParameterKey.email: email, K.APIParameterKey.password: password]
+        case .logout:
+            return nil
         case .register(let email, let password):
             return [K.APIParameterKey.email: email, K.APIParameterKey.password: password]
         }

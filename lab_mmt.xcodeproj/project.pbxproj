@@ -62,6 +62,17 @@
 		9C829B8123674DDF008429DF /* ActivityIndicatorButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C829B8023674DDF008429DF /* ActivityIndicatorButton.swift */; };
 		9C829B85236753F5008429DF /* LoginVCLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C829B84236753F5008429DF /* LoginVCLayout.swift */; };
 		9C829B8823675430008429DF /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C829B8723675430008429DF /* User.swift */; };
+		9C96E82A236EBCF3005B1F06 /* SettingDetailTermsOfUseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C96E81E236EBCF3005B1F06 /* SettingDetailTermsOfUseVC.swift */; };
+		9C96E82B236EBCF3005B1F06 /* SettingDetailSupportVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C96E81F236EBCF3005B1F06 /* SettingDetailSupportVC.swift */; };
+		9C96E82C236EBCF3005B1F06 /* SettingDetailPrivacyPolicyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C96E820236EBCF3005B1F06 /* SettingDetailPrivacyPolicyVC.swift */; };
+		9C96E82D236EBCF3005B1F06 /* SettingDetailAppInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C96E821236EBCF3005B1F06 /* SettingDetailAppInfoVC.swift */; };
+		9C96E82E236EBCF3005B1F06 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C96E822236EBCF3005B1F06 /* SettingsVC.swift */; };
+		9C96E82F236EBCF3005B1F06 /* SettingsVCLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C96E823236EBCF3005B1F06 /* SettingsVCLayout.swift */; };
+		9C96E830236EBCF3005B1F06 /* SettingDescribeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C96E825236EBCF3005B1F06 /* SettingDescribeView.swift */; };
+		9C96E831236EBCF3005B1F06 /* SettingCVCellLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C96E826236EBCF3005B1F06 /* SettingCVCellLayout.swift */; };
+		9C96E832236EBCF3005B1F06 /* SettingCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C96E827236EBCF3005B1F06 /* SettingCVCell.swift */; };
+		9C96E833236EBCF3005B1F06 /* SettingDetailAppInfoVCLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C96E828236EBCF3005B1F06 /* SettingDetailAppInfoVCLayout.swift */; };
+		9C96E834236EBCF3005B1F06 /* SettingDetailSupportVCLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C96E829236EBCF3005B1F06 /* SettingDetailSupportVCLayout.swift */; };
 		9C9A4F7B2365508D00EBEFF7 /* FriendsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9A4F772365508D00EBEFF7 /* FriendsVC.swift */; };
 		9C9A4F7C2365508D00EBEFF7 /* MainTabbarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9A4F782365508D00EBEFF7 /* MainTabbarVC.swift */; };
 		9C9A4F7D2365508D00EBEFF7 /* ChatListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9A4F792365508D00EBEFF7 /* ChatListVC.swift */; };
@@ -162,6 +173,17 @@
 		9C829B8023674DDF008429DF /* ActivityIndicatorButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorButton.swift; sourceTree = "<group>"; };
 		9C829B84236753F5008429DF /* LoginVCLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVCLayout.swift; sourceTree = "<group>"; };
 		9C829B8723675430008429DF /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		9C96E81E236EBCF3005B1F06 /* SettingDetailTermsOfUseVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingDetailTermsOfUseVC.swift; sourceTree = "<group>"; };
+		9C96E81F236EBCF3005B1F06 /* SettingDetailSupportVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingDetailSupportVC.swift; sourceTree = "<group>"; };
+		9C96E820236EBCF3005B1F06 /* SettingDetailPrivacyPolicyVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingDetailPrivacyPolicyVC.swift; sourceTree = "<group>"; };
+		9C96E821236EBCF3005B1F06 /* SettingDetailAppInfoVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingDetailAppInfoVC.swift; sourceTree = "<group>"; };
+		9C96E822236EBCF3005B1F06 /* SettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
+		9C96E823236EBCF3005B1F06 /* SettingsVCLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsVCLayout.swift; sourceTree = "<group>"; };
+		9C96E825236EBCF3005B1F06 /* SettingDescribeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingDescribeView.swift; sourceTree = "<group>"; };
+		9C96E826236EBCF3005B1F06 /* SettingCVCellLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingCVCellLayout.swift; sourceTree = "<group>"; };
+		9C96E827236EBCF3005B1F06 /* SettingCVCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingCVCell.swift; sourceTree = "<group>"; };
+		9C96E828236EBCF3005B1F06 /* SettingDetailAppInfoVCLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingDetailAppInfoVCLayout.swift; sourceTree = "<group>"; };
+		9C96E829236EBCF3005B1F06 /* SettingDetailSupportVCLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingDetailSupportVCLayout.swift; sourceTree = "<group>"; };
 		9C9A4F772365508D00EBEFF7 /* FriendsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsVC.swift; sourceTree = "<group>"; };
 		9C9A4F782365508D00EBEFF7 /* MainTabbarVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabbarVC.swift; sourceTree = "<group>"; };
 		9C9A4F792365508D00EBEFF7 /* ChatListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatListVC.swift; sourceTree = "<group>"; };
@@ -372,7 +394,6 @@
 			children = (
 				9C6926B1236BF587007B55B7 /* RegisterVCLayout.swift */,
 				9C6926BA236C0268007B55B7 /* RegisterVC.swift */,
-				9C9E738B236C73BB003DBEC3 /* UpdateProfileVC.swift */,
 			);
 			path = Register;
 			sourceTree = "<group>";
@@ -420,8 +441,10 @@
 		9C7B39AD236A0CEA001E7F95 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				9C96E81D236EBCF3005B1F06 /* Settings */,
 				9C3AFB1323682F16009E6ED6 /* ProfileVCLayout.swift */,
 				9C7B39AE236A0D00001E7F95 /* ProfileVC.swift */,
+				9C9E738B236C73BB003DBEC3 /* UpdateProfileVC.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -489,6 +512,40 @@
 				9C7B39C3236A12AB001E7F95 /* MessageAttachment.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		9C96E81D236EBCF3005B1F06 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				9C96E823236EBCF3005B1F06 /* SettingsVCLayout.swift */,
+				9C96E822236EBCF3005B1F06 /* SettingsVC.swift */,
+				9C96E835236EC315005B1F06 /* DetailVCs */,
+				9C96E824236EBCF3005B1F06 /* View */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		9C96E824236EBCF3005B1F06 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				9C96E825236EBCF3005B1F06 /* SettingDescribeView.swift */,
+				9C96E826236EBCF3005B1F06 /* SettingCVCellLayout.swift */,
+				9C96E827236EBCF3005B1F06 /* SettingCVCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		9C96E835236EC315005B1F06 /* DetailVCs */ = {
+			isa = PBXGroup;
+			children = (
+				9C96E81E236EBCF3005B1F06 /* SettingDetailTermsOfUseVC.swift */,
+				9C96E820236EBCF3005B1F06 /* SettingDetailPrivacyPolicyVC.swift */,
+				9C96E828236EBCF3005B1F06 /* SettingDetailAppInfoVCLayout.swift */,
+				9C96E821236EBCF3005B1F06 /* SettingDetailAppInfoVC.swift */,
+				9C96E829236EBCF3005B1F06 /* SettingDetailSupportVCLayout.swift */,
+				9C96E81F236EBCF3005B1F06 /* SettingDetailSupportVC.swift */,
+			);
+			path = DetailVCs;
 			sourceTree = "<group>";
 		};
 		9C9A4F7E236550CB00EBEFF7 /* IMBFramework */ = {
@@ -696,6 +753,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C96E830236EBCF3005B1F06 /* SettingDescribeView.swift in Sources */,
 				9CEE3695236A7E05003250C4 /* ChatDetailNavTitleView.swift in Sources */,
 				9C829B8823675430008429DF /* User.swift in Sources */,
 				9C6B9DAB2365E98F00F76BEA /* RTCStates.swift in Sources */,
@@ -709,6 +767,7 @@
 				9C829B8123674DDF008429DF /* ActivityIndicatorButton.swift in Sources */,
 				9C9A4FA3236550CC00EBEFF7 /* IMBTouchableBaseScrollView.swift in Sources */,
 				9C9A4FBE2365867300EBEFF7 /* ChatVC.swift in Sources */,
+				9C96E82E236EBCF3005B1F06 /* SettingsVC.swift in Sources */,
 				9C9A4F7C2365508D00EBEFF7 /* MainTabbarVC.swift in Sources */,
 				9C9A4F9B236550CC00EBEFF7 /* IMBToolbarBasePopUpViewController.swift in Sources */,
 				9C9A4F9E236550CC00EBEFF7 /* IMBToolbarViewController.swift in Sources */,
@@ -722,6 +781,7 @@
 				9C6B9DB32365E9C400F76BEA /* NativeWebSocket.swift in Sources */,
 				9C9A4FAD236550CC00EBEFF7 /* HTTPMethod.swift in Sources */,
 				9C9E738C236C73BB003DBEC3 /* UpdateProfileVC.swift in Sources */,
+				9C96E82D236EBCF3005B1F06 /* SettingDetailAppInfoVC.swift in Sources */,
 				9C7B39C4236A12AB001E7F95 /* MessageAttachment.swift in Sources */,
 				9C6B9DCF23674C5900F76BEA /* LoginVC.swift in Sources */,
 				9C9A4F7D2365508D00EBEFF7 /* ChatListVC.swift in Sources */,
@@ -731,11 +791,14 @@
 				9C7B39C2236A1254001E7F95 /* MessagePayload.swift in Sources */,
 				9C46B56F2365497500602F73 /* AppIcon.swift in Sources */,
 				9C829B85236753F5008429DF /* LoginVCLayout.swift in Sources */,
+				9C96E834236EBCF3005B1F06 /* SettingDetailSupportVCLayout.swift in Sources */,
 				9C9A4FA2236550CC00EBEFF7 /* IMBBaseSlideMenuController.swift in Sources */,
 				9C9A4FA1236550CC00EBEFF7 /* IMBBaseSlideMenuScrollViewController.swift in Sources */,
 				9C7B39AF236A0D00001E7F95 /* ProfileVC.swift in Sources */,
+				9C96E82B236EBCF3005B1F06 /* SettingDetailSupportVC.swift in Sources */,
 				9C3B68F5236A0BBD007A0A56 /* MessageCellVM.swift in Sources */,
 				9C6926B9236BFEB2007B55B7 /* AppFont.swift in Sources */,
+				9C96E832236EBCF3005B1F06 /* SettingCVCell.swift in Sources */,
 				9C3B68F1236A0AF6007A0A56 /* ChatListTableView.swift in Sources */,
 				9C6B9DA42365E94C00F76BEA /* SignalingClient.swift in Sources */,
 				9C9A4F9F236550CC00EBEFF7 /* IMBBaseViewController.swift in Sources */,
@@ -746,9 +809,11 @@
 				9C9A4FC223658ABC00EBEFF7 /* AppConstant.swift in Sources */,
 				9C3B68EB236A0A67007A0A56 /* ChatListVCLayout.swift in Sources */,
 				9C9A4FAE236550CC00EBEFF7 /* IMBPrettyDateLabel.swift in Sources */,
+				9C96E82F236EBCF3005B1F06 /* SettingsVCLayout.swift in Sources */,
 				9C3AFB0E2367F237009E6ED6 /* ChatRoom.swift in Sources */,
 				9C7B39B2236A0D66001E7F95 /* FriendsVCLayout.swift in Sources */,
 				9C9A4FA9236550CC00EBEFF7 /* IMBIndicatorView.swift in Sources */,
+				9C96E82A236EBCF3005B1F06 /* SettingDetailTermsOfUseVC.swift in Sources */,
 				9C9A4FA5236550CC00EBEFF7 /* IMBCoreDataExtension.swift in Sources */,
 				9C9A4FAB236550CC00EBEFF7 /* IMBBaseSlideMenuView.swift in Sources */,
 				9C3B68E82369E8F0007A0A56 /* LaunchVCLayout.swift in Sources */,
@@ -758,6 +823,7 @@
 				9C3AFB1223680B1D009E6ED6 /* MessageCenter.swift in Sources */,
 				9C9A4F9D236550CC00EBEFF7 /* IMBBasePopUpViewController.swift in Sources */,
 				9C6B9DA62365E96D00F76BEA /* Message.swift in Sources */,
+				9C96E82C236EBCF3005B1F06 /* SettingDetailPrivacyPolicyVC.swift in Sources */,
 				9C6B9DAD2365E98F00F76BEA /* IceCandidate.swift in Sources */,
 				9C9A4FAA236550CC00EBEFF7 /* IMBBaseTableViewCell.swift in Sources */,
 				9C9A4F9A236550CC00EBEFF7 /* IMBBaseScrollViewController.swift in Sources */,
@@ -778,6 +844,8 @@
 				9C9A4F9C236550CC00EBEFF7 /* IMBBaseWebViewController.swift in Sources */,
 				9C9A4FA6236550CC00EBEFF7 /* IMBExtension.swift in Sources */,
 				9C9A4FC023658A2000EBEFF7 /* IMBInputMessageBar.swift in Sources */,
+				9C96E833236EBCF3005B1F06 /* SettingDetailAppInfoVCLayout.swift in Sources */,
+				9C96E831236EBCF3005B1F06 /* SettingCVCellLayout.swift in Sources */,
 				9C9A4FAF236550CC00EBEFF7 /* API.swift in Sources */,
 				9C6926BB236C0268007B55B7 /* RegisterVC.swift in Sources */,
 				9C9A4FA8236550CC00EBEFF7 /* IMBView.swift in Sources */,

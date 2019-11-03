@@ -47,5 +47,10 @@ class AppIcon {
     
     static let userAvtPlaceholder = UIImage.init(named: "placeholder-user-photo")
     static let imagePlaceHolder = UIImage.init(named: "imagePlaceHolder")
+    static let editProfile = UIImage.init(named: "edit_profile")
     
+    static let dismissVC = UIImage.init(named: "dismissVC")
+    static let setting = UIImage.init(named: "setting_icon")
+    
+    static let settingCVButAtRightCornerIcon = UIImage.init(named: "rightNarrowIcon")
 }

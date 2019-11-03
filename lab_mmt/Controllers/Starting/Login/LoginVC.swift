@@ -27,9 +27,7 @@ class LoginVC: LoginVCLayout, UITextFieldDelegate {
     // define a variable to store initial touch position
     var initialTouchPoint: CGPoint = CGPoint(x: 0,y: 0)
 
-    @objc func swipeGestureRecognizerHandler(_ sender: UISwipeGestureRecognizer) {
-        dismissMySelf()
-    }
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,6 +52,10 @@ class LoginVC: LoginVCLayout, UITextFieldDelegate {
         let swipeGesture = UISwipeGestureRecognizer.init(target: self, action: #selector(swipeGestureRecognizerHandler(_:)))
         swipeGesture.direction = .down
         view.addGestureRecognizer(swipeGesture)
+    }
+    
+    @objc func swipeGestureRecognizerHandler(_ sender: UISwipeGestureRecognizer) {
+        dismissMySelf()
     }
     
     override func onBtnLoginTap() {
