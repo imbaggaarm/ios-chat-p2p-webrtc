@@ -75,7 +75,7 @@ class SettingDetailSupportVCLayout: BaseViewControllerLayout {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = AppColor.backgroundColor
+        view.backgroundColor = AppColor.black
         
         fanpageView.title = "Nếu bạn cần hỗ trợ, hoặc phát hiện lỗi trong ứng dụng, hãy liên hệ với chúng tôi qua fanpage: BKSchedule"
         supportView.title = "Hoặc bạn có thể liên hệ với chúng tôi qua email:"

@@ -53,4 +53,6 @@ class AppIcon {
     static let setting = UIImage.init(named: "setting_icon")
     
     static let settingCVButAtRightCornerIcon = UIImage.init(named: "rightNarrowIcon")
+    
+    static let attachmentIcon = UIImage.init(named: "icons8-attach")
 }

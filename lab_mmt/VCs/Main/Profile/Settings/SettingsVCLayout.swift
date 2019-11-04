@@ -46,7 +46,7 @@ class SettingsVCLayout: BaseViewControllerLayout {
         //present animation
         modalPresentationCapturesStatusBarAppearance = true
         
-        view.backgroundColor = AppColor.backgroundColor
+        view.backgroundColor = AppColor.black
         
     }
     

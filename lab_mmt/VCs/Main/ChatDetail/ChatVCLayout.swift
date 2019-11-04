@@ -35,7 +35,6 @@ class ChatVCLayout: BaseViewControllerLayout {
         view.backgroundColor = .black
         
         view.addSubviews(subviews: tableView)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.makeFullWithSuperView()
         
         tableView.contentInset.bottom = inputMessageBar.heightOfMessageBar
@@ -51,13 +50,13 @@ class ChatVCLayout: BaseViewControllerLayout {
         navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: navTitleView)
         navigationItem.leftItemsSupplementBackButton = true
         
-        let audioCallItem = UIBarButtonItem.init(image: AppIcon.audioCall, style: .done, target: self, action: nil)
-        let videoCallItem = UIBarButtonItem.init(image: AppIcon.videoCall, style: .done, target: self, action: nil)
-        
-        let space = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
-        space.width = -20
-        
-        navigationItem.rightBarButtonItems = [videoCallItem, space, audioCallItem]
+//        let audioCallItem = UIBarButtonItem.init(image: AppIcon.audioCall, style: .done, target: self, action: nil)
+//        let videoCallItem = UIBarButtonItem.init(image: AppIcon.videoCall, style: .done, target: self, action: nil)
+//
+//        let space = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
+//        space.width = -20
+//
+//        navigationItem.rightBarButtonItems = [videoCallItem, space, audioCallItem]
     }
     
 }

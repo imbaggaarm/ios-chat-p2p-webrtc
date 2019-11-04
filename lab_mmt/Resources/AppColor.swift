@@ -13,7 +13,7 @@ class AppColor {
     static let black = UIColor.black
     static let redOrangeColor = UIColor.init(hexString: "#FF4A57")
     
-    static let backgroundColor = UIColor.black//UIColor.init(hexString: "#1C1E21")
+    static let backgroundColor = UIColor.init(hexString: "#1C1E21")
     static let btnBackgroundColor = UIColor.init(hexString: "#1C1E21")
     static var barTintColor: UIColor {
         return UIColor.black

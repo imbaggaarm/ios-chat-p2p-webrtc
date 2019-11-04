@@ -45,8 +45,6 @@ class ChatVC: ChatVCLayout {
         navTitleView.lblName.text = room.name
         navTitleView.setOnlineState(state: room.partner.p2pState)
         navTitleView.vImage.kf.setImage(with: URL.init(string: room.partner.profilePictureUrl)!)
-        
-        //        navTitleView.backButton.addTarget(self, action: #selector(handleBack), for: .touchUpInside)
     }
     
     @objc func onNavTitleViewTapped() {

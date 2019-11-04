@@ -285,7 +285,7 @@
 				9C3BCFCA23698395008C2910 /* Helpers */,
 				9C3B68EC236A0A97007A0A56 /* View Models */,
 				9C829B8623675424008429DF /* Models */,
-				9C829B82236753BD008429DF /* Controllers */,
+				9C829B82236753BD008429DF /* VCs */,
 				9C9A4FB723655AE600EBEFF7 /* Views */,
 				9C6B9DA72365E98F00F76BEA /* Extensions */,
 				9C9A4F7E236550CB00EBEFF7 /* IMBFramework */,
@@ -481,13 +481,13 @@
 			path = Main;
 			sourceTree = "<group>";
 		};
-		9C829B82236753BD008429DF /* Controllers */ = {
+		9C829B82236753BD008429DF /* VCs */ = {
 			isa = PBXGroup;
 			children = (
 				9C7B39B7236A0E1A001E7F95 /* Starting */,
 				9C7B39B8236A0E26001E7F95 /* Main */,
 			);
-			path = Controllers;
+			path = VCs;
 			sourceTree = "<group>";
 		};
 		9C829B83236753E4008429DF /* Login */ = {

@@ -78,7 +78,7 @@ class SettingDetailAppInfoVCLayout: BaseViewControllerLayout {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = AppColor.backgroundColor
+        view.backgroundColor = AppColor.black
         
         fanpageView.title = "BKSchedule là sản phẩm của Baggarm Team. Nếu bạn muốn liên hệ với chúng tôi, xin vui lòng liên lạc qua fanpage: BKSchedule"
         

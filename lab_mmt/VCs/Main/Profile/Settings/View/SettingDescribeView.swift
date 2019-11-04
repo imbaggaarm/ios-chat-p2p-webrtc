@@ -23,7 +23,6 @@ class SettingDescribeView: IMBVerticalLabelView {
         lblTitle.backgroundColor = .clear
         setLeftAndRightInsetsOfTopView(left: 10, right: 10)
         spacing = 10
-        
     }
     
     required init?(coder aDecoder: NSCoder) {
