@@ -19,20 +19,14 @@ class ChatListVC: ChatListVCLayout, UITableViewDelegate, UITableViewDataSource {
         tableView.dataSource = self
      
         addOnNewMessageObserver()
-        loadData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        reloadData()
     }
     
     var chatThreadVMs = [ChatThreadCellVM]()
-    
-    func loadData() {
-        for friend in myFriends {
-            let room = ChatRoom.init(id: friend.username, partner: friend)
-            let thread = ChatThreadCellVM.init(with: room)
-            chatThreadVMs.append(thread)
-            chatRooms.append(room)
-        }
-        tableView.reloadData()
-    }
     
     func reloadData() {
         chatThreadVMs = []

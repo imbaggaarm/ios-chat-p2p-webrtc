@@ -98,64 +98,61 @@ class MainTabbarVC: UITabBarController {
 
 extension MainTabbarVC: SignalClientDelegate {
     
-//    func getUserProfileAndFriendList() {
-//        var isGotProfile = false
-//        var isGotUserFriends = false
-//
-//        APIClient.getUserProfile(username: UserProfile.this.username)
-//            .execute(onSuccess: {[weak self] (response) in
-//                isGotProfile = true
-//                if response.success {
-//                    UserProfile.this.copy(from: response.data!)
-//                    if isGotUserFriends {
-//                        self?.showMainVC()
-//                    }
-//                } else {
-//                    self?.showWelcomeVC()
-//                }
-//            }) {[weak self] (_) in
-//                isGotProfile = true
-//                self?.showWelcomeVC()
-//        }
-//        
-//
-//        APIClient.getUserFriends(username: UserProfile.this.username)
-//            .execute(onSuccess: {[weak self] (response) in
-//                isGotUserFriends = true
-//                if response.success {
-//                    myFriends = response.data!
-//                    for friend in myFriends {
-//                        friend.setP2pState()
-//                    }
-//                    if isGotProfile {
-//                        self?.showMainVC()
-//                        self?.stopRequestAnimation()
-//                    }
-//                } else {
-//                    self?.showWelcomeVC()
-//                }
-//            }) {[weak self] (_) in
-//                isGotUserFriends = true
-//                self?.showWelcomeVC()
-//        }
-//    }
+    func createChatRooms() {
+        for friend in myFriends {
+            let room = ChatRoom.init(id: friend.username, partner: friend)
+            chatRooms.append(room)
+        }
+    }
+    
+    func getUserProfileAndFriendList() {
+        APIClient.getUserFriends(username: UserProfile.this.username)
+            .execute(onSuccess: {[weak self] (response) in
+                if self == nil { return }
+                if response.success {
+                    DispatchQueue.main.async {
+                        myFriends = response.data!
+                        
+                        self!.createChatRooms()
+                        
+                        for friend in myFriends {
+                            friend.setP2pState()
+                        }
+                        
+                        //reload chatlistvc
+                        if let nav = self!.selectedViewController as? UINavigationController {
+                            if let chatListVC = nav.topViewController as? ChatListVC {
+                                chatListVC.reloadData()
+                            }
+                        }
+                        
+                        for friend in myFriends {
+                            //only establish connection for friend is online
+                            if friend.state == .online {
+                                let peerConnection = self!.webRTCClient.createPeerConnection(for: friend.username)
+                                self!.webRTCClient.offer(peerConnection: peerConnection) { (sdp) in
+                                    self!.signalClient.sendOffer(username: UserProfile.this.username, partnerUsername: friend.username, sdp: sdp)
+                                }
+                            }
+                        }
+                        self?.loadingView.removeFromSuperview()
+                    }
+                } else {
+                    DispatchQueue.main.async {
+                        self?.loadingView.removeFromSuperview()
+                        self?.letsAlert(withMessage: response.error)
+                    }
+                }
+            }) {[weak self] (err) in
+                DispatchQueue.main.async {
+                    self?.loadingView.removeFromSuperview()
+                    self?.letsAlert(withMessage: err.asAFError?.errorDescription ?? "Không thể lấy danh sách bạn, hãy thử đăng nhập lại.")
+                }
+        }
+    }
     
     func signalClientDidConnect(_ signalClient: SignalingClient) {
-        
-        DispatchQueue.main.async {
-            self.loadingView.removeFromSuperview()
-        }
-        
-        for friend in myFriends {
-            //only establish connection for friend is online
-            if friend.state == .online {
-                let peerConnection = self.webRTCClient.createPeerConnection(for: friend.username)
-                
-                self.webRTCClient.offer(peerConnection: peerConnection) { (sdp) in
-                    self.signalClient.sendOffer(username: UserProfile.this.username, partnerUsername: friend.username, sdp: sdp)
-                }
-            }
-        }
+        getUserProfileAndFriendList()
     }
     
     func signalClientDidDisconnect(_ signalClient: SignalingClient) {

@@ -16,9 +16,13 @@ class FriendsVC: FriendsVCLayout, UITableViewDelegate, UITableViewDataSource {
         tableView.delegate = self
         tableView.dataSource = self
         
-        loadData()
-        
         addConnectionStateChangeObserver()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        loadData()
     }
     
     override func onLeftBarButtonTapped() {
@@ -59,11 +63,6 @@ class FriendsVC: FriendsVCLayout, UITableViewDelegate, UITableViewDataSource {
             let vm = FriendCellVM.init(imageURL: URL(string: friend.profilePictureUrl), name: friend.displayName, onlineState: friend.p2pState)
             friendVMs.append(vm)
         }
-        
-        //        let ive = FriendCellVM(imageURL: UIImage.init(named: "ive"), name: "Jony Ive", onlineState: .doNotDisturb)
-        //        let cragh = FriendCellVM(imageURL: UIImage.init(named: "craig"), name: "Craig Federighi", onlineState: .offline)
-        //
-        //        friendVMs.append(elements: tim, ive, cragh)
         
         tableView.reloadData()
         

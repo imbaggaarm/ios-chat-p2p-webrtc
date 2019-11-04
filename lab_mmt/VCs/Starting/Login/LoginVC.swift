@@ -77,7 +77,7 @@ class LoginVC: LoginVCLayout, UITextFieldDelegate {
                     UserProfile.this.username = response.data!.username
                     UserProfile.this.token = response.data!.token
                     AppUserDefaults.sharedInstance.setUserAccount(email: email, password: password)
-                    self?.getUserProfileAndFriendList()
+                    self?.getUserProfile()
                 } else {
                     self?.handleError(error: response.error)
                 }
@@ -92,29 +92,19 @@ class LoginVC: LoginVCLayout, UITextFieldDelegate {
         self.letsAlert(withMessage: error)
     }
     
-    func getUserProfileAndFriendList() {
-        var isGotProfile = false
-        var isGotUserFriends = false
+    func getUserProfile() {
         
         APIClient.getUserProfile(username: UserProfile.this.username)
             .execute(onSuccess: {[weak self] (response) in
-                isGotProfile = true
                 if response.success {
                     UserProfile.this.copy(from: response.data!)
-                    if isGotUserFriends {
-                        self?.dismissToWelcomeVC()
-                    }
+                    self?.dismissToWelcomeVC()
                 } else {
-                    if isGotUserFriends {
-                        self?.stopRequestAnimation()
-                    }
+                    self?.stopRequestAnimation()
                     self?.handleError(error: response.error)
                 }
             }) {[weak self] (error) in
-                isGotProfile = true
-                if isGotUserFriends {
-                    self?.stopRequestAnimation()
-                }
+                self?.stopRequestAnimation()
                 self?.handleError(error: error.asAFError?.errorDescription ?? "Unexpected error")
         }
     }
