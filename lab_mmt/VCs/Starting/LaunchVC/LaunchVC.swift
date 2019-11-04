@@ -90,7 +90,7 @@ class LaunchVC: LaunchVCLayout {
                     UserProfile.this.username = response.data!.username
                     UserProfile.this.token = response.data!.token
                     AppUserDefaults.sharedInstance.setUserAccount(email: email, password: password)
-                    self?.getUserProfileAndFriendList()
+                    self?.getUserProfile()
                 } else {
                     self?.showWelcomeVC()
                 }
@@ -104,44 +104,17 @@ class LaunchVC: LaunchVCLayout {
         self.letsAlert(withMessage: error)
     }
     
-    func getUserProfileAndFriendList() {
-        var isGotProfile = false
-        var isGotUserFriends = false
+    func getUserProfile() {
         
         APIClient.getUserProfile(username: UserProfile.this.username)
             .execute(onSuccess: {[weak self] (response) in
-                isGotProfile = true
                 if response.success {
                     UserProfile.this.copy(from: response.data!)
-                    if isGotUserFriends {
-                        self?.showMainVC()
-                    }
+                    self?.showMainVC()
                 } else {
                     self?.showWelcomeVC()
                 }
             }) {[weak self] (_) in
-                isGotProfile = true
-                self?.showWelcomeVC()
-        }
-        
-        
-        APIClient.getUserFriends(username: UserProfile.this.username)
-            .execute(onSuccess: {[weak self] (response) in
-                isGotUserFriends = true
-                if response.success {
-                    myFriends = response.data!
-                    for friend in myFriends {
-                        friend.setP2pState()
-                    }
-                    if isGotProfile {
-                        self?.showMainVC()
-                        self?.stopRequestAnimation()
-                    }
-                } else {
-                    self?.showWelcomeVC()
-                }
-            }) {[weak self] (_) in
-                isGotUserFriends = true
                 self?.showWelcomeVC()
         }
     }

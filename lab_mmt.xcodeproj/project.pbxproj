@@ -107,6 +107,8 @@
 		9C9A4FC42365962700EBEFF7 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9A4FC32365962700EBEFF7 /* MessageCell.swift */; };
 		9C9E7389236C3791003DBEC3 /* AuthRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9E7388236C3791003DBEC3 /* AuthRouter.swift */; };
 		9C9E738C236C73BB003DBEC3 /* UpdateProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9E738B236C73BB003DBEC3 /* UpdateProfileVC.swift */; };
+		9CB5AFDF2370555100F17066 /* FileViewerVCLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB5AFDE2370555100F17066 /* FileViewerVCLayout.swift */; };
+		9CB5AFE12370960C00F17066 /* ImagePreviewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB5AFE02370960C00F17066 /* ImagePreviewVC.swift */; };
 		9CEE3695236A7E05003250C4 /* ChatDetailNavTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEE3694236A7E05003250C4 /* ChatDetailNavTitleView.swift */; };
 		D7849D9B3165B4C9C7D0E4B8 /* Pods_lab_mmt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 703780E5A04382471FE3EF15 /* Pods_lab_mmt.framework */; };
 /* End PBXBuildFile section */
@@ -220,6 +222,8 @@
 		9C9A4FC32365962700EBEFF7 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		9C9E7388236C3791003DBEC3 /* AuthRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRouter.swift; sourceTree = "<group>"; };
 		9C9E738B236C73BB003DBEC3 /* UpdateProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProfileVC.swift; sourceTree = "<group>"; };
+		9CB5AFDE2370555100F17066 /* FileViewerVCLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileViewerVCLayout.swift; sourceTree = "<group>"; };
+		9CB5AFE02370960C00F17066 /* ImagePreviewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePreviewVC.swift; sourceTree = "<group>"; };
 		9CEE3694236A7E05003250C4 /* ChatDetailNavTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDetailNavTitleView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -283,10 +287,10 @@
 				9C46B56A2365496500602F73 /* Resources */,
 				9C6B9D9D2365DF4D00F76BEA /* Services */,
 				9C3BCFCA23698395008C2910 /* Helpers */,
-				9C3B68EC236A0A97007A0A56 /* View Models */,
 				9C829B8623675424008429DF /* Models */,
-				9C829B82236753BD008429DF /* VCs */,
 				9C9A4FB723655AE600EBEFF7 /* Views */,
+				9C3B68EC236A0A97007A0A56 /* View Models */,
+				9C829B82236753BD008429DF /* VCs */,
 				9C6B9DA72365E98F00F76BEA /* Extensions */,
 				9C9A4F7E236550CB00EBEFF7 /* IMBFramework */,
 				9C0DBD382364B86B00BD3595 /* LaunchScreen.storyboard */,
@@ -363,6 +367,8 @@
 				9C3B68F8236A0C09007A0A56 /* ChatVCLayout.swift */,
 				9C9A4FBD2365867300EBEFF7 /* ChatVC.swift */,
 				9C5CDB6A236892AD003B1849 /* CallVC.swift */,
+				9CB5AFDE2370555100F17066 /* FileViewerVCLayout.swift */,
+				9CB5AFE02370960C00F17066 /* ImagePreviewVC.swift */,
 			);
 			path = ChatDetail;
 			sourceTree = "<group>";
@@ -780,6 +786,7 @@
 				9C7B39B4236A0DA0001E7F95 /* FriendTableView.swift in Sources */,
 				9C6B9DB32365E9C400F76BEA /* NativeWebSocket.swift in Sources */,
 				9C9A4FAD236550CC00EBEFF7 /* HTTPMethod.swift in Sources */,
+				9CB5AFE12370960C00F17066 /* ImagePreviewVC.swift in Sources */,
 				9C9E738C236C73BB003DBEC3 /* UpdateProfileVC.swift in Sources */,
 				9C96E82D236EBCF3005B1F06 /* SettingDetailAppInfoVC.swift in Sources */,
 				9C7B39C4236A12AB001E7F95 /* MessageAttachment.swift in Sources */,
@@ -815,6 +822,7 @@
 				9C9A4FA9236550CC00EBEFF7 /* IMBIndicatorView.swift in Sources */,
 				9C96E82A236EBCF3005B1F06 /* SettingDetailTermsOfUseVC.swift in Sources */,
 				9C9A4FA5236550CC00EBEFF7 /* IMBCoreDataExtension.swift in Sources */,
+				9CB5AFDF2370555100F17066 /* FileViewerVCLayout.swift in Sources */,
 				9C9A4FAB236550CC00EBEFF7 /* IMBBaseSlideMenuView.swift in Sources */,
 				9C3B68E82369E8F0007A0A56 /* LaunchVCLayout.swift in Sources */,
 				9C7B39BE236A0F25001E7F95 /* WSMessage.swift in Sources */,

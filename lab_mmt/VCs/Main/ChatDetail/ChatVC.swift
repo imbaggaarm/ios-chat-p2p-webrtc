@@ -7,12 +7,16 @@
 //
 
 import UIKit
+import AVKit
+import AttachmentPicker
 
 class ChatVC: ChatVCLayout {
     
     var webRTCClient: WebRTCClient
     //    var partnerID: UserID
     var room: ChatRoom
+    
+    let menu = HSAttachmentPicker()
     
     private let decoder = JSONDecoder()
     private let encoder = JSONEncoder()
@@ -45,6 +49,8 @@ class ChatVC: ChatVCLayout {
         navTitleView.lblName.text = room.name
         navTitleView.setOnlineState(state: room.partner.p2pState)
         navTitleView.vImage.kf.setImage(with: URL.init(string: room.partner.profilePictureUrl)!)
+        
+        menu.delegate = self
     }
     
     @objc func onNavTitleViewTapped() {
@@ -102,6 +108,70 @@ class ChatVC: ChatVCLayout {
         navTitleView.setOnlineState(state: room.partner.p2pState)
     }
     
+    func presentFileViewer(attachment: Attachment) {
+        do {
+            let url = try AppUserDefaults.sharedInstance.store(data: attachment.payload, name: attachment.name)
+            let fileViewer = FileViewerVCLayout.init(attachment: attachment, url: url)
+            present(UINavigationController.init(rootViewController: fileViewer), animated: true, completion: nil)
+        } catch {
+            print("Error")
+        }
+    }
+    
+    func showFastEmoji(attachment: Attachment) {
+        if let image = UIImage.init(data: attachment.payload) {
+            
+            let bgView = UIView()
+            
+            let imageView = UIImageView()
+            imageView.image = image
+            
+            bgView.addSubviews(subviews: imageView)
+            imageView.makeCenter(with: bgView)
+            imageView.width(constant: image.size.width)
+            imageView.height(constant: image.size.height)
+            
+            view.addSubview(bgView)
+            bgView.makeFullWidthWithSuperView()
+            bgView.topAnchor(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0)
+            bgView.height(constant: heightOfScreen - view.safeAreaLayoutGuide.layoutFrame.origin.y - currentKeyboardHeight)
+            
+            UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.3, initialSpringVelocity: 10, options: .curveEaseOut, animations: {
+                //
+                imageView.layer.transform = CATransform3DMakeScale(1.5, 1.5, 1)
+            }, completion: { (completed) in
+                UIView.animate(withDuration: 0.3, animations: {
+                    imageView.alpha = 0
+                }, completion: { (completed) in
+                    bgView.removeFromSuperview()
+                })
+            })
+        } else {
+            debugPrint("Can not get image from data")
+        }
+    }
+    
+    func showImage(attachment: Attachment) {
+        if let image = UIImage.init(data: attachment.payload) {
+            let imagePreview = ImagePreviewVC(image: image)
+            present(UINavigationController.init(rootViewController: imagePreview), animated: true, completion: nil)
+        } else {
+            debugPrint("Can not get image from data")
+        }
+    }
+    
+    func showVideo(attachment: Attachment) {
+        do {
+            let url = try AppUserDefaults.sharedInstance.store(data: attachment.payload, name: attachment.name)
+            let player = AVPlayer(url: url)
+            let vc = AVPlayerViewController()
+            vc.player = player
+            present(vc, animated: true, completion: nil)
+        } catch {
+            print("Error")
+        }
+    }
+    
     @objc func handleNewMessage(notification: Notification) {
         guard let message = notification.userInfo?[MessageHandler.messageUserInfoKey] as? Message else { return }
         if message.from == room.partner.username {
@@ -112,27 +182,21 @@ class ChatVC: ChatVCLayout {
                 messageVMs.append(vm)
                 reloadTableDataAfterAppendMessage()
             case .attachment(let attachment):
-                if let image = UIImage.init(data: attachment.payload) {
-                    let imageView = UIImageView()
-                    imageView.image = image
-                    view.addSubview(imageView)
-                    imageView.makeCenter(with: view)
-                    imageView.width(constant: image.size.width)
-                    imageView.height(constant: image.size.height)
-                    
-                    UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.3, initialSpringVelocity: 10, options: .curveEaseOut, animations: {
-                        //
-                        imageView.layer.transform = CATransform3DMakeScale(1.5, 1.5, 1)
-                    }, completion: { (completed) in
-                        UIView.animate(withDuration: 0.3, animations: {
-                            imageView.alpha = 0
-                        }, completion: { (completed) in
-                            imageView.removeFromSuperview()
-                        })
-                    })
-                } else {
-                    
-                    debugPrint("Can not get image from data")
+                if attachment.currentPackage < attachment.totalPackage {
+                    break
+                }
+                switch attachment.type {
+                case .image:
+                    showImage(attachment: attachment)
+                case .video:
+                    showVideo(attachment: attachment)
+                case .fastEmoji:
+                    showFastEmoji(attachment: attachment)
+                case .file:
+                    //append new data to old
+                    presentFileViewer(attachment: attachment)
+                default:
+                    break
                 }
             }
         } else if message.to == room.partner.username {
@@ -273,7 +337,7 @@ extension ChatVC: InputMessageBarDelegate {
     func inputMessageBarDidTapButtonFastEmoji() {
         let image = AppIcon.fastEmojiTest!
         if let data = image.pngData() {
-            let attachment = Attachment.init(type: .image, payload: data)
+            let attachment = Attachment.init(name: "fast_emoji.png", type: .fastEmoji, payload: data, totalPackage: 1, currentPackage: 1)
             let messagePayload = MessagePayload.attachment(attachment)
             let id = UUID().uuidString
             let createdTime = Int64(Date().timeIntervalSince1970)
@@ -288,11 +352,11 @@ extension ChatVC: InputMessageBarDelegate {
     }
     
     func inputMessageBarDidTapButtonPickImage() {
-        //
+        
     }
     
     func inputMessageBarDidTapButtonCamera() {
-        //
+        menu.showAttachmentMenu()
     }
     
     func inputMessageBarTxtVDidBecomeFirstResponder() {
@@ -302,6 +366,106 @@ extension ChatVC: InputMessageBarDelegate {
     func inputMessageBarTxtVDidResignFirstResponder() {
         //
     }
+}
+
+extension ChatVC: HSAttachmentPickerDelegate {
+    func attachmentPickerMenu(_ menu: HSAttachmentPicker, show controller: UIViewController, completion: (() -> Void)? = nil) {
+        self.present(controller, animated: true, completion: completion)
+    }
     
+    func attachmentPickerMenu(_ menu: HSAttachmentPicker, showErrorMessage errorMessage: String) {
+        print(errorMessage)
+    }
     
+    func attachmentPickerMenu(_ menu: HSAttachmentPicker, upload data: Data, filename: String, image: UIImage?) {
+        
+        if data.count == 0 {
+            letsAlert(withMessage: "Mời bạn chọn lại file. File không thể load để gửi đi.")
+            return
+        }
+        
+        let maxSizePerEach = 100*1024
+        let totalPackage = Int(Double(data.count)/Double(maxSizePerEach)) + 1
+        var attachmentType: AttachmentType
+        if filename.isImageType() {
+            attachmentType = .image
+        } else if filename.isVideoType() {
+            attachmentType = .video
+        } else {
+            attachmentType = .file
+        }
+        
+        
+        let id = UUID().uuidString
+        let createdTime = Int64(Date().timeIntervalSince1970)
+        
+        
+        for i in 1...totalPackage {
+            let min = i*maxSizePerEach - maxSizePerEach
+            let splicedData = data[min, min + maxSizePerEach]
+            let attachment: Attachment = Attachment.init(name: filename, type: attachmentType, payload: splicedData, totalPackage: totalPackage, currentPackage: i)
+            let messagePayload = MessagePayload.attachment(attachment)
+            let message = Message.init(id: id, from: UserProfile.this.username, to: room.partner.username, createdTime: createdTime, message: messagePayload)
+            print(message)
+            sendMessage(message: message)
+        }
+        
+    }
+}
+
+extension Data {
+    subscript(start:Int?, stop:Int?) -> Data {
+        var front = 0
+        if let start = start {
+            front = start < 0 ? Swift.max(self.count + start, 0) : Swift.min(start, self.count)
+        }
+        var back = self.count
+        if let stop  = stop {
+            back = stop < 0 ? Swift.max(self.count + stop, 0) : Swift.min(stop, self.count)
+        }
+        if front >= back {
+            return Data()
+        }
+        let range = front..<back
+        return self.subdata(in: range)
+    }
+}
+
+extension String {
+    public func isImageType() -> Bool {
+        // image formats which you want to check
+        let imageFormats = ["jpg", "png", "gif", "heic"]
+        
+        if URL(string: self) != nil  {
+            
+            let extensi = (self as NSString).pathExtension
+            
+            return imageFormats.contains(extensi)
+        }
+        return false
+    }
+    
+    public func isVideoType() -> Bool {
+        let formats = ["mov", "mp4"]
+        
+        if URL(string: self) != nil  {
+            
+            let extensi = (self as NSString).pathExtension
+            
+            return formats.contains(extensi)
+        }
+        return false
+    }
+    
+    public func isAudioType() -> Bool {
+        let formats = ["mp3"]
+        
+        if URL(string: self) != nil  {
+            
+            let extensi = (self as NSString).pathExtension
+            
+            return formats.contains(extensi)
+        }
+        return false
+    }
 }

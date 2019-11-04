@@ -9,13 +9,31 @@
 import Foundation
 
 enum AttachmentType: String, Codable {
+    case fastEmoji
     case image
-    case audio
     case video
     case file
+    
+    enum CodingKeys: String, CodingKey {
+        case fastEmoji = "fast_emoji"
+        case image
+        case video
+        case file
+    }
 }
 
 struct Attachment: Codable {
-    let type: AttachmentType
-    let payload: Data
+    let name: String
+    var type: AttachmentType
+    var payload: Data
+    var totalPackage: Int
+    var currentPackage: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case name
+        case type
+        case payload
+        case totalPackage = "total_package"
+        case currentPackage = "current_package"
+    }
 }

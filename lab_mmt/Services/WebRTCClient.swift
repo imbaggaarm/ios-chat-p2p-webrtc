@@ -189,8 +189,7 @@ final class WebRTCClient: NSObject {
     private func createDataChannel(forUser userID: UserID) {
         let config = RTCDataChannelConfiguration()
         config.isOrdered = true
-        
-        guard let peerConnection = peerConnections[userID], let dataChannel = peerConnection.dataChannel(forLabel: "channel1", configuration: config) else {
+        guard let peerConnection = peerConnections[userID], let dataChannel = peerConnection.dataChannel(forLabel: "channel_1", configuration: config) else {
             debugPrint("Warning: Couldn't create data channel.")
             return
         }

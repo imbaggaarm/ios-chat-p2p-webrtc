@@ -50,17 +50,17 @@ class AppUserDefaults {
         return UIImage(contentsOfFile: imagePath.path)
     }
     
-    func store(image: UIImage, name: String) throws {
-        guard let imageData = image.jpegData(compressionQuality: 1) else {
-            throw NSError(domain: "com.imbaggaarm.bkschedule", code: 0, userInfo: [NSLocalizedDescriptionKey: "The image could not be created"])
-
+    func store(data: Data, name: String) throws -> URL {
+        let fileManager = FileManager.default
+        let documentDirectory = try fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+        let fileURL = documentDirectory.appendingPathComponent(name)
+        do {
+            try data.write(to: fileURL)
+            return fileURL
         }
-        
-        guard let imagePath = path(for: name, fileExtension: "jpeg") else {
-            throw NSError(domain: "com.imbaggaarm.bkschedule", code: 0, userInfo: [NSLocalizedDescriptionKey: "The image path could not be retrieved"])
+        catch (let error) {
+            throw error
         }
-        
-        try imageData.write(to: imagePath)
     }
     
     private func path(for imageName: String, fileExtension: String = "jpeg") -> URL? {

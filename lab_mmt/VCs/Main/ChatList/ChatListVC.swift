@@ -82,13 +82,11 @@ class ChatListVC: ChatListVCLayout, UITableViewDelegate, UITableViewDataSource {
         
         for (i, t) in chatThreadVMs.enumerated() {
             if t.room.id == message.from || t.room.id == message.to {
-                print(t.room.lastMessage)
                 let oldIndex = IndexPath.init(row: i, section: 0)
                 
                 chatThreadVMs.remove(at: i)
                 // create new chat thread VM
                 let newVM = ChatThreadCellVM.init(with: t.room)
-                print(newVM.lastMessage)
                 chatThreadVMs.insert(newVM, at: 0)
                 
                 let newIndex = IndexPath.init(row: 0, section: 0)

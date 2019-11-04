@@ -117,31 +117,6 @@ class LoginVC: LoginVCLayout, UITextFieldDelegate {
                 }
                 self?.handleError(error: error.asAFError?.errorDescription ?? "Unexpected error")
         }
-        
-        APIClient.getUserFriends(username: UserProfile.this.username)
-            .execute(onSuccess: {[weak self] (response) in
-                isGotUserFriends = true
-                if response.success {
-                    myFriends = response.data!
-                    for friend in myFriends {
-                        friend.setP2pState()
-                    }
-                    if isGotProfile {
-                        self?.dismissToWelcomeVC()
-                    }
-                } else {
-                    if isGotProfile {
-                        self?.stopRequestAnimation()
-                    }
-                    self?.handleError(error: response.error)
-                }
-            }) {[weak self] (error) in
-                isGotUserFriends = true
-                if isGotProfile {
-                    self?.stopRequestAnimation()
-                }
-                self?.handleError(error: error.asAFError?.errorDescription ?? "Unexpected error")
-        }
     }
     
     private func dismissToWelcomeVC() {

@@ -37,11 +37,24 @@ struct ChatThreadCellVM {
             } else {
                 self.lastMessage = room.partner.displayName + ": \(text)"
             }
-        case .attachment(_):
+        case .attachment(let attachment):
+            var attType = ""
+            switch attachment.type {
+            case .image:
+                attType = "ảnh"
+            case .fastEmoji:
+                attType = "emoji"
+            case .video:
+                attType = "video"
+            case .file:
+                attType = "file"
+            default:
+                break
+            }
             if UserProfile.this.username == lastMessage.from {
-                self.lastMessage = "Bạn đã gửi một ảnh."
+                self.lastMessage = "Bạn đã gửi một \(attType)."
             } else {
-                self.lastMessage = room.partner.displayName + " đã gửi một ảnh."
+                self.lastMessage = room.partner.displayName + " đã gửi một \(attType)."
             }
         }
         

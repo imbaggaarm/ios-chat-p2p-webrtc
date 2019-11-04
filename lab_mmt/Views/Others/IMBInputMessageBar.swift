@@ -166,11 +166,11 @@ class IMBInputContentView: UIView, UITextViewDelegate {
         return temp
     }()
     
-    let butPickImage: UIButton = {
-        let temp = UIButton()
-        temp.clipsToBounds = true
-        return temp
-    }()
+//    let butPickImage: UIButton = {
+//        let temp = UIButton()
+//        temp.clipsToBounds = true
+//        return temp
+//    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -182,14 +182,14 @@ class IMBInputContentView: UIView, UITextViewDelegate {
         
         
         
-        butScaleDownTextView.addTarget(self, action: #selector(handleScaleDownTxtV), for: .touchUpInside)
+//        butScaleDownTextView.addTarget(self, action: #selector(handleScaleDownTxtV), for: .touchUpInside)
         butEmoji.addTarget(self, action: #selector(handleTapButEmoji), for: .touchUpInside)
         butFastEmoji.addTarget(self, action: #selector(handleTapButFastEmoji), for: .touchUpInside)
         butCamera.addTarget(self, action: #selector(handleTapButCamera), for: .touchUpInside)
-        butPickImage.addTarget(self, action: #selector(handleTapButPickImage), for: .touchUpInside)
+//        butPickImage.addTarget(self, action: #selector(handleTapButPickImage), for: .touchUpInside)
         butSendMessage.addTarget(self, action: #selector(handleTapButSendMessage), for: .touchUpInside)
         
-        butPickImage.isHidden = false
+//        butPickImage.isHidden = false
         butCamera.isHidden = false
         butScaleDownTextView.isHidden = true
     }
@@ -219,17 +219,16 @@ class IMBInputContentView: UIView, UITextViewDelegate {
             bottom = bottomAnchor.constraint(equalTo: layoutMarginsGuide.bottomAnchor)
             bottom?.isActive = true
         }
-        addSubviews(subviews: butCamera, butPickImage, butScaleDownTextView, inputMessageContentView, butFastEmoji, butSendMessage)
+        addSubviews(subviews: butCamera, butScaleDownTextView, inputMessageContentView, butFastEmoji, butSendMessage)
         
-        addConstraintsWith(format: "H:|-\(spacing)-[v0]-\(spacing)-[v1]", views: butCamera, butPickImage)
+        addConstraintsWith(format: "H:|-\(spacing)-[v0]", views: butCamera)
         
         addConstraintsWith(format: "H:[v0]-\(spacing)-[v1]-\(spacing)-|", views: inputMessageContentView, butFastEmoji)
         
-        leftConstraintOfInputMessageContentView = inputMessageContentView.leftAnchor.constraint(equalTo: leftAnchor, constant: spacing*3 + butWidth*2)
+        leftConstraintOfInputMessageContentView = inputMessageContentView.leftAnchor.constraint(equalTo: leftAnchor, constant: spacing*2 + butWidth)
         leftConstraintOfInputMessageContentView?.isActive = true
         
         butCamera.makeSquare(size: butWidth)
-        butPickImage.makeEqual(with: butCamera)
         butFastEmoji.makeEqual(with: butCamera)
         butSendMessage.makeEqual(with: butCamera)
         butSendMessage.makeCenter(with: butFastEmoji)
@@ -241,8 +240,6 @@ class IMBInputContentView: UIView, UITextViewDelegate {
         let butCamereBottom = butCamera.bottomAnchor.constraint(equalTo: inputMessageContentView.bottomAnchor, constant: -7.5)
         butCamereBottom.priority = UILayoutPriority.init(rawValue: 750)
         butCamereBottom.isActive = true
-        
-        butPickImage.bottomAnchor(equalTo: butCamera.bottomAnchor)
         
         butFastEmoji.bottomAnchor(equalTo: butCamera.bottomAnchor)
         
@@ -275,14 +272,14 @@ class IMBInputContentView: UIView, UITextViewDelegate {
     }
     
     func setImageForButtons() {
-        butCamera.setImage(AppIcon.camera, for: .normal)
+        butCamera.setImage(AppIcon.attachmentIcon, for: .normal)
         
         butFastEmoji.setImage(AppIcon.fastEmojiTest, for: .normal)
         
         butSendMessage.setImage(AppIcon.sendMessage, for: .normal)
         
-        butPickImage.setImage(AppIcon.unSelectedImageIcon, for: .normal)
-        butPickImage.setImage(AppIcon.selectedImageIcon, for: .selected)
+//        butPickImage.setImage(AppIcon.unSelectedImageIcon, for: .normal)
+//        butPickImage.setImage(AppIcon.selectedImageIcon, for: .selected)
         
         butEmoji.setImage(AppIcon.emojiTest, for: .normal)
         butEmoji.setImage(AppIcon.fillEmoji, for: .selected)
@@ -297,7 +294,7 @@ class IMBInputContentView: UIView, UITextViewDelegate {
             txtVInputMessage.text = ""
         }
         if !textViewIsScaleUp {
-            handleScaleUpTxtV()
+//            handleScaleUpTxtV()
         }
         
         inputMessageBar?.delegate?.inputMessageBarTxtVDidBecomeFirstResponder?()
@@ -306,9 +303,9 @@ class IMBInputContentView: UIView, UITextViewDelegate {
             butEmoji.isSelected = false
         }
         
-        if butPickImage.isSelected {
-            butPickImage.isSelected = false
-        }
+//        if butPickImage.isSelected {
+//            butPickImage.isSelected = false
+//        }
     }
     
     func textViewDidChange(_ textView: UITextView) {
@@ -353,7 +350,7 @@ class IMBInputContentView: UIView, UITextViewDelegate {
 //        }, completion: nil)
         
         if butScaleDownTextView.isHidden {
-            handleScaleUpTxtV()
+//            handleScaleUpTxtV()
         }
         
         if textView.text != "" {
@@ -387,7 +384,7 @@ class IMBInputContentView: UIView, UITextViewDelegate {
             txtVInputMessage.setPlaceHolder()
         }
         
-        handleScaleDownTxtV()
+//        handleScaleDownTxtV()
         
         inputMessageBar?.delegate?.inputMessageBarTxtVDidResignFirstResponder?()
     }
@@ -419,35 +416,35 @@ class IMBInputContentView: UIView, UITextViewDelegate {
     }
 
     
-    @objc func handleScaleDownTxtV() {
-        leftConstraintOfInputMessageContentView?.constant = spacing*3 + butWidth*2
-        butCamera.isHidden = false
-        butPickImage.isHidden = false
-        butScaleDownTextView.isHidden = true
-        animateButton(button: butScaleDownTextView)
-        defer { textViewIsScaleUp = false }
-        UIView.animate(withDuration: 0.15, delay: 0, options: .curveEaseOut, animations: {
-            self.butCamera.alpha = 1
-            self.butPickImage.alpha = 1
-            self.layoutIfNeeded()
-        }, completion: nil)
-    }
-    
-    @objc func handleScaleUpTxtV() {
-        leftConstraintOfInputMessageContentView?.constant = spacing*2 + butWidth
-        butScaleDownTextView.isHidden = false
-        defer { textViewIsScaleUp = true }
-        UIView.animate(withDuration: 0.15, delay: 0, options: .curveEaseOut, animations: {
-            self.butCamera.alpha = 0
-            self.butPickImage.alpha = 0
-            self.layoutIfNeeded()
-        }, completion: { _ in
-            self.butCamera.isHidden = true
-            self.butPickImage.isHidden = true
-        })
-        
-        animateButton(button: butScaleDownTextView)
-    }
+//    @objc func handleScaleDownTxtV() {
+//        leftConstraintOfInputMessageContentView?.constant = spacing*3 + butWidth*2
+//        butCamera.isHidden = false
+////        butPickImage.isHidden = false
+//        butScaleDownTextView.isHidden = true
+//        animateButton(button: butScaleDownTextView)
+//        defer { textViewIsScaleUp = false }
+//        UIView.animate(withDuration: 0.15, delay: 0, options: .curveEaseOut, animations: {
+//            self.butCamera.alpha = 1
+////            self.butPickImage.alpha = 1
+//            self.layoutIfNeeded()
+//        }, completion: nil)
+//    }
+//
+//    @objc func handleScaleUpTxtV() {
+//        leftConstraintOfInputMessageContentView?.constant = spacing*2 + butWidth
+//        butScaleDownTextView.isHidden = false
+//        defer { textViewIsScaleUp = true }
+//        UIView.animate(withDuration: 0.15, delay: 0, options: .curveEaseOut, animations: {
+//            self.butCamera.alpha = 0
+//            self.butPickImage.alpha = 0
+//            self.layoutIfNeeded()
+//        }, completion: { _ in
+//            self.butCamera.isHidden = true
+//            self.butPickImage.isHidden = true
+//        })
+//
+//        animateButton(button: butScaleDownTextView)
+//    }
     
     @objc func handleTapButEmoji() {
         butEmoji.isSelected = !butEmoji.isSelected
@@ -472,15 +469,15 @@ class IMBInputContentView: UIView, UITextViewDelegate {
         inputMessageBar?.delegate?.inputMessageBarDidTapButtonCamera()
     }
     
-    @objc func handleTapButPickImage() {
-        butPickImage.isSelected = !butPickImage.isSelected
-        
-        if butPickImage.isSelected {
-            inputMessageBar?.delegate?.inputMessageBarDidTapButtonPickImage()
-        } else {
-            txtVInputMessage.becomeFirstResponder()
-        }
-    }
+//    @objc func handleTapButPickImage() {
+//        butPickImage.isSelected = !butPickImage.isSelected
+//
+//        if butPickImage.isSelected {
+//            inputMessageBar?.delegate?.inputMessageBarDidTapButtonPickImage()
+//        } else {
+//            txtVInputMessage.becomeFirstResponder()
+//        }
+//    }
     
     
 }

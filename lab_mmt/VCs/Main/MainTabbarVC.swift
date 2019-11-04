@@ -9,6 +9,29 @@
 import UIKit
 import WebRTC
 
+class LoadingView: UIView {
+    let loadIndicator: UIActivityIndicatorView = {
+        let temp = UIActivityIndicatorView()
+        temp.color = .white
+        return temp
+    }()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        backgroundColor = AppColor.black
+        
+        addSubviews(subviews: loadIndicator)
+        
+        loadIndicator.makeSquare(size: 40)
+        loadIndicator.makeCenter(with: self)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
 class MainTabbarVC: UITabBarController {
     
     let signalClient: SignalingClient
@@ -52,7 +75,15 @@ class MainTabbarVC: UITabBarController {
             vc.tabBarItem.imageInsets = UIEdgeInsets.init(top: 6, left: 0, bottom: -6, right: 0)
         }
         
-        
+        setUpLayout()
+    }
+    
+    
+    let loadingView = LoadingView()
+    func setUpLayout() {
+        view.addSubview(loadingView)
+        loadingView.makeFullWithSuperView()
+        loadingView.loadIndicator.startAnimating()
     }
     
     override var preferredStatusBarStyle : UIStatusBarStyle {
@@ -67,7 +98,53 @@ class MainTabbarVC: UITabBarController {
 
 extension MainTabbarVC: SignalClientDelegate {
     
+//    func getUserProfileAndFriendList() {
+//        var isGotProfile = false
+//        var isGotUserFriends = false
+//
+//        APIClient.getUserProfile(username: UserProfile.this.username)
+//            .execute(onSuccess: {[weak self] (response) in
+//                isGotProfile = true
+//                if response.success {
+//                    UserProfile.this.copy(from: response.data!)
+//                    if isGotUserFriends {
+//                        self?.showMainVC()
+//                    }
+//                } else {
+//                    self?.showWelcomeVC()
+//                }
+//            }) {[weak self] (_) in
+//                isGotProfile = true
+//                self?.showWelcomeVC()
+//        }
+//        
+//
+//        APIClient.getUserFriends(username: UserProfile.this.username)
+//            .execute(onSuccess: {[weak self] (response) in
+//                isGotUserFriends = true
+//                if response.success {
+//                    myFriends = response.data!
+//                    for friend in myFriends {
+//                        friend.setP2pState()
+//                    }
+//                    if isGotProfile {
+//                        self?.showMainVC()
+//                        self?.stopRequestAnimation()
+//                    }
+//                } else {
+//                    self?.showWelcomeVC()
+//                }
+//            }) {[weak self] (_) in
+//                isGotUserFriends = true
+//                self?.showWelcomeVC()
+//        }
+//    }
+    
     func signalClientDidConnect(_ signalClient: SignalingClient) {
+        
+        DispatchQueue.main.async {
+            self.loadingView.removeFromSuperview()
+        }
         
         for friend in myFriends {
             //only establish connection for friend is online
@@ -153,20 +230,50 @@ extension MainTabbarVC: WebRTCClientDelegate {
         
         //let message = String(data: data, encoding: .utf8) ?? "(Binary: \(data.count) bytes)"
         
-        let message: Message
+        var message: Message
         do {
             //let data = Data(string.utf8)
             message = try self.decoder.decode(Message.self, from: data)
-            print("Succeeded")
         }
         catch {
             print("Could not decode message")
             return
         }
         
+        //print message that has just received
+        print(message)
         for room in chatRooms {
             if room.partner.username == message.from {
-                room.addMessage(message: message)
+                switch message.message {
+                case .attachment(let attachment):
+                    //append to old
+                    
+                    for i in stride(from: room.messages.count - 1, through: 0, by: -1) {
+                        let mes = room.messages[i]
+                        if message.id == mes.id {
+                            switch mes.message {
+                            case .attachment(var attach):
+                                attach.payload += attachment.payload
+                                attach.currentPackage = attachment.currentPackage
+                                message = Message.init(id: mes.id, from: mes.from, to: mes.to, createdTime: mes.createdTime, message: MessagePayload.attachment(attach))
+                                room.messages[i] = message
+                                if i == room.messages.count - 1 {
+                                    room.lastMessage = message
+                                }
+                                break
+                            default:
+                                break
+                            }
+                            break
+                        }
+                    }
+                    if attachment.currentPackage == 1 {
+                        room.addMessage(message: message)
+                    }
+                default:
+                    room.addMessage(message: message)
+                    break
+                }
                 break
             } else if room.partner.username == message.to {
                 room.addMessage(message: message)

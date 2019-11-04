@@ -9,18 +9,25 @@
 import Foundation
 
 protocol Response {
+    
     var type: String { get set }
+    
     var success: Bool { get set }
+    
     var error: String { get set }
 }
 
 struct LoginResponseData: Codable {
+    
     let token: String
+    
     let username: String
+    
     let email: String
 }
 
 struct LoginResponse: Response, Codable {
+    
     var type: String
     
     var success: Bool
@@ -31,13 +38,16 @@ struct LoginResponse: Response, Codable {
 }
 
 struct LogoutResponse: Response, Codable {
+    
     var type: String
+    
     var success: Bool
     
     var error: String
 }
 
 struct UserProfileResponse: Response, Codable {
+    
     var type: String
     
     var success: Bool
@@ -48,6 +58,7 @@ struct UserProfileResponse: Response, Codable {
 }
 
 struct UserFriendsResponse: Response, Codable {
+    
     var type: String
     
     var success: Bool
