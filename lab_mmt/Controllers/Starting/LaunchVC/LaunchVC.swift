@@ -11,8 +11,6 @@ import UIKit
 class LaunchVC: LaunchVCLayout {
     
     init() {
-        //        self.signalClient = signalClient
-        //        self.webRTCClient = webRTCClient
         super.init(nibName: nil, bundle: nil)
     }
     

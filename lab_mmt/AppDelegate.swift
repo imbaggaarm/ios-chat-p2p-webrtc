@@ -29,16 +29,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         if #available(iOS 13.0, *) {
-//            let appearance = UINavigationBarAppearance()
-//            appearance.backgroundColor = AppColor.barTintColor
-//            appearance.titleTextAttributes = [.foregroundColor: AppColor.tintColor]
-//            appearance.largeTitleTextAttributes = [.foregroundColor: AppColor.tintColor]
-//
-            
             UINavigationBar.appearance().tintColor = AppColor.navTintColor
-//            UINavigationBar.appearance().standardAppearance = appearance
-//            UINavigationBar.appearance().compactAppearance = appearance
-//            UINavigationBar.appearance().scrollEdgeAppearance = appearance
+
         } else {
             window?.makeKeyAndVisible()
             

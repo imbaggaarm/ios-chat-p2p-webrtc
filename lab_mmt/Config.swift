@@ -9,7 +9,7 @@
 import Foundation
 
 // Set this to the machine's address which runs the signaling server
-fileprivate let defaultServerUrlStr = "99f55226.ngrok.io/api/v1"
+fileprivate let defaultServerUrlStr = "2baea4fa.ngrok.io/api/v1"
 fileprivate let defaultSignalingServerUrlStr = "ws://\(defaultServerUrlStr)/ws"
 fileprivate let defaultRestServerUrl = URL(string:"https://\(defaultServerUrlStr)")!
 
