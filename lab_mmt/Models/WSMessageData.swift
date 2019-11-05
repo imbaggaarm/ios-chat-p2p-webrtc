@@ -17,10 +17,6 @@ import Foundation
 //    case answer = "answer"
 //}
 
-public struct LoginData: Codable {
-    let username: String
-}
-
 public struct OfferData: Codable {
     let sdp: SessionDescription
     let fromID: String

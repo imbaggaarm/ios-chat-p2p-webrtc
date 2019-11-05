@@ -99,6 +99,7 @@ class MainTabbarVC: UITabBarController {
 extension MainTabbarVC: SignalClientDelegate {
     
     func createChatRooms() {
+        chatRooms = []
         for friend in myFriends {
             let room = ChatRoom.init(id: friend.username, partner: friend)
             chatRooms.append(room)

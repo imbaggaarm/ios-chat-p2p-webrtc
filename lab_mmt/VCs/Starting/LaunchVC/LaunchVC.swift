@@ -24,14 +24,10 @@ class LaunchVC: LaunchVCLayout {
         setStatusBarHidden(isHidden: true)
         loadConfigData()
         startRequestAnimation()
-        let swipeGesture = UISwipeGestureRecognizer.init(target: self, action: #selector(swipeGestureRecognizerHandler(_:)))
-        swipeGesture.direction = .down
-        view.addGestureRecognizer(swipeGesture)
+
     }
     
-    @objc func swipeGestureRecognizerHandler(_ sender: UISwipeGestureRecognizer) {
-        dismissMySelf()
-    }
+
     
     var shouldShowLoginVC: Bool = false
     var isShowing: Bool = false

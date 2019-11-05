@@ -22,6 +22,14 @@ class RegisterVC: RegisterVCLayout, UITextFieldDelegate {
         txtFRPassword.addTarget(self, action: #selector(checkEnableBtnRegister), for: .editingChanged)
         
         txtFEmail.becomeFirstResponder()
+        
+        let swipeGesture = UISwipeGestureRecognizer.init(target: self, action: #selector(swipeGestureRecognizerHandler(_:)))
+        swipeGesture.direction = .down
+        view.addGestureRecognizer(swipeGesture)
+    }
+    
+    @objc func swipeGestureRecognizerHandler(_ sender: UISwipeGestureRecognizer) {
+        dismissMySelf()
     }
     
     //MARK: - UITextFieldDelegate
