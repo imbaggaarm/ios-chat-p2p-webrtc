@@ -12,6 +12,7 @@ import Alamofire
 enum UserEndPoint: APIConfiguration {
     case login(email: String, password: String)
     case profile(username: String)
+    case updateProfile(username: String, displayName: String)
     case friends(username: String)
     // MARK: HTTPMethod
     var method: HTTPMethod {
@@ -20,28 +21,22 @@ enum UserEndPoint: APIConfiguration {
             return .post
         case .profile:
             return .get
+        case .updateProfile:
+            return .post
         case .friends:
             return .get
         }
     }
-    
-    private func percentEscapeString(string: String) -> String {
-        var characterSet = CharacterSet.alphanumerics
-        characterSet.insert(charactersIn: "-._* ")
         
-        return string
-          .addingPercentEncoding(withAllowedCharacters: characterSet)!
-          .replacingOccurrences(of: " ", with: "+")
-          .replacingOccurrences(of: " ", with: "+", options: [], range: nil)
-    }
-    
     // MARK: - Path
     var path: String {
         switch self {
         case .login:
-            return "/login"
+            return "/auth/login"
         case .profile(let username):
             return "/\(username)"
+        case .updateProfile(let username, _):
+            return "/\(username)/update_profile"
         case .friends(let username):
             return "/\(username)/friends"
         }
@@ -52,6 +47,8 @@ enum UserEndPoint: APIConfiguration {
         switch self {
         case .login(let email, let password):
             return [K.APIParameterKey.email: email, K.APIParameterKey.password: password]
+        case .updateProfile(_, let displayName):
+            return [K.APIParameterKey.token: UserProfile.this.token, K.APIParameterKey.displayName: displayName]
         case .profile:
             return nil
         case .friends:
@@ -59,27 +56,27 @@ enum UserEndPoint: APIConfiguration {
         }
     }
     
-    func asURLRequest() throws -> URLRequest {
-        let url = try K.ProductionServer.baseURL.asURL()
-        
-        var urlRequest = URLRequest(url: url.appendingPathComponent(path))
-        
-        // HTTP Method
-        urlRequest.httpMethod = method.rawValue
-        
-        // Common Headers
-        urlRequest.setValue(ContentType.json.rawValue, forHTTPHeaderField: HTTPHeaderField.acceptType.rawValue)
-        urlRequest.setValue(ContentType.form_urlencoded.rawValue, forHTTPHeaderField: HTTPHeaderField.contentType.rawValue)
-        
-        // Parameters
-        if let parameters = parameters {
-            let parameterArray = parameters.map { (key, value) -> String in
-                return "\(key)=\(self.percentEscapeString(string: value as! String))"
-            }
-            
-            urlRequest.httpBody = parameterArray.joined(separator: "&").data(using: .utf8)
-        }
-        
-        return urlRequest
-    }
+//    func asURLRequest() throws -> URLRequest {
+//        let url = try K.ProductionServer.baseURL.asURL()
+//
+//        var urlRequest = URLRequest(url: url.appendingPathComponent(path))
+//
+//        // HTTP Method
+//        urlRequest.httpMethod = method.rawValue
+//
+//        // Common Headers
+//        urlRequest.setValue(ContentType.json.rawValue, forHTTPHeaderField: HTTPHeaderField.acceptType.rawValue)
+//        urlRequest.setValue(ContentType.form_urlencoded.rawValue, forHTTPHeaderField: HTTPHeaderField.contentType.rawValue)
+//
+//        // Parameters
+//        if let parameters = parameters {
+//            let parameterArray = parameters.map { (key, value) -> String in
+//                return "\(key)=\(self.percentEscapeString(string: value as! String))"
+//            }
+//
+//            urlRequest.httpBody = parameterArray.joined(separator: "&").data(using: .utf8)
+//        }
+//
+//        return urlRequest
+//    }
 }

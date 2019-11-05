@@ -17,12 +17,15 @@ class AppConstant {
 
 struct K {
     struct ProductionServer {
-        static let baseURL = "https://362e9e63.ngrok.io/api/v1"
+        static let baseURL = Config.default.restServerUrl
     }
     
     struct APIParameterKey {
         static let password = "password"
         static let email = "email"
+        static let token = "token"
+        static let displayName = "display_name"
+        static let username = "username"
     }
 }
 

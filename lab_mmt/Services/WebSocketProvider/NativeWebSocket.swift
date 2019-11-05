@@ -53,7 +53,7 @@ class NativeWebSocket: NSObject, WebSocketProvider {
         }
     }
     
-    private func disconnect() {
+    internal func disconnect() {
         self.socket?.cancel()
         self.socket = nil
         self.delegate?.webSocketDidDisconnect(self)

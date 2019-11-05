@@ -7,27 +7,51 @@
 //
 
 import Alamofire
+import PromisedFuture
 
 final class APIClient {
-    static func login(email: String, password: String, completion: @escaping (AFResult<LoginResponse>) -> Void) {
-        let router = APIRouter.login(email: email, password: password)
-        AF.request(router).responseDecodable{ (response: AFDataResponse<LoginResponse>) in
-            completion(response.result)
-        }
+    @discardableResult
+    private static func performRequest<T:Decodable>(route: URLRequestConvertible, decoder: JSONDecoder = JSONDecoder()) -> Future<T> {
+        return Future(operation: { completion in
+            AF.request(route).responseDecodable(decoder: decoder, completionHandler: { (response: AFDataResponse<T>) -> Void in
+                switch response.result {
+                case .success(let value):
+                    completion(.success(value))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            })
+        })
     }
     
-    static func getUserProfile(username: String, completion: @escaping (AFResult<UserProfileResponse>) -> Void) {
-        let router = UserEndPoint.profile(username: username)
-        AF.request(router).responseDecodable { (response: AFDataResponse<UserProfileResponse>) in
-            completion(response.result)
-        }
+    static func register(email: String, password: String) -> Future<LoginResponse> {
+        let route = AuthRouter.register(email: email, password: password)
+        return performRequest(route: route)
     }
     
-    static func getUserFriends(username: String, completion: @escaping (AFResult<UserFriendsResponse>) -> Void) {
-        let router = UserEndPoint.friends(username: username)
-        AF.request(router).responseDecodable { (response: AFDataResponse<UserFriendsResponse>) in
-            completion(response.result)
-        }
+    static func login(email: String, password: String) -> Future<LoginResponse> {
+        let route = AuthRouter.login(email: email, password: password)
+        return performRequest(route: route)
+    }
+    
+    static func logout() -> Future<LogoutResponse> {
+        let route = AuthRouter.logout
+        return performRequest(route: route)
+    }
+    
+    static func getUserProfile(username: String) -> Future<UserProfileResponse> {
+        let route = UserEndPoint.profile(username: username)
+        return performRequest(route: route)
+    }
+    
+    static func getUserFriends(username: String) -> Future<UserFriendsResponse> {
+        let route = UserEndPoint.friends(username: username)
+        return performRequest(route: route)
+    }
+    
+    static func updateUserProfile(username: String, displayName: String) -> Future<UserProfileResponse> {
+        let route = UserEndPoint.updateProfile(username: username, displayName: displayName)
+        return performRequest(route: route)
     }
 
 }

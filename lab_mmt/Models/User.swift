@@ -8,50 +8,20 @@
 
 import Foundation
 
-enum OnlineState {
-    case online, offline, doNotDisturb
+enum P2POnlineState: Int, Codable {
+    case offline = 0
+    case online = 1
+    case doNotDisturb = 2
+    case idle = 3
 }
 
-struct LoginResponseData: Codable {
-    let jwt: String
-    let username: String
+enum WSOnlineState: Int, Codable {
+    case offline = 0
+    case online = 1
+    case doNotDisturb = 2
 }
 
-protocol Response {
-    var type: String { get set }
-    var success: Bool { get set }
-    var error: String { get set }
-}
-
-struct LoginResponse: Response, Codable {
-    var type: String
-    
-    var success: Bool
-    
-    var error: String
-    
-    let data: LoginResponseData?
-}
-
-struct UserProfileResponse: Response, Codable {
-    var type: String
-    
-    var success: Bool
-    
-    var error: String
-    
-    let data: UserProfile?
-}
-
-struct UserFriendsResponse: Response, Codable {
-    var type: String
-    
-    var success: Bool
-    
-    var error: String
-    
-    let data: [UserProfile]?
-}
+var myFriends = [UserProfile]()
 
 struct UserAccount: Codable {
     let email: String
@@ -59,22 +29,48 @@ struct UserAccount: Codable {
 }
 
 class UserProfile: Codable {
-    static var this: UserProfile = UserProfile(email: "", username: "", displayName: "", profilePictureUrl: "", coverPhotoUrl: "")
+    static let this: UserProfile = UserProfile(email: "", username: "", displayName: "", profilePictureUrl: "", coverPhotoUrl: "", state: .online, p2pState: .online)
     
     var email: String
     var username: String
     var displayName: String
     var profilePictureUrl: String
     var coverPhotoUrl: String
-    var state: OnlineState = .offline
+    var state: WSOnlineState = .offline {
+        didSet {
+            setP2pState()
+        }
+    }
+    var p2pState: P2POnlineState = .offline
+    var token: String = ""
     
-    init(email: String, username: String, displayName: String, profilePictureUrl: String, coverPhotoUrl: String, state: OnlineState = .offline) {
+    init(email: String, username: String, displayName: String, profilePictureUrl: String, coverPhotoUrl: String, state: WSOnlineState = .offline, p2pState: P2POnlineState = .offline) {
         self.email = email
         self.username = username
         self.displayName = displayName
         self.profilePictureUrl = profilePictureUrl
         self.coverPhotoUrl = coverPhotoUrl
         self.state = state
+        self.p2pState = p2pState
+    }
+    
+    func copy(from u: UserProfile) {
+        self.email = u.email
+        self.username = u.username
+        self.displayName = u.displayName
+        self.profilePictureUrl = u.profilePictureUrl
+        self.coverPhotoUrl = u.coverPhotoUrl
+        
+        //not copy state and p2pstate, token
+        //self.state = u.state
+    }
+    
+    func setP2pState() {
+        if self.state == .online && self.p2pState != .doNotDisturb {
+            self.p2pState = .idle
+            return
+        }
+        self.p2pState = P2POnlineState.init(rawValue: self.state.rawValue)!
     }
 }
 
@@ -85,29 +81,6 @@ extension UserProfile {
         case displayName = "display_name"
         case profilePictureUrl = "profile_picture_url"
         case coverPhotoUrl = "cover_photo_url"
+        case state = "online_state"
     }
 }
-
-var myFriends = [UserProfile]()
-//
-//class User {
-//    let username: String
-//    let password: String
-//    let displayName: String
-//
-//    let avtStrURL: String
-//    let coverStrURL: String
-//
-//    var state: OnlineState
-//
-////    static var this: User!
-//
-//    init(username: String, password: String, displayName: String, avtStrURL: String, coverStrURL: String, onlineState: OnlineState = .offline) {
-//        self.username = username
-//        self.password = password
-//        self.displayName = displayName
-//        self.avtStrURL = avtStrURL
-//        self.coverStrURL = coverStrURL
-//        self.state = onlineState
-//    }
-//}

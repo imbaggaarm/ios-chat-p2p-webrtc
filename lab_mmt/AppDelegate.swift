@@ -8,7 +8,7 @@
 
 import UIKit
 import CoreData
- 
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -19,13 +19,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if #available(iOS 13.0, *) {
             
         } else {
+            let rootVC = LaunchVC()//UINavigationController.init(rootViewController: UpdateProfileVC())//
             window = UIWindow.init(frame: UIScreen.main.bounds)
-            let webRTCClient = MyWebRTCClient(iceServers: self.config.webRTCIceServers)
-            let signalClient = self.buildSignalingClient()
-//            let mainTabbarController = MainTabBarController(signalClient: signalClient, webRTCClient: webRTCClient)
-            
-            window?.rootViewController = LaunchViewController(signalClient: signalClient, webRTCClient: webRTCClient)
-            
+            window?.rootViewController = rootVC//WelcomeVC()
         }
         
         return true
@@ -33,16 +29,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         if #available(iOS 13.0, *) {
-//            let appearance = UINavigationBarAppearance()
-//            appearance.backgroundColor = AppColor.barTintColor
-//            appearance.titleTextAttributes = [.foregroundColor: AppColor.tintColor]
-//            appearance.largeTitleTextAttributes = [.foregroundColor: AppColor.tintColor]
-//
-            
             UINavigationBar.appearance().tintColor = AppColor.navTintColor
-//            UINavigationBar.appearance().standardAppearance = appearance
-//            UINavigationBar.appearance().compactAppearance = appearance
-//            UINavigationBar.appearance().scrollEdgeAppearance = appearance
+
         } else {
             window?.makeKeyAndVisible()
             
@@ -53,21 +41,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         return true
     }
-    
-    private func buildSignalingClient() -> SignalingClient {
-        
-        // iOS 13 has native websocket support. For iOS 12 or lower we will use 3rd party library.
-        let webSocketProvider: WebSocketProvider
-        
-        if #available(iOS 13.0, *) {
-            webSocketProvider = NativeWebSocket(url: self.config.signalingServerUrl)
-        } else {
-            webSocketProvider = StarscreamWebSocket(url: self.config.signalingServerUrl)
-        }
-        
-        return SignalingClient(webSocket: webSocketProvider)
-    }
-
 
     // MARK: UISceneSession Lifecycle
 

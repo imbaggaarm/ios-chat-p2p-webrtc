@@ -1,5 +1,6 @@
 PODS:
   - Alamofire (5.0.0-rc.3)
+  - AttachmentPicker (1.0.10)
   - GoogleWebRTC (1.1.29400)
   - Kingfisher (5.9.0):
     - Kingfisher/Core (= 5.9.0)
@@ -7,34 +8,41 @@ PODS:
   - NVActivityIndicatorView (4.8.0):
     - NVActivityIndicatorView/Presenter (= 4.8.0)
   - NVActivityIndicatorView/Presenter (4.8.0)
+  - PromisedFuture (1.0.1)
   - Starscream (3.0.6)
   - SwiftDate (6.1.0)
 
 DEPENDENCIES:
   - Alamofire (~> 5.0.0-rc.3)
+  - AttachmentPicker
   - GoogleWebRTC
   - Kingfisher (~> 5.9)
   - NVActivityIndicatorView
+  - PromisedFuture
   - Starscream (~> 3.0.2)
   - SwiftDate
 
 SPEC REPOS:
   trunk:
     - Alamofire
+    - AttachmentPicker
     - GoogleWebRTC
     - Kingfisher
     - NVActivityIndicatorView
+    - PromisedFuture
     - Starscream
     - SwiftDate
 
 SPEC CHECKSUMS:
   Alamofire: ca8c0de6906873be89d6deec5c8de279e00bf872
+  AttachmentPicker: 318b2f8e28e6ac1f3dce904584692fec68c5a67c
   GoogleWebRTC: cfb83bc346435a17fe06bb05f04ad826b858a7fb
   Kingfisher: ff98240aebb7302bdc4f1ecd701761030ce18b16
   NVActivityIndicatorView: d24b7ebcf80af5dcd994adb650e2b6c93379270f
+  PromisedFuture: 3f863d17c047c3474c85045b254bb1c94743ed0f
   Starscream: ef3ece99d765eeccb67de105bfa143f929026cf5
   SwiftDate: fa2bb3962056bb44047b4b85a30044e5eae30b03
 
-PODFILE CHECKSUM: bc02b006e66b95ae53407fdc097f3771e966e375
+PODFILE CHECKSUM: f60f07b15dbba6d1be37475dfb189e2a8b2c07ad
 
 COCOAPODS: 1.8.4

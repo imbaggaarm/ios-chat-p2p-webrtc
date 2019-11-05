@@ -11,14 +11,17 @@ import WebRTC
 
 typealias UserID = String
 
-protocol MyWebRTCClientDelegate: class {
-    func webRTCClient(_ client: MyWebRTCClient, didDiscoverLocalCandidate candidate: RTCIceCandidate, forUser userID: UserID)
-    func webRTCClient(_ client: MyWebRTCClient, didChangeConnectionState state: RTCIceConnectionState)
-    func webRTCClient(_ client: MyWebRTCClient, didReceiveData data: Data)
+protocol WebRTCClientDelegate: class {
+    func webRTCClient(_ client: WebRTCClient, didDiscoverLocalCandidate candidate: RTCIceCandidate, forUser userID: UserID)
+    func webRTCClient(_ client: WebRTCClient, didChangeConnectionState state: RTCIceConnectionState)
+    func webRTCClient(_ client: WebRTCClient, didReceiveData data: Data)
 }
 
 
-final class MyWebRTCClient: NSObject {
+final class WebRTCClient: NSObject {
+    
+    public static var `default`: WebRTCClient?
+    
     private static let factory: RTCPeerConnectionFactory = {
         RTCInitializeSSL()
         let videoEncoderFactory = RTCDefaultVideoEncoderFactory()
@@ -34,7 +37,7 @@ final class MyWebRTCClient: NSObject {
     private let mediaConstrains = [kRTCMediaConstraintsOfferToReceiveAudio: kRTCMediaConstraintsValueTrue,
                                    kRTCMediaConstraintsOfferToReceiveVideo: kRTCMediaConstraintsValueTrue]
     
-    weak var delegate: MyWebRTCClientDelegate?
+    weak var delegate: WebRTCClientDelegate?
     
     
     @available(*, unavailable)
@@ -45,6 +48,7 @@ final class MyWebRTCClient: NSObject {
     required init(iceServers: [String]) {
         self.iceServers = iceServers
         super.init()
+        WebRTCClient.default = self
     }
     
     private func createMediaSenders(forUser userID: UserID) {
@@ -79,7 +83,7 @@ final class MyWebRTCClient: NSObject {
         
         // gatherContinually will let WebRTC to listen to any network changes and send any new candidates to the other client
         config.continualGatheringPolicy = .gatherContinually
-        let peerConnection = MyWebRTCClient.factory.peerConnection(with: config, constraints: constraints, delegate: self)
+        let peerConnection = WebRTCClient.factory.peerConnection(with: config, constraints: constraints, delegate: self)
         
         // add to peer connection dict
         self.peerConnections[userID] = peerConnection
@@ -185,8 +189,7 @@ final class MyWebRTCClient: NSObject {
     private func createDataChannel(forUser userID: UserID) {
         let config = RTCDataChannelConfiguration()
         config.isOrdered = true
-        
-        guard let peerConnection = peerConnections[userID], let dataChannel = peerConnection.dataChannel(forLabel: "channel1", configuration: config) else {
+        guard let peerConnection = peerConnections[userID], let dataChannel = peerConnection.dataChannel(forLabel: "channel_1", configuration: config) else {
             debugPrint("Warning: Couldn't create data channel.")
             return
         }
@@ -206,7 +209,7 @@ final class MyWebRTCClient: NSObject {
     }
 }
 
-extension MyWebRTCClient: RTCDataChannelDelegate {
+extension WebRTCClient: RTCDataChannelDelegate {
     func dataChannelDidChangeState(_ dataChannel: RTCDataChannel) {
         debugPrint("dataChannel did change state: \(dataChannel.readyState)")
 //        switch dataChannel.readyState {
@@ -224,7 +227,7 @@ extension MyWebRTCClient: RTCDataChannelDelegate {
     }
 }
 
-extension MyWebRTCClient: RTCPeerConnectionDelegate {
+extension WebRTCClient: RTCPeerConnectionDelegate {
     
     func peerConnection(_ peerConnection: RTCPeerConnection, didChange stateChanged: RTCSignalingState) {
         debugPrint("peerConnection new signaling state: \(stateChanged)")
@@ -246,12 +249,25 @@ extension MyWebRTCClient: RTCPeerConnectionDelegate {
     func peerConnection(_ peerConnection: RTCPeerConnection, didChange newState: RTCIceConnectionState) {
         debugPrint("peerConnection new connection state: \(newState)")
         switch newState {
+        case .checking, .new:
+            for (uID, peer) in self.peerConnections {
+                if peer.isEqual(peerConnection) {
+                    for friend in myFriends {
+                        if friend.username == uID {
+                            friend.p2pState = .idle
+                            self.delegate?.webRTCClient(self, didChangeConnectionState: newState)
+                            break
+                        }
+                    }
+                    break
+                }
+            }
         case .connected:
             for (uID, peer) in self.peerConnections {
                 if peer.isEqual(peerConnection) {
                     for friend in myFriends {
                         if friend.username == uID {
-                            friend.state = .online
+                            friend.p2pState = .online
                             self.delegate?.webRTCClient(self, didChangeConnectionState: newState)
                             break
                         }
@@ -264,7 +280,7 @@ extension MyWebRTCClient: RTCPeerConnectionDelegate {
                 if peer.isEqual(peerConnection) {
                     for friend in myFriends {
                         if friend.username == uID {
-                            friend.state = .offline
+                            friend.p2pState = .offline
                             self.delegate?.webRTCClient(self, didChangeConnectionState: newState)
                             break
                         }

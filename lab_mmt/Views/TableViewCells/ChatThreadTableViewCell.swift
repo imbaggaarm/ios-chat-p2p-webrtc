@@ -53,16 +53,23 @@ class ChatThreadTableViewCell: IMBBaseTableViewCell {
     let imgVMessageStatus: UIImageView = {
         let temp = UIImageView()
         temp.image = AppIcon.newMessage
-        temp.backgroundColor = AppColor.backgroundColor
+        temp.backgroundColor = UIColor.black
+        return temp
+    }()
+    
+    let vOnlineState: UIView = {
+        let temp = UIView()
         return temp
     }()
     
     override func setUpLayout() {
         super.setUpLayout()
         
+        selectionStyle = .none
+        
         backgroundColor = .black
         
-        contentView.addSubviews(subviews: imgVAvatar, lblTitle, lblLastMessage, lblTime, imgVMessageStatus)
+        contentView.addSubviews(subviews: imgVAvatar, lblTitle, lblLastMessage, lblTime, imgVMessageStatus, vOnlineState)
         
         contentView.addConstraintsWith(format: "H:|-16-[v0]-10-[v1]-10-[v2]-16-|", views: imgVAvatar, lblTitle, lblTime)
         contentView.addConstraintsWith(format: "H:[v0]-10-[v1]-10-[v2]-16-|", views: imgVAvatar, lblLastMessage, imgVMessageStatus)
@@ -85,6 +92,10 @@ class ChatThreadTableViewCell: IMBBaseTableViewCell {
             imgVMessageStatus.contentScaleFactor = UIScreen.main.scale
         }
         
+        vOnlineState.makeCircle(corner: 6)
+        let spacing = (CGFloat(2.0.squareRoot()/2.0) + 1)*30 - 6
+        vOnlineState.topAnchor(equalTo: imgVAvatar.topAnchor, constant: spacing)
+        vOnlineState.leftAnchor(equalTo: imgVAvatar.leftAnchor, constant: spacing)
     }
     
     override func showData() {
@@ -102,7 +113,20 @@ class ChatThreadTableViewCell: IMBBaseTableViewCell {
         lblLastMessage.textColor = vm.lastMessageTextColor
         imgVMessageStatus.image = vm.messageStatusIcon
         
-        
+        var color: UIColor
+        switch vm.onlineState {
+        case .online:
+            color = .green
+        case .offline:
+            color = .clear
+        case .doNotDisturb:
+            color = .red
+        default:
+            color = .yellow
+        }
+        vOnlineState.backgroundColor = color
+
     }
+
 
 }

@@ -42,4 +42,17 @@ class AppIcon {
     
     static let audioCall = UIImage.init(named: "audio_call")
     static let videoCall = UIImage.init(named: "video_call")
+    
+    static let navBackIcon = UIImage.init(named: "back_icon")
+    
+    static let userAvtPlaceholder = UIImage.init(named: "placeholder-user-photo")
+    static let imagePlaceHolder = UIImage.init(named: "imagePlaceHolder")
+    static let editProfile = UIImage.init(named: "edit_profile")
+    
+    static let dismissVC = UIImage.init(named: "dismissVC")
+    static let setting = UIImage.init(named: "setting_icon")
+    
+    static let settingCVButAtRightCornerIcon = UIImage.init(named: "rightNarrowIcon")
+    
+    static let attachmentIcon = UIImage.init(named: "icons8-attach")
 }

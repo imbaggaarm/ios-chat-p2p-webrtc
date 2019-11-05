@@ -43,6 +43,7 @@ class FriendTableViewCell: IMBBaseTableViewCell {
         super.setUpLayout()
         
         backgroundColor = .black
+        selectionStyle = .none
         
         contentView.addSubviews(subviews: imgVAvatar, lblName, vOnlineStatus)
         

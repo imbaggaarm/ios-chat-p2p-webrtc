@@ -15,60 +15,63 @@ protocol SignalClientDelegate: class {
     func signalClient(_ signalClient: SignalingClient, didReceiveRemoteSdp sdp: RTCSessionDescription, fromUser userID: UserID)
     func signalClient(_ signalClient: SignalingClient, didReceiveAnswerSdp sdp: RTCSessionDescription, fromUser userID: UserID)
     func signalClient(_ signalClient: SignalingClient, didReceiveCandidate candidate: RTCIceCandidate, fromUser userID: UserID)
+    func signalClient(_ signalClient: SignalingClient, didReceiveOnlineState onlineState: WSOnlineState, fromUser userID: UserID)
     func signalClient(_ signalClient: SignalingClient, didReceiveFailedOfferFromUser userID: UserID)
 }
 
 final class SignalingClient {
+    
+    public static var shared: SignalingClient!
     
     private let decoder = JSONDecoder()
     private let encoder = JSONEncoder()
     private let webSocket: WebSocketProvider
     weak var delegate: SignalClientDelegate?
     
-    init(webSocket: WebSocketProvider) {
-        self.webSocket = webSocket
+    init() {
+        // iOS 13 has native websocket support. For iOS 12 or lower we will use 3rd party library.
+        let url = URL.init(string: Config.default.signalingServerUrlStr + "?token=\(UserProfile.this.token)")!
+        if #available(iOS 13.0, *) {
+            self.webSocket = NativeWebSocket(url: url)
+        } else {
+            self.webSocket = StarscreamWebSocket(url: url)
+        }
+        SignalingClient.shared = self
+        
+        encoder.outputFormatting = .prettyPrinted
     }
-    
+        
     func connect() {
         self.webSocket.delegate = self
         self.webSocket.connect()
-        
     }
     
-//    func sendMessage(message: [String: Any]) {
-//        do {
-//            let dataMessage = try JSONSerialization.data(withJSONObject: message, options: .prettyPrinted)
-//            
-////            let decoded = try JSONSerialization.jsonObject(with: dataMessage, options: [])
-////            print(decoded)
-//
-//            webSocket.send(data: dataMessage)
-//        }
-//        catch {
-//            debugPrint("Warning: Could not encode message: \(error)")
-//        }
-//    }
+    func disconnect() {
+        self.webSocket.delegate = nil
+        self.webSocket.disconnect()
+    }
     
-    func send(username: String) {
-        let loginData = LoginData(username: username)
-        let message = MyMessage.login(loginData)
-
+    func sendOnlineStateChange(username: String, state: WSOnlineState) {
+        print("sending online state")
+        let message = WSMessage.onlineState(OnlineStateData.init(username: username, onlineState: state))
         do {
             let dataMessage = try self.encoder.encode(message)
             self.webSocket.send(data: dataMessage)
         }
         catch {
-            debugPrint("Warning: Could not encode message: \(error)")
+            debugPrint("Warning: Could not encode sdp: \(error)")
         }
     }
-    
+        
     func sendOffer(username: UserID, partnerUsername: UserID, sdp rtcSdp: RTCSessionDescription) {
         
         print("send offer to: ", partnerUsername)
         
-        let message = MyMessage.offer(OfferData(sdp: SessionDescription(from: rtcSdp), fromID: username, toID: partnerUsername))
+        let message = WSMessage.offer(OfferData(sdp: SessionDescription(from: rtcSdp), fromID: username, toID: partnerUsername))
         do {
             let dataMessage = try self.encoder.encode(message)
+            
+            print(dataMessage.prettyPrintedJSONString!)
             
             self.webSocket.send(data: dataMessage)
         }
@@ -80,9 +83,10 @@ final class SignalingClient {
     
     func sendAnswer(username: UserID, toUser userID: UserID, sdp rtcSdp: RTCSessionDescription) {
         print("send answer to: ", userID)
-        let message = MyMessage.answer(AnswerData(sdp: SessionDescription(from: rtcSdp), fromID: username, toID: userID))
+        let message = WSMessage.answer(AnswerData(sdp: SessionDescription(from: rtcSdp), fromID: username, toID: userID))
         do {
             let dataMessage = try self.encoder.encode(message)
+            print(dataMessage.prettyPrintedJSONString ?? "")
             self.webSocket.send(data: dataMessage)
         }
         catch {
@@ -92,10 +96,10 @@ final class SignalingClient {
     }
             
     func send(candidate rtcIceCandidate: RTCIceCandidate, toUser userID: UserID) {
-        let message = MyMessage.candidate(CandidateData(candidate: IceCandidate(from: rtcIceCandidate), fromID: UserProfile.this.username, toID: userID))
+        let message = WSMessage.candidate(CandidateData(candidate: IceCandidate(from: rtcIceCandidate), fromID: UserProfile.this.username, toID: userID))
         do {
             let dataMessage = try self.encoder.encode(message)
-            
+            print(dataMessage.prettyPrintedJSONString ?? "")
             self.webSocket.send(data: dataMessage)
         }
         catch {
@@ -121,50 +125,43 @@ extension SignalingClient: WebSocketProviderDelegate {
     }
     
     func webSocket(_ webSocket: WebSocketProvider, didReceiveString string: String) {
-//        print(string)
-        
-        let message: MyMessage
+        let message: WSMessage
         do {
             let data = Data(string.utf8)
-            message = try self.decoder.decode(MyMessage.self, from: data)
-            print("Succeeded")
-        }
-        catch {
-//            debugPrint("Warning: Could not decode incoming message: \(error)")
-            return
-        }
-        
-//        print(message)
-        switch message {
-        case .offer(let offerData):
-            self.delegate?.signalClient(self, didReceiveRemoteSdp: offerData.sdp.rtcSessionDescription, fromUser: offerData.fromID)
-        case .offerRespone(let response):
-//            print(response.fromID)
-//            print(response.success)
-            if !response.success {
-                //self.delegate?.signalClient(self, didReceiveFailedOfferFromUser: response.fromID)
-            }
-        case .answer(let answerData):
-            //print(answerData)
-            self.delegate?.signalClient(self, didReceiveAnswerSdp: answerData.sdp.rtcSessionDescription, fromUser: answerData.fromID)
-        case .candidate(let candidateData):
-            self.delegate?.signalClient(self, didReceiveCandidate: candidateData.candidate.rtcIceCandidate, fromUser: candidateData.fromID)
-        default:
-            break
-        }
-    }
-    
-    func webSocket(_ webSocket: WebSocketProvider, didReceiveData data: Data) {
-        let message: MyMessage
-        do {
-            message = try self.decoder.decode(MyMessage.self, from: data)
+            message = try self.decoder.decode(WSMessage.self, from: data)
+            print(data.prettyPrintedJSONString ?? "")
         }
         catch {
             debugPrint("Warning: Could not decode incoming message: \(error)")
             return
         }
         
-        print(message)
+        
+        switch message {
+        case .offer(let offerData):
+            self.delegate?.signalClient(self, didReceiveRemoteSdp: offerData.sdp.rtcSessionDescription, fromUser: offerData.fromID)
+        case .offerRespone(_):
+            break
+        case .answer(let answerData):
+            //print(answerData)
+            self.delegate?.signalClient(self, didReceiveAnswerSdp: answerData.sdp.rtcSessionDescription, fromUser: answerData.fromID)
+        case .candidate(let candidateData):
+            self.delegate?.signalClient(self, didReceiveCandidate: candidateData.candidate.rtcIceCandidate, fromUser: candidateData.fromID)
+        case .onlineState(let onlineStateData):
+            self.delegate?.signalClient(self, didReceiveOnlineState: onlineStateData.onlineState, fromUser: onlineStateData.username)
+        }
+    }
+    
+    func webSocket(_ webSocket: WebSocketProvider, didReceiveData data: Data) {
+//        let message: WSMessage
+//        do {
+//            message = try self.decoder.decode(WSMessage.self, from: data)
+//            print(data.prettyPrintedJSONString ?? "")
+//        }
+//        catch {
+//            debugPrint("Warning: Could not decode incoming message: \(error)")
+//            return
+//        }
         
 //        switch message {
 //        case .candidate(let iceCandidate):
@@ -176,3 +173,12 @@ extension SignalingClient: WebSocketProviderDelegate {
     }
 }
 
+extension Data {
+    var prettyPrintedJSONString: NSString? { /// NSString gives us a nice sanitized debugDescription
+        guard let object = try? JSONSerialization.jsonObject(with: self, options: []),
+              let data = try? JSONSerialization.data(withJSONObject: object, options: [.prettyPrinted]),
+              let prettyPrintedString = NSString(data: data, encoding: String.Encoding.utf8.rawValue) else { return nil }
+
+        return prettyPrintedString
+    }
+}
