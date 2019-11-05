@@ -37,6 +37,8 @@ final class SignalingClient {
             self.webSocket = StarscreamWebSocket(url: url)
         }
         SignalingClient.shared = self
+        
+        encoder.outputFormatting = .prettyPrinted
     }
         
     func connect() {
@@ -69,6 +71,8 @@ final class SignalingClient {
         do {
             let dataMessage = try self.encoder.encode(message)
             
+            print(dataMessage.prettyPrintedJSONString!)
+            
             self.webSocket.send(data: dataMessage)
         }
         catch {
@@ -82,6 +86,7 @@ final class SignalingClient {
         let message = WSMessage.answer(AnswerData(sdp: SessionDescription(from: rtcSdp), fromID: username, toID: userID))
         do {
             let dataMessage = try self.encoder.encode(message)
+            print(dataMessage.prettyPrintedJSONString ?? "")
             self.webSocket.send(data: dataMessage)
         }
         catch {
@@ -94,7 +99,7 @@ final class SignalingClient {
         let message = WSMessage.candidate(CandidateData(candidate: IceCandidate(from: rtcIceCandidate), fromID: UserProfile.this.username, toID: userID))
         do {
             let dataMessage = try self.encoder.encode(message)
-            
+            print(dataMessage.prettyPrintedJSONString ?? "")
             self.webSocket.send(data: dataMessage)
         }
         catch {
@@ -124,14 +129,14 @@ extension SignalingClient: WebSocketProviderDelegate {
         do {
             let data = Data(string.utf8)
             message = try self.decoder.decode(WSMessage.self, from: data)
-            print("Succeeded")
+            print(data.prettyPrintedJSONString ?? "")
         }
         catch {
             debugPrint("Warning: Could not decode incoming message: \(error)")
             return
         }
         
-//        print(message)
+        
         switch message {
         case .offer(let offerData):
             self.delegate?.signalClient(self, didReceiveRemoteSdp: offerData.sdp.rtcSessionDescription, fromUser: offerData.fromID)
@@ -148,16 +153,15 @@ extension SignalingClient: WebSocketProviderDelegate {
     }
     
     func webSocket(_ webSocket: WebSocketProvider, didReceiveData data: Data) {
-        let message: WSMessage
-        do {
-            message = try self.decoder.decode(WSMessage.self, from: data)
-        }
-        catch {
-            debugPrint("Warning: Could not decode incoming message: \(error)")
-            return
-        }
-        
-        print(message)
+//        let message: WSMessage
+//        do {
+//            message = try self.decoder.decode(WSMessage.self, from: data)
+//            print(data.prettyPrintedJSONString ?? "")
+//        }
+//        catch {
+//            debugPrint("Warning: Could not decode incoming message: \(error)")
+//            return
+//        }
         
 //        switch message {
 //        case .candidate(let iceCandidate):
@@ -169,3 +173,12 @@ extension SignalingClient: WebSocketProviderDelegate {
     }
 }
 
+extension Data {
+    var prettyPrintedJSONString: NSString? { /// NSString gives us a nice sanitized debugDescription
+        guard let object = try? JSONSerialization.jsonObject(with: self, options: []),
+              let data = try? JSONSerialization.data(withJSONObject: object, options: [.prettyPrinted]),
+              let prettyPrintedString = NSString(data: data, encoding: String.Encoding.utf8.rawValue) else { return nil }
+
+        return prettyPrintedString
+    }
+}

@@ -308,6 +308,8 @@ extension ChatVC: InputMessageBarDelegate {
             webRTCClient.sendData(toUserID: room.partner.username, dataMessage)
             room.addMessage(message: message)
             
+            print(dataMessage.prettyPrintedJSONString ?? "")
+            
             let notification = Notification.init(name: MessageHandler.onNewMessage, object: nil, userInfo: [
                 MessageHandler.messageUserInfoKey: message
             ])
@@ -384,7 +386,7 @@ extension ChatVC: HSAttachmentPickerDelegate {
             return
         }
         
-        let maxSizePerEach = 100*1024
+        let maxSizePerEach = 16*1024
         let totalPackage = Int(Double(data.count)/Double(maxSizePerEach)) + 1
         var attachmentType: AttachmentType
         if filename.isImageType() {
@@ -406,7 +408,6 @@ extension ChatVC: HSAttachmentPickerDelegate {
             let attachment: Attachment = Attachment.init(name: filename, type: attachmentType, payload: splicedData, totalPackage: totalPackage, currentPackage: i)
             let messagePayload = MessagePayload.attachment(attachment)
             let message = Message.init(id: id, from: UserProfile.this.username, to: room.partner.username, createdTime: createdTime, message: messagePayload)
-            print(message)
             sendMessage(message: message)
         }
         

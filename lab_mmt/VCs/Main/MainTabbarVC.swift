@@ -232,14 +232,14 @@ extension MainTabbarVC: WebRTCClientDelegate {
         do {
             //let data = Data(string.utf8)
             message = try self.decoder.decode(Message.self, from: data)
+            //print message that has just received
+            print(data.prettyPrintedJSONString ?? "")
         }
         catch {
             print("Could not decode message")
             return
         }
         
-        //print message that has just received
-        print(message)
         for room in chatRooms {
             if room.partner.username == message.from {
                 switch message.message {
